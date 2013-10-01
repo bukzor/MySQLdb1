@@ -33,7 +33,6 @@ def defaulterrorhandler(connection, cursor, errorclass, errorvalue):
         connection.messages.append(error)
     del cursor
     del connection
-    # raise errorclass, errorvalue
     if isinstance(errorvalue, errorclass):
         raise errorvalue
     else:
@@ -233,8 +232,8 @@ class Connection(_mysql.connection):
             self.converter[FIELD_TYPE.VARCHAR].append((None, string_decoder))
             self.converter[FIELD_TYPE.BLOB].append((None, string_decoder))
 
-        self.encoders[types.StringType] = string_literal
-        self.encoders[types.UnicodeType] = unicode_literal
+        self.encoders[bytes] = string_literal
+        self.encoders[str] = unicode_literal
         self._transactional = self.server_capabilities & CLIENT.TRANSACTIONS
         self._autocommit = None
         if self._transactional:

@@ -14,6 +14,7 @@ except ImportError:
     ListType = list
     TupleType = tuple
     UnicodeType = str
+    unicode = str
 
 restr = r"""
     \s
