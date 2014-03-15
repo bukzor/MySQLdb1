@@ -4,6 +4,7 @@
 *.so
 *.pyd
 *.gz
+.*.sw[a-z]
 *.zip
 *.egg
 *.egg-info/
