@@ -34,13 +34,21 @@ MySQL.connect().
 
 """
 
-from _mysql import string_literal, escape_sequence, escape_dict, escape, NULL
+from _mysql import string_literal, escape_sequence, escape_dict, NULL
 from MySQLdb.constants import FIELD_TYPE, FLAG
-from MySQLdb.times import *
+from MySQLdb.times import (
+    DateTimeType, DateTime2literal, DateTimeDeltaType, DateTimeDelta2literal,
+    mysql_timestamp_converter, DateTime_or_None, TimeDelta_or_None, Date_or_None,
+)
+
+
 
 try:
-    from types import IntType, LongType, FloatType, NoneType, TupleType, ListType, DictType, InstanceType, \
-        StringType, UnicodeType, ObjectType, BooleanType, ClassType, TypeType
+    from types import (
+        IntType, LongType, FloatType, NoneType, TupleType, ListType, DictType,
+        InstanceType, StringType, UnicodeType, ObjectType, BooleanType, ClassType,
+        TypeType
+    )
 except ImportError:
     # Python 3
     long = int

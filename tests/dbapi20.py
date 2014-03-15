@@ -245,6 +245,7 @@ class DatabaseAPI20Test(unittest.TestCase):
         con = self._connect()
         try:
             cur = con.cursor()
+            del cur
         finally:
             con.close()
 
@@ -752,9 +753,6 @@ class DatabaseAPI20Test(unittest.TestCase):
         finally:
             con.close()
 
-    def test_nextset(self):
-        raise NotImplementedError('Drivers need to override this test')
-
     def test_arraysize(self):
         # Not much here - rest of the tests for this are in test_fetchmany
         con = self._connect()
@@ -807,12 +805,14 @@ class DatabaseAPI20Test(unittest.TestCase):
     def test_Date(self):
         d1 = self.driver.Date(2002,12,25)
         d2 = self.driver.DateFromTicks(time.mktime((2002,12,25,0,0,0,0,0,0)))
+        del d1, d2
         # Can we assume this? API doesn't specify, but it seems implied
         # self.assertEqual(str(d1),str(d2))
 
     def test_Time(self):
         t1 = self.driver.Time(13,45,30)
         t2 = self.driver.TimeFromTicks(time.mktime((2001,1,1,13,45,30,0,0,0)))
+        del t1, t2
         # Can we assume this? API doesn't specify, but it seems implied
         # self.assertEqual(str(t1),str(t2))
 
@@ -821,12 +821,14 @@ class DatabaseAPI20Test(unittest.TestCase):
         t2 = self.driver.TimestampFromTicks(
             time.mktime((2002,12,25,13,45,30,0,0,0))
             )
+        del t1, t2
         # Can we assume this? API doesn't specify, but it seems implied
         # self.assertEqual(str(t1),str(t2))
 
     def test_Binary(self):
         b = self.driver.Binary('Something')
         b = self.driver.Binary('')
+        del b
 
     def test_STRING(self):
         self.assertTrue(hasattr(self.driver,'STRING'),
