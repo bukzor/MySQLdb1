@@ -42,9 +42,7 @@ restr = r"""
 
 insert_values = re.compile(restr, re.S | re.I | re.X)
 
-from _mysql_exceptions import Warning, Error, InterfaceError, DataError, \
-     DatabaseError, OperationalError, IntegrityError, InternalError, \
-     NotSupportedError, ProgrammingError
+from _mysql_exceptions import ProgrammingError
 
 
 class BaseCursor(object):
@@ -66,7 +64,7 @@ class BaseCursor(object):
 
     """
 
-    from _mysql_exceptions import MySQLError, Warning, Error, InterfaceError, \
+    from _mysql_exceptions import Warning, Error, InterfaceError, \
          DatabaseError, DataError, OperationalError, IntegrityError, \
          InternalError, ProgrammingError, NotSupportedError
     
