@@ -1,4 +1,6 @@
 #!/usr/bin/env python -O
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """ Script to test database capabilities and the DB-API interface
     for functionality and memory leaks.
 

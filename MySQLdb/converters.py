@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """MySQLdb type conversion module
 
 This module handles all the type conversions for MySQL. If the default

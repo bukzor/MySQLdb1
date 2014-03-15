@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """
 
 This module implements connections for MySQLdb. Presently there is

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """times module
 
 This module provides some Date and Time classes for dealing with MySQL data.

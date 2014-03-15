@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """_mysql_exceptions: Exception classes for _mysql and MySQLdb.
 
 These classes are dictated by the DB API v2.0:

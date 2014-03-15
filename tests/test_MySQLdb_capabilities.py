@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
+
 import capabilities
 import unittest
 import MySQLdb

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """MySQL REFRESH Constants
 
 These constants seem to mostly deal with things internal to the

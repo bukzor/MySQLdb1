@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """Configure database connection for tests."""
 
 from os import environ, path
