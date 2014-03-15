@@ -15,14 +15,24 @@ Now edit tests/default.cnf to add the port and change the user to 'root':
     user = root
 
 
+Install nose:
+
+    pip install nose
+
+
+Populate your new DB with a test table:
+
+    echo 'create database test;' | mysql --port 33060 -h 0.0.0.0 -u root
+
+
 Finally, run the tests:
 
-    nosetests
+    cd PATH/TO/MYSQLDB && nosetests
 
 
 When you're done, stop the server:
 
-    cat data/*.pid | xargs kill
+    cd ~/tmp/mysqldb-test-server && cat data/*.pid | xargs kill
 
 
 Remove its data:
