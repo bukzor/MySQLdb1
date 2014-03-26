@@ -139,7 +139,7 @@ class DatabaseAPI20Test(unittest.TestCase):
         try:
             return self.driver.connect(
                 *self.connect_args, **self.connect_kw_args
-                )
+            )
         except AttributeError:
             self.fail("No connect method found in self.driver module")
 
@@ -172,7 +172,7 @@ class DatabaseAPI20Test(unittest.TestCase):
             # Must be a valid value
             self.assertTrue(paramstyle in (
                 'qmark', 'numeric', 'named', 'format', 'pyformat'
-                ))
+            ))
         except AttributeError:
             self.fail("Driver doesn't define paramstyle")
 
@@ -183,25 +183,25 @@ class DatabaseAPI20Test(unittest.TestCase):
         self.assertTrue(issubclass(self.driver.Error, StandardError))
         self.assertTrue(
             issubclass(self.driver.InterfaceError, self.driver.Error)
-            )
+        )
         self.assertTrue(
             issubclass(self.driver.DatabaseError, self.driver.Error)
-            )
+        )
         self.assertTrue(
             issubclass(self.driver.OperationalError, self.driver.Error)
-            )
+        )
         self.assertTrue(
             issubclass(self.driver.IntegrityError, self.driver.Error)
-            )
+        )
         self.assertTrue(
             issubclass(self.driver.InternalError, self.driver.Error)
-            )
+        )
         self.assertTrue(
             issubclass(self.driver.ProgrammingError, self.driver.Error)
-            )
+        )
         self.assertTrue(
             issubclass(self.driver.NotSupportedError, self.driver.Error)
-            )
+        )
 
     def test_ExceptionsAsConnectionAttributes(self):
         # OPTIONAL EXTENSION
@@ -258,7 +258,7 @@ class DatabaseAPI20Test(unittest.TestCase):
             self.executeDDL1(cur1)
             cur1.execute("insert into %sbooze values ('Victoria Bitter')" % (
                 self.table_prefix
-                ))
+            ))
             cur2.execute("select name from %sbooze" % self.table_prefix)
             booze = cur2.fetchall()
             self.assertEqual(len(booze), 1)
@@ -318,7 +318,7 @@ class DatabaseAPI20Test(unittest.TestCase):
             )
             cur.execute("insert into %sbooze values ('Victoria Bitter')" % (
                 self.table_prefix
-                ))
+            ))
             self.assertTrue(
                 cur.rowcount in (-1, 1),
                 'cursor.rowcount should == number or rows inserted, or '
@@ -392,34 +392,34 @@ class DatabaseAPI20Test(unittest.TestCase):
         self.executeDDL1(cur)
         cur.execute("insert into %sbooze values ('Victoria Bitter')" % (
             self.table_prefix
-            ))
+        ))
         self.assertTrue(cur.rowcount in (-1, 1))
 
         if self.driver.paramstyle == 'qmark':
             cur.execute(
                 'insert into %sbooze values (?)' % self.table_prefix,
                 ("Cooper's",)
-                )
+            )
         elif self.driver.paramstyle == 'numeric':
             cur.execute(
                 'insert into %sbooze values (:1)' % self.table_prefix,
                 ("Cooper's",)
-                )
+            )
         elif self.driver.paramstyle == 'named':
             cur.execute(
                 'insert into %sbooze values (:beer)' % self.table_prefix,
                 {'beer': "Cooper's"}
-                )
+            )
         elif self.driver.paramstyle == 'format':
             cur.execute(
                 'insert into %sbooze values (%%s)' % self.table_prefix,
                 ("Cooper's",)
-                )
+            )
         elif self.driver.paramstyle == 'pyformat':
             cur.execute(
                 'insert into %sbooze values (%%(beer)s)' % self.table_prefix,
                 {'beer': "Cooper's"}
-                )
+            )
         else:
             self.fail('Invalid paramstyle')
         self.assertTrue(cur.rowcount in (-1, 1))
@@ -451,29 +451,29 @@ class DatabaseAPI20Test(unittest.TestCase):
                 cur.executemany(
                     'insert into %sbooze values (?)' % self.table_prefix,
                     largs
-                    )
+                )
             elif self.driver.paramstyle == 'numeric':
                 cur.executemany(
                     'insert into %sbooze values (:1)' % self.table_prefix,
                     largs
-                    )
+                )
             elif self.driver.paramstyle == 'named':
                 cur.executemany(
                     'insert into %sbooze values (:beer)' % self.table_prefix,
                     margs
-                    )
+                )
             elif self.driver.paramstyle == 'format':
                 cur.executemany(
                     'insert into %sbooze values (%%s)' % self.table_prefix,
                     largs
-                    )
+                )
             elif self.driver.paramstyle == 'pyformat':
                 cur.executemany(
                     'insert into %sbooze values (%%(beer)s)' % (
                         self.table_prefix
-                        ),
+                    ),
                     margs
-                    )
+                )
             else:
                 self.fail('Unknown paramstyle')
             self.assertTrue(
@@ -520,7 +520,7 @@ class DatabaseAPI20Test(unittest.TestCase):
             # executing a query that cannnot return rows
             cur.execute("insert into %sbooze values ('Victoria Bitter')" % (
                 self.table_prefix
-                ))
+            ))
             self.assertRaises(self.driver.Error, cur.fetchone)
 
             cur.execute('select name from %sbooze' % self.table_prefix)
@@ -548,7 +548,7 @@ class DatabaseAPI20Test(unittest.TestCase):
         'Redback',
         'Victoria Bitter',
         'XXXX'
-        ]
+    ]
 
     def _populate(self):
         ''' Return a list of sql commands to setup the DB for the fetch
@@ -686,7 +686,7 @@ class DatabaseAPI20Test(unittest.TestCase):
                 len(rows), 0,
                 'cursor.fetchall should return an empty list if called '
                 'after the whole result set has been fetched'
-                )
+            )
             self.assertTrue(cur.rowcount in (-1, len(self.samples)))
 
             self.executeDDL2(cur)
@@ -861,7 +861,7 @@ class DatabaseAPI20Test(unittest.TestCase):
         t1 = self.driver.Timestamp(2002, 12, 25, 13, 45, 30)
         t2 = self.driver.TimestampFromTicks(
             time.mktime((2002, 12, 25, 13, 45, 30, 0, 0, 0))
-            )
+        )
         del t1, t2
         # Can we assume this? API doesn't specify, but it seems implied
         # self.assertEqual(str(t1), str(t2))

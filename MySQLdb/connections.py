@@ -7,10 +7,12 @@ override Connection.default_cursor with a non-standard Cursor class.
 
 """
 from MySQLdb import cursors
-from _mysql_exceptions import Warning, Error, InterfaceError, DataError, \
-     DatabaseError, OperationalError, IntegrityError, InternalError, \
-     NotSupportedError, ProgrammingError
-import types, _mysql
+from _mysql_exceptions import (
+    Warning, Error, InterfaceError, DataError, DatabaseError, OperationalError,
+    IntegrityError, InternalError, NotSupportedError, ProgrammingError
+)
+import types
+import _mysql
 import re
 
 
@@ -33,9 +35,10 @@ def defaulterrorhandler(connection, cursor, errorclass, errorvalue):
         connection.messages.append(error)
     del cursor
     del connection
-    raise errorclass, errorvalue
+    raise errorclass(errorvalue)
 
 re_numeric_part = re.compile(r"^(\d+)")
+
 
 def numeric_part(s):
     """Returns the leading numeric part of a string.
@@ -179,7 +182,10 @@ class Connection(_mysql.connection):
         sql_mode = kwargs2.pop('sql_mode', '')
 
         client_flag = kwargs.get('client_flag', 0)
-        client_version = tuple([ numeric_part(n) for n in _mysql.get_client_info().split('.')[:2] ])
+        client_version = tuple([
+            numeric_part(n)
+            for n in _mysql.get_client_info().split('.')[:2]
+        ])
         if client_version >= (4, 1):
             client_flag |= CLIENT.MULTI_STATEMENTS
         if client_version >= (5, 0):
@@ -192,12 +198,18 @@ class Connection(_mysql.connection):
 
         super(Connection, self).__init__(*args, **kwargs2)
         self.cursorclass = cursorclass
-        self.encoders = dict([ (k, v) for k, v in conv.items()
-                               if type(k) is not int ])
+        self.encoders = dict([
+            (k, v) for k, v in conv.items()
+            if type(k) is not int
+        ])
 
-        self._server_version = tuple([ numeric_part(n) for n in self.get_server_info().split('.')[:2] ])
+        self._server_version = tuple([
+            numeric_part(n)
+            for n in self.get_server_info().split('.')[:2]
+        ])
 
         db = proxy(self)
+
         def _get_string_literal():
             def string_literal(obj, dummy=None):
                 return db.string_literal(obj)
@@ -225,7 +237,9 @@ class Connection(_mysql.connection):
 
         if use_unicode:
             self.converter[FIELD_TYPE.STRING].append((None, string_decoder))
-            self.converter[FIELD_TYPE.VAR_STRING].append((None, string_decoder))
+            self.converter[FIELD_TYPE.VAR_STRING].append(
+                (None, string_decoder)
+            )
             self.converter[FIELD_TYPE.VARCHAR].append((None, string_decoder))
             self.converter[FIELD_TYPE.BLOB].append((None, string_decoder))
 
@@ -331,7 +345,8 @@ class Connection(_mysql.connection):
         sequence of tuples of (Level, Code, Message). This
         is only supported in MySQL-4.1 and up. If your server
         is an earlier version, an empty sequence is returned."""
-        if self._server_version < (4,1): return ()
+        if self._server_version < (4, 1):
+            return ()
         self.query("SHOW WARNINGS")
         r = self.store_result()
         warnings = r.fetch_row(0)

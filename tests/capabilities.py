@@ -115,7 +115,7 @@ class DatabaseTest(unittest.TestCase):
             if col == 0:
                 return row
             else:
-                return ('%i' % (row % 10))*255
+                return ('%i' % (row % 10)) * 255
         self.create_table(columndefs)
         insert_statement = ('INSERT INTO %s VALUES (%s)' %
                             (self.table,
@@ -153,14 +153,14 @@ class DatabaseTest(unittest.TestCase):
             if col == 0:
                 return row
             else:
-                return ('%i' % (row % 10))*((255-self.rows/2)+row)
+                return ('%i' % (row % 10)) * ((255 - self.rows / 2) + row)
         self.create_table(columndefs)
         insert_statement = ('INSERT INTO %s VALUES (%s)' %
                             (self.table,
                              ','.join(['%s'] * len(columndefs))))
 
         try:
-            self.cursor.execute(insert_statement, (0, '0'*256))
+            self.cursor.execute(insert_statement, (0, '0' * 256))
         except self.connection.DataError:
             pass
         else:
@@ -207,7 +207,7 @@ class DatabaseTest(unittest.TestCase):
     def test_CHAR(self):
         # Character data
         def generator(row, col):
-            return ('%i' % ((row+col) % 10)) * 255
+            return ('%i' % ((row + col) % 10)) * 255
         self.check_data_integrity(
             ('col1 char(255)', 'col2 char(255)'),
             generator)
@@ -215,7 +215,7 @@ class DatabaseTest(unittest.TestCase):
     def test_INT(self):
         # Number data
         def generator(row, col):
-            return row*row
+            return row * row
         self.check_data_integrity(
             ('col1 INT',),
             generator)
@@ -233,7 +233,9 @@ class DatabaseTest(unittest.TestCase):
         ticks = time()
 
         def generator(row, col):
-            return self.db_module.DateFromTicks(ticks+row*86400-col*1313)
+            return self.db_module.DateFromTicks(
+                ticks + row * 86400 - col * 1313
+            )
         self.check_data_integrity(
             ('col1 DATE',),
             generator,
@@ -243,7 +245,9 @@ class DatabaseTest(unittest.TestCase):
         ticks = time()
 
         def generator(row, col):
-            return self.db_module.TimeFromTicks(ticks+row*86400-col*1313)
+            return self.db_module.TimeFromTicks(
+                ticks + row * 86400 - col * 1313
+            )
         self.check_data_integrity(
             ('col1 TIME',),
             generator,
@@ -253,7 +257,9 @@ class DatabaseTest(unittest.TestCase):
         ticks = time()
 
         def generator(row, col):
-            return self.db_module.TimestampFromTicks(ticks+row*86400-col*1313)
+            return self.db_module.TimestampFromTicks(
+                ticks + row * 86400 - col * 1313
+            )
         self.check_data_integrity(
             ('col1 DATETIME',),
             generator,
@@ -263,7 +269,9 @@ class DatabaseTest(unittest.TestCase):
         ticks = time()
 
         def generator(row, col):
-            return self.db_module.TimestampFromTicks(ticks+row*86400-col*1313)
+            return self.db_module.TimestampFromTicks(
+                ticks + row * 86400 - col * 1313
+            )
         self.check_data_integrity(
             ('col1 TIMESTAMP',),
             generator,
@@ -274,7 +282,7 @@ class DatabaseTest(unittest.TestCase):
 
         def generator(row, col):
             return self.db_module.TimestampFromTicks(
-                ticks+row*86400-col*1313+row*0.7*col/3.0
+                ticks + row * 86400 - col * 1313 + row * 0.7 * col / 3.0
             )
         self.check_data_integrity(
             ('col1 TIMESTAMP',),

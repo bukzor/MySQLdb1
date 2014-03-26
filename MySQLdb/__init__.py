@@ -14,19 +14,30 @@ MySQLdb.converters module.
 """
 
 __revision__ = """$Revision$"""[11:-2]
-from MySQLdb.release import __version__, version_info, __author__
+import MySQLdb.release
 
 import _mysql
 
-if version_info != _mysql.version_info:
-    raise ImportError("this is MySQLdb version %s, but _mysql is version %r" %
-                      (version_info, _mysql.version_info))
+__author__ = MySQLdb.release.__author__
+__version__ = MySQLdb.release.__version__
+
+if MySQLdb.release.version_info == _mysql.version_info:
+    raise ImportError(
+        "this is MySQLdb version %s, but _mysql is version %r" %
+        (MySQLdb.release.version_info, _mysql.version_info)
+    )
 
 threadsafety = 1
 apilevel = "2.0"
 paramstyle = "format"
 
-from _mysql import *
+from _mysql import (
+    DataError, DatabaseError, Error, IntegrityError, InterfaceError,
+    InternalError, MySQLError, NULL, NotSupportedError, OperationalError,
+    ProgrammingError, Warning, debug, escape,
+    escape_dict, escape_sequence, escape_string, get_client_info,
+    string_literal, version_info,
+)
 from MySQLdb.constants import FIELD_TYPE
 from MySQLdb.times import Date, Time, Timestamp, \
     DateFromTicks, TimeFromTicks, TimestampFromTicks
