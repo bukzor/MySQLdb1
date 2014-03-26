@@ -17,7 +17,7 @@ Key: Python type object (from types) or class
 
 Conversion function:
 
-    Arguments: Python object of indicated type or class AND 
+    Arguments: Python object of indicated type or class AND
                conversion dictionary
 
     Returns: SQL literal value
@@ -32,13 +32,21 @@ MySQL.connect().
 
 """
 
-from _mysql import string_literal, escape_sequence, escape_dict, escape, NULL
+from _mysql import string_literal, escape_sequence, escape_dict, NULL
 from MySQLdb.constants import FIELD_TYPE, FLAG
-from MySQLdb.times import *
+from MySQLdb.times import (
+    DateTimeType, DateTime2literal, DateTimeDeltaType, DateTimeDelta2literal,
+    mysql_timestamp_converter, DateTime_or_None, TimeDelta_or_None,
+    Date_or_None,
+)
+
 
 try:
-    from types import IntType, LongType, FloatType, NoneType, TupleType, ListType, DictType, InstanceType, \
-        StringType, UnicodeType, ObjectType, BooleanType, ClassType, TypeType
+    from types import (
+        IntType, LongType, FloatType, NoneType, TupleType, ListType, DictType,
+        InstanceType, StringType, UnicodeType, ObjectType, BooleanType,
+        ClassType, TypeType
+    )
 except ImportError:
     # Python 3
     long = int
@@ -58,17 +66,23 @@ try:
 except NameError:
     from sets import Set as set
 
-def Bool2Str(s, d): return str(int(s))
+
+def Bool2Str(s, d):
+    return str(int(s))
+
 
 def Str2Set(s):
-    return set([ i for i in s.split(',') if i ])
+    return set([i for i in s.split(',') if i])
+
 
 def Set2Str(s, d):
     return string_literal(','.join(s), d)
-    
+
+
 def Thing2Str(s, d):
     """Convert something into a string via str()."""
     return str(s)
+
 
 def Unicode2Str(s, d):
     """Convert a unicode object to a string using the default encoding.
@@ -78,15 +92,18 @@ def Unicode2Str(s, d):
 
 Long2Int = Thing2Str
 
+
 def Float2Str(o, d):
     return '%.15g' % o
 
+
 def None2NULL(o, d):
     """Convert None to NULL."""
-    return NULL # duh
+    return NULL  # duh
+
 
 def Thing2Literal(o, d):
-    
+
     """Convert something into a SQL string literal.  If using
     MySQL-3.23 or newer, string_literal() is a method of the
     _mysql.MYSQL object, and this function will be overridden with
@@ -109,25 +126,28 @@ def Instance2Str(o, d):
 
     if o.__class__ in d:
         return d[o.__class__](o, d)
-    cl = filter(lambda x,o=o:
+    cl = filter(lambda x, o=o:
                 type(x) is ClassType
                 and isinstance(o, x), d.keys())
     if not cl:
-        cl = filter(lambda x,o=o:
+        cl = filter(lambda x, o=o:
                     type(x) is TypeType
                     and isinstance(o, x)
                     and d[x] is not Instance2Str,
                     d.keys())
     if not cl:
-        return d[StringType](o,d)
+        return d[StringType](o, d)
     d[o.__class__] = d[cl[0]]
     return d[cl[0]](o, d)
+
 
 def char_array(s):
     return array.array('c', s)
 
+
 def array2Str(o, d):
     return Thing2Literal(o.tostring(), d)
+
 
 def quote_tuple(t, d):
     return "(%s)" % (','.join(escape_sequence(t, d)))
@@ -142,7 +162,7 @@ conversions = {
     DictType: escape_dict,
     InstanceType: Instance2Str,
     ArrayType: array2Str,
-    StringType: Thing2Literal, # default
+    StringType: Thing2Literal,  # default
     UnicodeType: Unicode2Str,
     ObjectType: Instance2Str,
     BooleanType: Bool2Str,
@@ -164,19 +184,11 @@ conversions = {
     FIELD_TYPE.DATETIME: DateTime_or_None,
     FIELD_TYPE.TIME: TimeDelta_or_None,
     FIELD_TYPE.DATE: Date_or_None,
-    FIELD_TYPE.BLOB: [
-        (FLAG.BINARY, str),
-        ],
-    FIELD_TYPE.STRING: [
-        (FLAG.BINARY, str),
-        ],
-    FIELD_TYPE.VAR_STRING: [
-        (FLAG.BINARY, str),
-        ],
-    FIELD_TYPE.VARCHAR: [
-        (FLAG.BINARY, str),
-        ],
-    }
+    FIELD_TYPE.BLOB: [(FLAG.BINARY, str)],
+    FIELD_TYPE.STRING: [(FLAG.BINARY, str)],
+    FIELD_TYPE.VAR_STRING: [(FLAG.BINARY, str)],
+    FIELD_TYPE.VARCHAR: [(FLAG.BINARY, str)],
+}
 
 try:
     from decimal import Decimal
@@ -184,6 +196,3 @@ try:
     conversions[FIELD_TYPE.NEWDECIMAL] = Decimal
 except ImportError:
     pass
-
-
-

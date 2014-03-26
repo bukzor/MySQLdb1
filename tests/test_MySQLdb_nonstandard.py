@@ -7,6 +7,7 @@ from configdb import connection_factory
 import warnings
 warnings.simplefilter("ignore")
 
+
 class TestDBAPISet(unittest.TestCase):
     def test_set_equality(self):
         self.assertTrue(MySQLdb.STRING == MySQLdb.STRING)
@@ -63,11 +64,12 @@ class CoreAPI(unittest.TestCase):
         self.assertEquals(self.conn.affected_rows(), 0,
                           "Should return 0 before we do anything.")
 
-
     #def test_debug(self):
         ## FIXME Only actually tests if you lack SUPER
-        #self.assertRaises(MySQLdb.OperationalError,
-                          #self.conn.dump_debug_info)
+        #self.assertRaises(
+        #   MySQLdb.OperationalError,
+        #   self.conn.dump_debug_info
+        #)
 
     def test_charset_name(self):
         self.assertTrue(isinstance(self.conn.character_set_name(), str),
@@ -84,4 +86,3 @@ class CoreAPI(unittest.TestCase):
     def test_server_info(self):
         self.assertTrue(isinstance(self.conn.get_server_info(), str),
                         "Should return an str.")
-
