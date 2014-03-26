@@ -12,7 +12,7 @@ class test_MySQLdb(capabilities.DatabaseTest):
     db_module = MySQLdb
     connect_args = ()
     connect_kwargs = dict(
-        use_unicode=True, sql_mode="ANSI, STRICT_TRANS_TABLES, TRADITIONAL"
+        use_unicode=True, sql_mode="ANSI,STRICT_TRANS_TABLES,TRADITIONAL"
     )
     create_table_extra = "ENGINE=INNODB CHARACTER SET UTF8"
     leak_test = False

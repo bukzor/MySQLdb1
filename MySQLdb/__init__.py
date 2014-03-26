@@ -21,7 +21,7 @@ import _mysql
 __author__ = MySQLdb.release.__author__
 __version__ = MySQLdb.release.__version__
 
-if MySQLdb.release.version_info == _mysql.version_info:
+if MySQLdb.release.version_info != _mysql.version_info:
     raise ImportError(
         "this is MySQLdb version %s, but _mysql is version %r" %
         (MySQLdb.release.version_info, _mysql.version_info)
