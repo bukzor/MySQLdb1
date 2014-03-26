@@ -1,5 +1,6 @@
 import os, sys
-from ConfigParser import SafeConfigParser
+import six.moves
+SafeConfigParser = six.moves.configparser.ConfigParser
 
 # This dequote() business is required for some older versions
 # of mysql_config

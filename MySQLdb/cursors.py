@@ -14,6 +14,7 @@ except ImportError:
     ListType = list
     TupleType = tuple
     UnicodeType = str
+    unicode = str
 
 restr = r"""
     \s
@@ -188,7 +189,7 @@ class BaseCursor(object):
         try:
             r = None
             r = self._query(query)
-        except TypeError, m:
+        except TypeError as m:
             if m.args[0] in ("not enough arguments for format string",
                              "not all arguments converted"):
                 self.messages.append((ProgrammingError, m.args[0]))
@@ -247,7 +248,7 @@ class BaseCursor(object):
                                        for key, item in a.iteritems()))
                 else:
                     q.append(qv % tuple([db.literal(item) for item in a]))
-        except TypeError, msg:
+        except TypeError as msg:
             if msg.args[0] in ("not enough arguments for format string",
                                "not all arguments converted"):
                 self.errorhandler(self, ProgrammingError, msg.args[0])
