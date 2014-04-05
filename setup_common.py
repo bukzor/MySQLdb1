@@ -12,8 +12,8 @@ def get_metadata_and_options():
     config = SafeConfigParser()
     config.read(['metadata.cfg', 'site.cfg'])
 
-    metadata = dict(config.items('metadata'))
-    options = dict(config.items('options'))
+    metadata = dict([(key.decode('US-ASCII'), val.decode('US-ASCII')) for key, val in config.items('metadata')])
+    options = dict([(key.decode('US-ASCII'), val.decode('US-ASCII')) for key, val in config.items('options')])
 
     metadata['py_modules'] = list(
         filter(None, metadata['py_modules'].split('\n'))
@@ -38,7 +38,10 @@ def enabled(options, option):
 
 def create_release_file(metadata):
     rel = open("MySQLdb/release.py", 'w')
-    rel.write("""
+    rel.write("""\
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
+
 __author__ = "%(author)s <%(author_email)s>"
 version_info = %(version_info)s
 __version__ = "%(version)s"
