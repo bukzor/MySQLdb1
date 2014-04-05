@@ -1,5 +1,9 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
+
 import os
 import sys
+from ConfigParser import SafeConfigParser
 
 
 def dequote(s):

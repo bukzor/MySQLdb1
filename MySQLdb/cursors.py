@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """MySQLdb Cursors
 
 This module implements Cursors of various types for MySQLdb. By

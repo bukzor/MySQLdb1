@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 try:
     # Python 2.x
     from ConfigParser import SafeConfigParser

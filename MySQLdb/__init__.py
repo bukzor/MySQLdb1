@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """MySQLdb - A DB API v2.0 compatible interface to MySQL.
 
 This package is a wrapper around _mysql, which mostly implements the

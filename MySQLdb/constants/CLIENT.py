@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import explicit_encoding
 """MySQL CLIENT constants
 
 These constants are used when creating the connection. Use bitwise-OR
