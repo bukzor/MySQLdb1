@@ -37,6 +37,4 @@ metadata, options = get_config()
 metadata['ext_modules'] = [
     setuptools.Extension(sources=[n('_mysql.c')], **native_dict(options))]
 metadata['long_description'] = metadata['long_description'].replace(r'\n', '')
-metadata['setup_requires'] = ['six']
-metadata['install_requires'] = ['six']
 setuptools.setup(**native_dict(metadata))
