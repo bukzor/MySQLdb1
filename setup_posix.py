@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from five import udict
 
 import os
 import sys
@@ -23,7 +24,7 @@ def mysql_config(what):
     from os import popen
 
     f = popen("%s --%s" % (mysql_config.path, what))
-    data = f.read().strip().split()
+    data = f.read().decode('UTF-8').strip().split()
     ret = f.close()
     if ret:
         if ret / 256:
@@ -111,7 +112,7 @@ def get_config():
     ]
     create_release_file(metadata)
     del metadata['version_info']
-    ext_options = dict(
+    ext_options = udict(
         name="_mysql",
         library_dirs=library_dirs,
         libraries=libraries,

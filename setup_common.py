@@ -1,26 +1,24 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from five import u, open
 try:
     # Python 2.x
     from ConfigParser import SafeConfigParser
 except ImportError:
-    # Python 3.x
+    # Python 3.x pylint:disable=import-error
     from configparser import ConfigParser as SafeConfigParser
 
 
 def get_metadata_and_options():
     config = SafeConfigParser()
-    config.read(['metadata.cfg', 'site.cfg'])
+    for fname in ['metadata.cfg', 'site.cfg']:
+        config.readfp(open(fname), fname)
 
-    metadata = dict([(key.decode('US-ASCII'), val.decode('US-ASCII')) for key, val in config.items('metadata')])
-    options = dict([(key.decode('US-ASCII'), val.decode('US-ASCII')) for key, val in config.items('options')])
+    metadata = dict(config.items('metadata'))
+    options = dict(config.items('options'))
 
-    metadata['py_modules'] = list(
-        filter(None, metadata['py_modules'].split('\n'))
-    )
-    metadata['classifiers'] = list(
-        filter(None, metadata['classifiers'].split('\n'))
-    )
+    metadata['py_modules'] = metadata['py_modules'].split()
+    metadata['classifiers'] = metadata['classifiers'].split()
 
     return metadata, options
 
