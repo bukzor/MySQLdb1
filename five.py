@@ -63,6 +63,15 @@ def udict(*args, **kwargs):
 
     return dict(*args, **kwargs)
 
+def ndict(*args, **kwargs):
+    """Similar to dict(), but keyword-keys are forced to native strings."""
+    # I hate this :(
+    kwargs = dict([
+        (n(key), val)
+        for key, val in kwargs.items()
+    ])
+
+    return dict(*args, **kwargs)
 
 def open(*args, **kwargs):
     """Override the builtin open() to return text and use utf8 by default."""

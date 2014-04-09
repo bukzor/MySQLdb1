@@ -7,6 +7,7 @@ import _mysql
 import MySQLdb
 from MySQLdb.constants import FIELD_TYPE
 from configdb import connection_factory
+from five import text
 import warnings
 warnings.simplefilter("ignore")
 
@@ -34,13 +35,13 @@ class CoreModule(unittest.TestCase):
 
     def test_version(self):
         """Version information sanity."""
-        self.assertTrue(isinstance(_mysql.__version__, str))
+        self.assertTrue(isinstance(_mysql.__version__, text))
 
         self.assertTrue(isinstance(_mysql.version_info, tuple))
         self.assertEqual(len(_mysql.version_info), 5)
 
     def test_client_info(self):
-        self.assertTrue(isinstance(_mysql.get_client_info(), str))
+        self.assertTrue(isinstance(_mysql.get_client_info(), text))
 
     def test_thread_safe(self):
         self.assertTrue(isinstance(_mysql.thread_safe(), int))
@@ -75,11 +76,11 @@ class CoreAPI(unittest.TestCase):
         #)
 
     def test_charset_name(self):
-        self.assertTrue(isinstance(self.conn.character_set_name(), str),
+        self.assertTrue(isinstance(self.conn.character_set_name(), text),
                         "Should return a string.")
 
     def test_host_info(self):
-        self.assertTrue(isinstance(self.conn.get_host_info(), str),
+        self.assertTrue(isinstance(self.conn.get_host_info(), text),
                         "Should return a string.")
 
     def test_proto_info(self):
@@ -87,5 +88,5 @@ class CoreAPI(unittest.TestCase):
                         "Should return an int.")
 
     def test_server_info(self):
-        self.assertTrue(isinstance(self.conn.get_server_info(), str),
+        self.assertTrue(isinstance(self.conn.get_server_info(), text),
                         "Should return an str.")

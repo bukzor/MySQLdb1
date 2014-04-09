@@ -160,7 +160,8 @@ class Connection(_mysql.connection):
         from MySQLdb.converters import conversions
         from weakref import proxy
 
-        kwargs2 = kwargs.copy()
+        from five import udict
+        kwargs2 = udict(**kwargs)
 
         if 'conv' in kwargs:
             conv = kwargs['conv']
@@ -201,7 +202,9 @@ class Connection(_mysql.connection):
         # PEP-249 requires autocommit to be initially off
         autocommit = kwargs2.pop('autocommit', False)
 
-        super(Connection, self).__init__(*args, **kwargs2)
+        # FIXME: this sucks.
+        from five import ndict
+        super(Connection, self).__init__(*args, **ndict(**kwargs2))
         self.cursorclass = cursorclass
         self.encoders = dict([
             (k, v) for k, v in conv.items()
