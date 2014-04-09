@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
 from five import n, text
-from buck.pprint import pprint as pp
 
 import os
 import sys
