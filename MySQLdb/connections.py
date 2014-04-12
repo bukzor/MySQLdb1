@@ -16,6 +16,7 @@ from _mysql_exceptions import (
 import types
 import _mysql
 import re
+import sys
 
 
 def defaulterrorhandler(connection, cursor, errorclass, errorvalue):
@@ -37,10 +38,12 @@ def defaulterrorhandler(connection, cursor, errorclass, errorvalue):
         connection.messages.append(error)
     del cursor
     del connection
+
+    _, _, current_traceback = sys.exc_info()
     if isinstance(errorvalue, errorclass):
-        raise errorvalue
+        raise errorclass, errorvalue, current_traceback
     else:
-        raise errorclass(errorvalue)
+        raise errorclass, errorclass(errorvalue), current_traceback
 
 re_numeric_part = re.compile(r"^(\d+)")
 

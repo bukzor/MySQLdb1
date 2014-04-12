@@ -26,9 +26,9 @@ class DatabaseTest(unittest.TestCase):
         self.connection = db
         self.cursor = db.cursor()
         # TODO: this needs to be re-evaluated for Python 3
-        self.BLOBText = ''.join([chr(i) for i in range(256)] * 100)
+        self.BLOBText = b''.join([chr(i) for i in range(256)] * 100)
         self.BLOBUText = u''.join([unichr(i) for i in range(16384)])
-        self.BLOBBinary = self.db_module.Binary(''.join(
+        self.BLOBBinary = self.db_module.Binary(b''.join(
             [chr(i) for i in range(256)] * 16
         ))
 
