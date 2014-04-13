@@ -1,4 +1,5 @@
-First, run a little mysql server in your home directory.
+First, run a little mysql server in your home directory.  If you get an error saying the test database already exists,
+just skip the third part.
 
 *NOTE:* The below setup is quite insecure and should be shutdown and deleted when testing is concluded.
 
@@ -7,34 +8,18 @@ First, run a little mysql server in your home directory.
 
     mysql_install_db --no-defaults --user=$USER --datadir=$PWD/data --socket=$PWD/mysql.sock --force
     /usr/sbin/mysqld --no-defaults --user=$USER --datadir=$PWD/data --socket=$PWD/mysql.sock --port 33060
-
-
-Now edit tests/default.cnf to add the port and change the user to 'root':
-
-    port = 33060
-    user = root
-
-
-Install nose:
-
-    pip install nose
-
-
-Populate your new DB with a test table:
-
     echo 'create database test;' | mysql --port 33060 -h 0.0.0.0 -u root
 
 
-Finally, run the tests:
+In your MySQLdb1 directory (this directory), run the tests:  
 
-    cd PATH/TO/MYSQLDB && nosetests
+    virtualenv mysql-venv
+    source mysql-venv/bin/activate
+    pip install nose
+    nosetests
 
 
-When you're done, stop the server:
+When you're done, stop the server and remove its data:
 
     cd ~/tmp/mysqldb-test-server && cat data/*.pid | xargs kill
-
-
-Remove its data:
-
     rm -rf data

@@ -7,7 +7,7 @@ reproduced below.
 
 Copyright 1999 by Comstar.net, Inc., Atlanta, GA, US.
 
-                        All Rights Reserved
+						All Rights Reserved
 
 Permission to use, copy, modify, and distribute this software and its
 documentation for any purpose and without fee is hereby granted,
@@ -44,6 +44,7 @@ PERFORMANCE OF THIS SOFTWARE.
 #include "my_config.h"
 #endif
 #include "mysql.h"
+#include "m_ctype.h"
 #include "mysqld_error.h"
 #include "errmsg.h"
 
@@ -70,6 +71,9 @@ typedef int Py_ssize_t;
 #define PY_SSIZE_T_MAX INT_MAX
 #define PY_SSIZE_T_MIN INT_MIN
 #endif
+ 
+/* the never-used connection, with utf8 charset */
+static MYSQL *utf8conn;
 
 static PyObject *_mysql_MySQLError;
 static PyObject *_mysql_Warning;
@@ -96,7 +100,8 @@ typedef struct {
 
 /* TODO: inline or macro */
 char * get_string(PyObject * uniobj) {
-    PyObject *strobj = PyUnicode_AsEncodedString(uniobj, "US-ASCII", "strict");
+	// TODO: re-evalutate if utf8 is always appropriate here.
+    PyObject *strobj = PyUnicode_AsEncodedString(uniobj, "UTF-8", "strict");
     if (!strobj) return NULL;
     return PyString_AsString(strobj);
 }
@@ -546,14 +551,14 @@ _mysql_ConnectionObject_Initialize(
 				  "client_flag", "ssl",
 				  "local_infile",
 #ifdef HAVE_MYSQL_OPT_TIMEOUTS
-                                  "read_timeout",
-                                  "write_timeout",
+				  "read_timeout",
+				  "write_timeout",
 #endif
 				  NULL } ;
 	int connect_timeout = 0;
 #ifdef HAVE_MYSQL_OPT_TIMEOUTS
-        int read_timeout = 0;
-        int write_timeout = 0;
+	int read_timeout = 0;
+	int write_timeout = 0;
 #endif
 	int compress = -1, named_pipe = -1, local_infile = -1;
 	char *init_command=NULL,
@@ -566,9 +571,9 @@ _mysql_ConnectionObject_Initialize(
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs,
 #ifdef HAVE_MYSQL_OPT_TIMEOUTS
-                                         "|ssssisOiiisssiOiii:connect",
+					 "|ssssisOiiisssiOiii:connect",
 #else
-                                         "|ssssisOiiisssiOi:connect",
+					 "|ssssisOiiisssiOi:connect",
 #endif
 					 kwlist,
 					 &host, &user, &passwd, &db,
@@ -578,17 +583,17 @@ _mysql_ConnectionObject_Initialize(
 					 &init_command, &read_default_file,
 					 &read_default_group,
 					 &client_flag, &ssl,
-                     &local_infile
+		     &local_infile
 #ifdef HAVE_MYSQL_OPT_TIMEOUTS
-                     , &read_timeout
-                     , &write_timeout
+		     , &read_timeout
+		     , &write_timeout
 #endif
 	))
 		return -1;
 
 #define _stringsuck(d,t,s) {t=PyMapping_GetItemString(s,#d);\
-        if(t){d=get_string(t);Py_DECREF(t);}\
-        PyErr_Clear();}
+	if(t){d=get_string(t);Py_DECREF(t);}\
+	PyErr_Clear();}
 
 	if (ssl) {
 #if HAVE_OPENSSL
@@ -656,7 +661,7 @@ _mysql_ConnectionObject_Initialize(
 		return -1;
 	}
 
-        /* Internal references to python-land objects */
+	/* Internal references to python-land objects */
 	if (!conv)
 		conv = PyDict_New();
 	else
@@ -1064,6 +1069,7 @@ _mysql.escape_string(s) cannot handle character sets. You are\n\
 probably better off using connection.escape(o) instead, since\n\
 it will escape entire sequences as well as strings.";
 
+// TODO: need to rename s/string/bytes/
 static PyObject *
 _mysql_escape_string(
 	_mysql_ConnectionObject *self,
@@ -1078,13 +1084,10 @@ _mysql_escape_string(
 	out = get_string(str);
 	if (!out) return NULL;
 #if MYSQL_VERSION_ID < 32321
+	// TODO: we don't support mysql 3.1...
 	len = mysql_escape_string(out, in, size);
 #else
-	check_server_init(NULL);
-	if (self && self->open)
-		len = mysql_real_escape_string(&(self->connection), out, in, size);
-	else
-		len = mysql_escape_string(out, in, size);
+	len = mysql_real_escape_string(utf8conn, out, in, size);
 #endif
 	if (PyUnicode_Resize(&str, len) < 0) return NULL;
 	return (str);
@@ -1108,28 +1111,24 @@ _mysql_string_literal(
 	PyObject *str, *s, *o, *d;
 	char *in, *out;
 	int len, size;
+	// mystery: what is d?
 	if (!PyArg_ParseTuple(args, "O|O:string_literal", &o, &d)) return NULL;
 	s = PyObject_Str(o);
 	if (!s) return NULL;
-	in = get_string(s);
-	if (!in) return NULL;
-	size = PyUnicode_GetSize(s);
-	str = PyUnicode_FromStringAndSize((char *) NULL, size*2+3);
+	in = PyString_AS_STRING(s);
+	size = PyString_GET_SIZE(s);
+	str = PyString_FromStringAndSize((char *) NULL, size*2+3);
 	if (!str) return PyErr_NoMemory();
-	out = get_string(str);
-	if (!out) return NULL;
+	out = PyString_AS_STRING(str);
 #if MYSQL_VERSION_ID < 32321
+	// TODO: we don't support mysql 3.1...
 	len = mysql_escape_string(out+1, in, size);
 #else
-	check_server_init(NULL);
-	if (self && self->open)
-		len = mysql_real_escape_string(&(self->connection), out+1, in, size);
-	else
-		len = mysql_escape_string(out+1, in, size);
+	len = mysql_real_escape_string(utf8conn, out+1, in, size);
 #endif
 	*out = *(out+len+1) = '\'';
-	if (PyUnicode_Resize(&str, len+2) < 0) return NULL;
-	Py_DECREF(s);
+	if (_PyString_Resize(&str, len+2) < 0) return NULL;
+	Py_DECREF(o);
 	return (str);
 }
 
@@ -1206,10 +1205,10 @@ _mysql_escape_sequence(
 	if (!PyArg_ParseTuple(args, "OO:escape_sequence", &o, &d))
 		goto error;
 	if (!PyMapping_Check(d)) {
-              PyErr_SetString(PyExc_TypeError,
-                              "argument 2 must be a mapping");
-              return NULL;
-        }
+	      PyErr_SetString(PyExc_TypeError,
+			      "argument 2 must be a mapping");
+	      return NULL;
+	}
 	if ((n = PyObject_Length(o)) == -1) goto error;
 	if (!(r = PyTuple_New(n))) goto error;
 	for (i=0; i<n; i++) {
@@ -1240,10 +1239,10 @@ _mysql_escape_dict(
 	if (!PyArg_ParseTuple(args, "O!O:escape_dict", &PyDict_Type, &o, &d))
 		goto error;
 	if (!PyMapping_Check(d)) {
-              PyErr_SetString(PyExc_TypeError,
-                              "argument 2 must be a mapping");
-              return NULL;
-        }
+	      PyErr_SetString(PyExc_TypeError,
+			      "argument 2 must be a mapping");
+	      return NULL;
+	}
 	if (!(r = PyDict_New())) goto error;
 	while (PyDict_Next(o, &ppos, &pkey, &item)) {
 		quoted = _escape_item(item, d);
@@ -1379,12 +1378,12 @@ _mysql_row_to_dict(
 	unsigned int n, i;
 	unsigned long *length;
 	PyObject *r, *c;
-        MYSQL_FIELD *fields;
+	MYSQL_FIELD *fields;
 
 	n = mysql_num_fields(self->result);
 	if (!(r = PyDict_New())) return NULL;
 	length = mysql_fetch_lengths(self->result);
-        fields = mysql_fetch_fields(self->result);
+	fields = mysql_fetch_fields(self->result);
 	for (i=0; i<n; i++) {
 		PyObject *v;
 		c = PyTuple_GET_ITEM(self->converter, i);
@@ -1418,12 +1417,12 @@ _mysql_row_to_dict_old(
 	unsigned int n, i;
 	unsigned long *length;
 	PyObject *r, *c;
-        MYSQL_FIELD *fields;
+	MYSQL_FIELD *fields;
 
 	n = mysql_num_fields(self->result);
 	if (!(r = PyDict_New())) return NULL;
 	length = mysql_fetch_lengths(self->result);
-        fields = mysql_fetch_fields(self->result);
+	fields = mysql_fetch_fields(self->result);
 	for (i=0; i<n; i++) {
 		PyObject *v;
 		c = PyTuple_GET_ITEM(self->converter, i);
@@ -1540,7 +1539,7 @@ _mysql_ResultObject_fetch_row(
 				skiprows += rowsadded;
 				if (rowsadded < maxrows) break;
 				if (MyTuple_Resize(&r, skiprows+maxrows, 0) == -1)
-				        goto error;
+					goto error;
 			}
 		} else {
 			/* XXX if overflow, maxrows<0? */
@@ -1584,7 +1583,7 @@ _mysql_ConnectionObject_change_user(
 {
 	char *user, *pwd=NULL, *db=NULL;
 	int r;
-        static char *kwlist[] = { "user", "passwd", "db", NULL } ;
+	static char *kwlist[] = { "user", "passwd", "db", NULL } ;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "s|ss:change_user",
 					 kwlist, &user, &pwd, &db))
@@ -1593,7 +1592,7 @@ _mysql_ConnectionObject_change_user(
 	Py_BEGIN_ALLOW_THREADS
 		r = mysql_change_user(&(self->connection), user, pwd, db);
 	Py_END_ALLOW_THREADS
-	if (r) 	return _mysql_Exception(self);
+	if (r)	return _mysql_Exception(self);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -1906,7 +1905,7 @@ _mysql_ConnectionObject_ping(
 	Py_BEGIN_ALLOW_THREADS
 	r = mysql_ping(&(self->connection));
 	Py_END_ALLOW_THREADS
-	if (r) 	return _mysql_Exception(self);
+	if (r)	return _mysql_Exception(self);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -1959,7 +1958,7 @@ _mysql_ConnectionObject_select_db(
 	Py_BEGIN_ALLOW_THREADS
 	r = mysql_select_db(&(self->connection), db);
 	Py_END_ALLOW_THREADS
-	if (r) 	return _mysql_Exception(self);
+	if (r)	return _mysql_Exception(self);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -2161,7 +2160,7 @@ _mysql_ResultObject_row_seek(
      PyObject *args)
 {
 	int offset;
-        MYSQL_ROW_OFFSET r;
+	MYSQL_ROW_OFFSET r;
 	if (!PyArg_ParseTuple(args, "i:row_seek", &offset)) return NULL;
 	check_result_connection(self);
 	if (self->use) {
@@ -2432,7 +2431,7 @@ static PyMethodDef _mysql_ConnectionObject_methods[] = {
 		METH_VARARGS,
 		_mysql_ConnectionObject_use_result__doc__
 	},
-	{NULL,              NULL} /* sentinel */
+	{NULL,		    NULL} /* sentinel */
 };
 
 static MyMemberlist(_mysql_ConnectionObject_memberlist)[] = {
@@ -2523,7 +2522,7 @@ static PyMethodDef _mysql_ResultObject_methods[] = {
 		METH_VARARGS,
 		_mysql_ResultObject_num_rows__doc__
 	},
-	{NULL,              NULL} /* sentinel */
+	{NULL,		    NULL} /* sentinel */
 };
 
 static MyMemberlist(_mysql_ResultObject_memberlist)[] = {
@@ -2609,14 +2608,14 @@ _mysql_ConnectionObject_setattr(
 #if PY_VERSION_HEX < 0x02020000
 	return PyMember_Set((char *)self, _mysql_ConnectionObject_memberlist, name, v);
 #else
-        {
+	{
 		MyMemberlist(*l);
 		for (l = _mysql_ConnectionObject_memberlist; l->name != NULL; l++)
 			if (strcmp(l->name, name) == 0)
 				return PyMember_SetOne((char *)self, l, v);
 	}
-        PyErr_SetString(PyExc_AttributeError, name);
-        return -1;
+	PyErr_SetString(PyExc_AttributeError, name);
+	return -1;
 #endif
 }
 
@@ -2634,14 +2633,14 @@ _mysql_ResultObject_setattr(
 #if PY_VERSION_HEX < 0x02020000
 	return PyMember_Set((char *)self, _mysql_ResultObject_memberlist, name, v);
 #else
-        {
+	{
 		MyMemberlist(*l);
 		for (l = _mysql_ResultObject_memberlist; l->name != NULL; l++)
 			if (strcmp(l->name, name) == 0)
 				return PyMember_SetOne((char *)self, l, v);
 	}
-        PyErr_SetString(PyExc_AttributeError, name);
-        return -1;
+	PyErr_SetString(PyExc_AttributeError, name);
+	return -1;
 #endif
 }
 
@@ -2934,8 +2933,8 @@ static struct PyModuleDef _mysqlmodule = {
    PyModuleDef_HEAD_INIT,
    "_mysql",   /* name of module */
    _mysql___doc__, /* module documentation, may be NULL */
-   -1,       /* size of per-interpreter state of the module,
-                or -1 if the module keeps state in global variables. */
+   -1,	     /* size of per-interpreter state of the module,
+				or -1 if the module keeps state in global variables. */
    _mysql_methods
 };
 
@@ -2947,6 +2946,10 @@ init_mysql(void)
 #endif
 {
 	PyObject *dict, *module, *emod, *edict;
+
+    utf8conn = mysql_init(NULL);
+    utf8conn->charset = &my_charset_utf8mb4_unicode_ci;
+
 #ifdef IS_PY3K
     module = PyModule_Create(&_mysqlmodule);
 	if (!module) return module; /* this really should never happen */
@@ -3050,3 +3053,4 @@ init_mysql(void)
 }
 
 
+// vim:noet:ts=4:
