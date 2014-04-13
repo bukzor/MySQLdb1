@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from __future__ import division
 from five import n
 """times module
 
@@ -39,8 +40,8 @@ format_TIME = format_DATE = str
 
 def format_TIMEDELTA(v):
     seconds = int(v.seconds) % 60
-    minutes = int(v.seconds / 60) % 60
-    hours = int(v.seconds / 3600) % 24
+    minutes = (v.seconds // 60) % 60
+    hours = (v.seconds // 3600) % 24
     return '%d %d:%d:%d' % (v.days, hours, minutes, seconds)
 
 

@@ -7,6 +7,7 @@ from __future__ import explicit_encoding
     Adapted from a script by M-A Lemburg.
 
 """
+from __future__ import division
 from time import time
 import unittest
 from configdb import connection_factory
@@ -155,7 +156,7 @@ class DatabaseTest(unittest.TestCase):
             if col == 0:
                 return row
             else:
-                return ('%i' % (row % 10)) * ((255 - self.rows / 2) + row)
+                return ('%i' % (row % 10)) * ((255 - self.rows // 2) + row)
         self.create_table(columndefs)
         insert_statement = ('INSERT INTO %s VALUES (%s)' %
                             (self.table,
