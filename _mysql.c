@@ -1111,7 +1111,6 @@ _mysql_string_literal(
 	PyObject *str, *s, *o, *d;
 	char *in, *out;
 	int len, size;
-	// mystery: what is d?
 	if (!PyArg_ParseTuple(args, "O|O:string_literal", &o, &d)) return NULL;
 	s = PyObject_Str(o);
 	if (!s) return NULL;
@@ -1121,14 +1120,13 @@ _mysql_string_literal(
 	if (!str) return PyErr_NoMemory();
 	out = PyString_AS_STRING(str);
 #if MYSQL_VERSION_ID < 32321
-	// TODO: we don't support mysql 3.1...
 	len = mysql_escape_string(out+1, in, size);
 #else
 	len = mysql_real_escape_string(utf8conn, out+1, in, size);
 #endif
 	*out = *(out+len+1) = '\'';
 	if (_PyString_Resize(&str, len+2) < 0) return NULL;
-	Py_DECREF(o);
+	Py_DECREF(s);
 	return (str);
 }
 
@@ -1146,7 +1144,8 @@ _escape_item(
 	Py_DECREF(itemtype);
 	if (!itemconv) {
 		PyErr_Clear();
-		itemconv = PyObject_GetItem(d, (PyObject *) &PyUnicode_Type);
+		// TODO: final fallback should be PyNative_Type
+		itemconv = PyObject_GetItem(d, (PyObject *) &PyString_Type);
 	}
 	if (!itemconv) {
 		PyErr_SetString(PyExc_TypeError,

@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from five import n
 """times module
 
 This module provides some Date and Time classes for dealing with MySQL data.
@@ -44,26 +45,26 @@ def format_TIMEDELTA(v):
 
 
 def format_TIMESTAMP(d):
-    return d.isoformat(" ")
+    return d.isoformat(n(" "))
 
 
 def DateTime_or_None(s):
-    if ' ' in s:
-        sep = ' '
-    elif 'T' in s:
-        sep = 'T'
+    if b' ' in s:
+        sep = b' '
+    elif b'T' in s:
+        sep = b'T'
     else:
         return Date_or_None(s)
 
     try:
         d, t = s.split(sep, 1)
-        if '.' in t:
-            t, ms = t.split('.', 1)
-            ms = ms.ljust(6, '0')
+        if b'.' in t:
+            t, ms = t.split(b'.', 1)
+            ms = ms.ljust(6, b'0')
         else:
             ms = 0
         return datetime(*[
-            int(x) for x in d.split('-') + t.split(':') + [ms]
+            int(x) for x in d.split(b'-') + t.split(b':') + [ms]
         ])
     except (SystemExit, KeyboardInterrupt):
         raise
@@ -73,10 +74,10 @@ def DateTime_or_None(s):
 
 def TimeDelta_or_None(s):
     try:
-        h, m, s = s.split(':')
-        if '.' in s:
-            s, ms = s.split('.')
-            ms = ms.ljust(6, '0')
+        h, m, s = s.split(b':')
+        if b'.' in s:
+            s, ms = s.split(b'.')
+            ms = ms.ljust(6, b'0')
         else:
             ms = 0
         h, m, s, ms = int(h), int(m), int(s), int(ms)
@@ -107,14 +108,9 @@ def Time_or_None(s):
 
 
 def Date_or_None(s):
-    try:
-        return date(*[
-            int(x) for x in s.split('-', 2)
-        ])
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        return None
+    return date(*[
+        int(x) for x in s.split(b'-', 2)
+    ])
 
 
 def DateTime2literal(d, c):
@@ -130,9 +126,9 @@ def DateTimeDelta2literal(d, c):
 def mysql_timestamp_converter(s):
     """Convert a MySQL TIMESTAMP to a Timestamp object."""
     # MySQL>4.1 returns TIMESTAMP in the same format as DATETIME
-    if s[4] == '-':
+    if s[4] == b'-':
         return DateTime_or_None(s)
-    s = s + "0" * (14 - len(s))  # padding
+    s = s + b"0" * (14 - len(s))  # padding
     parts = map(int, filter(None, (s[:4], s[4:6], s[6:8],
                                    s[8:10], s[10:12], s[12:14])))
     try:
