@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from future.builtins import range
 ''' Python DB API 2.0 driver compliance unit test suite.
 
     This software is Public Domain and may be used without restrictions.

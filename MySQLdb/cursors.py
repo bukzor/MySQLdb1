@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from future.builtins import range
+from future.builtins import dict
 """MySQLdb Cursors
 
 This module implements Cursors of various types for MySQLdb. By
@@ -185,7 +187,7 @@ class BaseCursor(object):
         if args is not None:
             if isinstance(args, dict):
                 query = query % dict((key, db.literal(item))
-                                     for key, item in args.iteritems())
+                                     for key, item in args.items())
             else:
                 query = query % tuple([db.literal(item) for item in args])
         try:
@@ -249,7 +251,7 @@ class BaseCursor(object):
             for a in args:
                 if isinstance(a, dict):
                     q.append(qv % dict((key, db.literal(item))
-                                       for key, item in a.iteritems()))
+                                       for key, item in a.items()))
                 else:
                     q.append(qv % tuple([db.literal(item) for item in a]))
         except TypeError as msg:
@@ -467,7 +469,7 @@ class CursorUseResultMixIn(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         row = self.fetchone()
         if row is None:
             raise StopIteration

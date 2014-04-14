@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from future.builtins import dict
 """Configure database connection for tests."""
 
 from os import environ, path

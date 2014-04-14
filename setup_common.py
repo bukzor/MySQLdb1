@@ -1,16 +1,15 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from future import standard_library
+standard_library.install_hooks()
+
+from future.builtins import dict
 from five import u, open
-try:
-    # Python 2.x
-    from ConfigParser import SafeConfigParser
-except ImportError:
-    # Python 3.x pylint:disable=import-error
-    from configparser import ConfigParser as SafeConfigParser
+from configparser import ConfigParser
 
 
 def get_metadata_and_options():
-    config = SafeConfigParser()
+    config = ConfigParser()
     for fname in ['metadata.cfg', 'site.cfg']:
         config.readfp(open(fname), fname)
 

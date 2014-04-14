@@ -1110,10 +1110,15 @@ _mysql_string_literal(
 {
 	PyObject *str, *s, *o, *d;
 	char *in, *out;
-	int len, size;
+	int len, size, isstring;
 	if (!PyArg_ParseTuple(args, "O|O:string_literal", &o, &d)) return NULL;
-	s = PyObject_Str(o);
-	if (!s) return NULL;
+	isstring = PyString_Check(o);
+	if (isstring) {
+		s = o;
+	} else {
+		s = PyObject_Str(o);
+		if (!s) return NULL;
+	}
 	in = PyString_AS_STRING(s);
 	size = PyString_GET_SIZE(s);
 	str = PyString_FromStringAndSize((char *) NULL, size*2+3);
@@ -1126,7 +1131,9 @@ _mysql_string_literal(
 #endif
 	*out = *(out+len+1) = '\'';
 	if (_PyString_Resize(&str, len+2) < 0) return NULL;
-	Py_DECREF(s);
+	if (!isstring) {
+		Py_DECREF(s);
+	}
 	return (str);
 }
 
@@ -1137,6 +1144,21 @@ _escape_item(
 	PyObject *item,
 	PyObject *d)
 {
+	/* TODO: respect the mro
+	PyObject *quoted=NULL, *mro, *itemtype, *itemconv=NULL;
+	Py_ssize_t len, i=0;
+
+	if (!(item->ob_type && (mro = item->ob_type->tp_mro)))
+		goto error;
+	
+	len = PyTuple_Size(mro);
+	while ( i<len && !itemconv ) {
+		PyErr_Clear();
+		itemtype = PyTuple_GET_ITEM(mro, i);
+		itemconv = PyObject_GetItem(d, itemtype);
+		i++;
+	}
+	*/
 	PyObject *quoted=NULL, *itemtype, *itemconv;
 	if (!(itemtype = PyObject_Type(item)))
 		goto error;
