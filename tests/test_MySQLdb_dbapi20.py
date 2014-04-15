@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from five import udict
 
 import dbapi20
 import unittest
@@ -172,7 +173,7 @@ class test_MySQLdb(dbapi20.DatabaseAPI20Test):
                select count(*) from %(tp)sbooze;
                select name from %(tp)sbooze;
            end
-        """ % dict(tp=self.table_prefix)
+        """ % udict(tp=self.table_prefix)
         cur.execute(sql)
 
     def help_nextset_tearDown(self, cur):
@@ -186,14 +187,14 @@ class test_MySQLdb(dbapi20.DatabaseAPI20Test):
             if not hasattr(cur, 'nextset'):
                 return
 
+            self.executeDDL1(cur)
+            sql = self._populate()
+            for sql in self._populate():
+                cur.execute(sql)
+
+            self.help_nextset_setUp(cur)
+
             try:
-                self.executeDDL1(cur)
-                sql = self._populate()
-                for sql in self._populate():
-                    cur.execute(sql)
-
-                self.help_nextset_setUp(cur)
-
                 cur.callproc('deleteme')
                 numberofrows = cur.fetchone()
                 assert numberofrows[0] == len(self.samples)

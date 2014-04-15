@@ -6,17 +6,10 @@ This module implements Cursors of various types for MySQLdb. By
 default, MySQLdb uses the Cursor class.
 
 """
+from five import text
 
 import re
 import sys
-try:
-    from types import ListType, TupleType, UnicodeType
-except ImportError:
-    # Python 3
-    ListType = list
-    TupleType = tuple
-    UnicodeType = str
-    unicode = str
 
 restr = r"""
     \s
@@ -187,7 +180,7 @@ class BaseCursor(object):
         """
         del self.messages[:]
         db = self._get_db()
-        if isinstance(query, unicode):
+        if isinstance(query, text):
             query = query.encode(db.unicode_literal.charset)
         if args is not None:
             if isinstance(args, dict):
@@ -240,7 +233,7 @@ class BaseCursor(object):
         db = self._get_db()
         if not args:
             return
-        if isinstance(query, unicode):
+        if isinstance(query, text):
             query = query.encode(db.unicode_literal.charset)
         m = insert_values.search(query)
         if not m:
@@ -271,7 +264,7 @@ class BaseCursor(object):
             exc, value, tb = sys.exc_info()
             del tb
             self.errorhandler(self, exc, value)
-        r = self._query('\n'.join([query[:p], ',\n'.join(q), query[e:]]))
+        r = self._query(b'\n'.join([query[:p], b',\n'.join(q), query[e:]]))
         if not self._defer_warnings:
             self._warning_check()
         return r
@@ -311,7 +304,7 @@ class BaseCursor(object):
             q = "SET @_%s_%d=%s" % (
                 procname, index, db.literal(arg)
             )
-            if isinstance(q, unicode):
+            if isinstance(q, text):
                 q = q.encode(db.unicode_literal.charset)
             self._query(q)
             self.nextset()
@@ -319,7 +312,7 @@ class BaseCursor(object):
         q = "CALL %s(%s)" % (procname,
                              ','.join(['@_%s_%d' % (procname, i)
                                        for i in range(len(args))]))
-        if type(q) is UnicodeType:
+        if isinstance(q, text):
             q = q.encode(db.unicode_literal.charset)
         self._query(q)
         self._executed = q
