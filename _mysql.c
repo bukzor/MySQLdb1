@@ -36,7 +36,6 @@ PERFORMANCE OF THIS SOFTWARE.
 #if PY_VERSION_HEX > 0x02060000
 #include "bytesobject.h"
 #endif
-#include "pymemcompat.h"
 #include "structmember.h"
 #if defined(MS_WINDOWS)
 #include <config-win.h>
@@ -109,6 +108,7 @@ inline char * get_string(PyObject * uniobj) {
 	// TODO: re-evalutate if utf8 is always appropriate here.
     PyObject *strobj = PyUnicode_AsEncodedString(uniobj, "UTF-8", "strict");
     if (!strobj) return NULL;
+	Py_INCREF(strobj);
     return PyBytes_AS_STRING(strobj);
 }
 
@@ -2064,7 +2064,7 @@ _mysql_ConnectionObject_store_result(
 		goto error;
 	result = (PyObject *) r;
 	if (!(r->result)) {
-		Py_DECREF(result);
+		// Py_DECREF(result);
 		Py_INCREF(Py_None);
 		result = Py_None;
 	}
@@ -2146,7 +2146,7 @@ _mysql_ConnectionObject_dealloc(
 		o = _mysql_ConnectionObject_close(self, NULL);
 		Py_XDECREF(o);
 	}
-	MyFree(self);
+	// MyFree(self);
 }
 
 static PyObject *
@@ -2227,7 +2227,7 @@ _mysql_ResultObject_dealloc(
 	PyObject_GC_UnTrack((PyObject *)self);
 	mysql_free_result(self->result);
 	_mysql_ResultObject_clear(self);
-	MyFree(self);
+	// MyFree(self);
 }
 
 static PyObject *
