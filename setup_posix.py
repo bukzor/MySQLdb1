@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 #from __future__ import explicit_encoding
 from __future__ import division
 from future.builtins import range
-from five import udict
+from five import udict, u
 
 import os
 import sys
@@ -25,7 +25,9 @@ def mysql_config(what):
     from os import popen
 
     f = popen("%s --%s" % (mysql_config.path, what))
-    data = f.read().decode('UTF-8').strip().split()
+    data = f.read()
+    data = u(data)
+    data = data.strip().split()
     ret = f.close()
     if ret:
         if ret // 256:

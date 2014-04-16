@@ -98,12 +98,18 @@ typedef struct {
 #define result_connection(r) ((_mysql_ConnectionObject *)r->conn)
 #define check_result_connection(r) check_connection(result_connection(r))
 
+#ifdef IS_PY3K
+// nothing, yet
+#else
+// nothing, yet
+#endif
+
 /* TODO: inline or macro */
-char * get_string(PyObject * uniobj) {
+inline char * get_string(PyObject * uniobj) {
 	// TODO: re-evalutate if utf8 is always appropriate here.
     PyObject *strobj = PyUnicode_AsEncodedString(uniobj, "UTF-8", "strict");
     if (!strobj) return NULL;
-    return PyString_AsString(strobj);
+    return PyBytes_AS_STRING(strobj);
 }
 
 extern PyTypeObject _mysql_ConnectionObject_Type;
@@ -1112,25 +1118,25 @@ _mysql_string_literal(
 	char *in, *out;
 	int len, size, isstring;
 	if (!PyArg_ParseTuple(args, "O|O:string_literal", &o, &d)) return NULL;
-	isstring = PyString_Check(o);
+	isstring = PyBytes_Check(o);
 	if (isstring) {
 		s = o;
 	} else {
 		s = PyObject_Str(o);
 		if (!s) return NULL;
 	}
-	in = PyString_AS_STRING(s);
-	size = PyString_GET_SIZE(s);
-	str = PyString_FromStringAndSize((char *) NULL, size*2+3);
+	in = PyBytes_AS_STRING(s);
+	size = PyBytes_GET_SIZE(s);
+	str = PyBytes_FromStringAndSize((char *) NULL, size*2+3);
 	if (!str) return PyErr_NoMemory();
-	out = PyString_AS_STRING(str);
+	out = PyBytes_AS_STRING(str);
 #if MYSQL_VERSION_ID < 32321
 	len = mysql_escape_string(out+1, in, size);
 #else
 	len = mysql_real_escape_string(utf8conn, out+1, in, size);
 #endif
 	*out = *(out+len+1) = '\'';
-	if (_PyString_Resize(&str, len+2) < 0) return NULL;
+	if (_PyBytes_Resize(&str, len+2) < 0) return NULL;
 	if (!isstring) {
 		Py_DECREF(s);
 	}
@@ -1167,7 +1173,7 @@ _escape_item(
 	if (!itemconv) {
 		PyErr_Clear();
 		// TODO: final fallback should be PyNative_Type
-		itemconv = PyObject_GetItem(d, (PyObject *) &PyString_Type);
+		itemconv = PyObject_GetItem(d, (PyObject *) &PyBytes_Type);
 	}
 	if (!itemconv) {
 		PyErr_SetString(PyExc_TypeError,
@@ -3058,7 +3064,7 @@ init_mysql(void)
 	if (!(_mysql_NULL = PyUnicode_FromString("NULL")))
 		goto error;
 #else
-	if (!(_mysql_NULL = PyString_FromString("NULL")))
+	if (!(_mysql_NULL = PyBytes_FromString("NULL")))
 		goto error;
 #endif
 	if (PyDict_SetItemString(dict, "NULL", _mysql_NULL)) goto error;
