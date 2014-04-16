@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from __future__ import explicit_encoding
+#from __future__ import explicit_encoding
 from __future__ import division
 from future.builtins import map
 from future.builtins import int

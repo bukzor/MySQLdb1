@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from __future__ import explicit_encoding
+#from __future__ import explicit_encoding
 from future import standard_library
 standard_library.install_hooks()
 
