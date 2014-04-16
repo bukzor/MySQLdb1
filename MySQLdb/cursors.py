@@ -470,6 +470,7 @@ class CursorUseResultMixIn(object):
         return self
 
     def __next__(self):
+        """TODO: this is not tested AT ALL"""
         row = self.fetchone()
         if row is None:
             raise StopIteration
