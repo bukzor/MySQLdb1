@@ -7,8 +7,6 @@ These classes are dictated by the DB API v2.0:
     http://www.python.org/topics/database/DatabaseAPI-2.0.html
 """
 
-from exceptions import Exception, Warning
-
 
 class MySQLError(Exception):
 

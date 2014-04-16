@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from future.builtins import dict
 from future.builtins import int
 from future.builtins import super
+from future.utils import raise_with_traceback
 from five import text
 """
 
@@ -44,9 +45,9 @@ def defaulterrorhandler(connection, cursor, errorclass, errorvalue):
 
     _, _, current_traceback = sys.exc_info()
     if isinstance(errorvalue, errorclass):
-        raise errorclass, errorvalue, current_traceback
+        raise_with_traceback(errorvalue, current_traceback)
     else:
-        raise errorclass, errorclass(errorvalue), current_traceback
+        raise_with_traceback(errorclass(errorvalue), current_traceback)
 
 re_numeric_part = re.compile(r"^(\d+)")
 
