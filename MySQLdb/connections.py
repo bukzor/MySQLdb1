@@ -1,5 +1,9 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from future.builtins import dict
+from future.builtins import int
+from future.builtins import super
+from five import text
 """
 
 This module implements connections for MySQLdb. Presently there is
@@ -13,7 +17,6 @@ from _mysql_exceptions import (
     Warning, Error, InterfaceError, DataError, DatabaseError, OperationalError,
     IntegrityError, InternalError, NotSupportedError, ProgrammingError
 )
-import types
 import _mysql
 import re
 import sys
@@ -254,8 +257,8 @@ class Connection(_mysql.connection):
             self.converter[FIELD_TYPE.VARCHAR].append((None, string_decoder))
             self.converter[FIELD_TYPE.BLOB].append((None, string_decoder))
 
-        self.encoders[types.StringType] = string_literal
-        self.encoders[types.UnicodeType] = unicode_literal
+        self.encoders[bytes] = string_literal
+        self.encoders[text] = unicode_literal
         self._transactional = self.server_capabilities & CLIENT.TRANSACTIONS
         if self._transactional:
             if autocommit is not None:

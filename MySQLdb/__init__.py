@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from five import b
 """MySQLdb - A DB API v2.0 compatible interface to MySQL.
 
 This package is a wrapper around _mysql, which mostly implements the
@@ -94,7 +95,7 @@ def test_DBAPISet_set_inequality_membership():
 
 
 def Binary(x):
-    return str(x)
+    return b(x)
 
 
 def Connect(*args, **kwargs):

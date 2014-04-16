@@ -1,6 +1,11 @@
 #!/usr/bin/env python -O
-from __future__ import unicode_literals
+from __future__ import division
 from __future__ import explicit_encoding
+from __future__ import unicode_literals
+from future.builtins import bytes
+from future.builtins import chr
+from future.builtins import dict
+from future.builtins import range
 """ Script to test database capabilities and the DB-API interface
     for functionality and memory leaks.
 
@@ -26,11 +31,9 @@ class DatabaseTest(unittest.TestCase):
         self.connection = db
         self.cursor = db.cursor()
         # TODO: this needs to be re-evaluated for Python 3
-        self.BLOBText = b''.join([chr(i) for i in range(256)] * 100)
-        self.BLOBUText = u''.join([unichr(i) for i in range(16384)])
-        self.BLOBBinary = self.db_module.Binary(b''.join(
-            [chr(i) for i in range(256)] * 16
-        ))
+        self.BLOBText = bytes(range(256)) * 100
+        self.BLOBUText = u''.join([chr(i) for i in range(16384)])
+        self.BLOBBinary = self.db_module.Binary(bytes(range(256)) * 16)
 
     leak_test = True
 
@@ -155,7 +158,7 @@ class DatabaseTest(unittest.TestCase):
             if col == 0:
                 return row
             else:
-                return ('%i' % (row % 10)) * ((255 - self.rows / 2) + row)
+                return ('%i' % (row % 10)) * ((255 - self.rows // 2) + row)
         self.create_table(columndefs)
         insert_statement = ('INSERT INTO %s VALUES (%s)' %
                             (self.table,

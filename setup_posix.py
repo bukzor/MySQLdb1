@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from __future__ import division
+from future.builtins import range
 from five import udict
 
 import os
 import sys
-from ConfigParser import SafeConfigParser
 
 
 def dequote(s):
@@ -27,9 +28,9 @@ def mysql_config(what):
     data = f.read().decode('UTF-8').strip().split()
     ret = f.close()
     if ret:
-        if ret / 256:
+        if ret // 256:
             data = []
-        if ret / 256 > 1:
+        if ret // 256 > 1:
             raise EnvironmentError("%s not found" % (mysql_config.path,))
     return data
 mysql_config.path = "mysql_config"

@@ -1,5 +1,8 @@
 """five: six, redux"""
-# pylint:disable=invalid-name
+# pylint:disable=invalid-name,redefined-builtin
+str = str
+bytes = bytes
+
 PY2 = (str is bytes)
 PY3 = (str is not bytes)
 
@@ -17,7 +20,7 @@ def n(obj):
     """
     if isinstance(obj, str):
         return obj
-    elif PY2 and isinstance(obj, unicode):
+    elif PY2 and isinstance(obj, text):
         return obj.encode('US-ASCII')
     elif PY3 and isinstance(obj, bytes):
         return obj.decode('US-ASCII')
@@ -40,18 +43,18 @@ def u(obj):
 
 
 def b(obj):
-    """Produces bytes.
+    r"""Produces bytes.
 
-    Similar in behavior to bytes(), but uses US-ASCII encoding when necessary.
+    Similar in behavior to bytes(), but uses latin1 encoding when necessary.
+    This is so that b('\x00\xFF') == future.bytes([0, 255])
     """
     if isinstance(obj, bytes):
         return obj
-    elif PY2 and isinstance(obj, unicode):
-        return obj.encode('US-ASCII')
-    elif PY3 and isinstance(obj, str):
+    elif isinstance(obj, text):
+        # TODO: how come we don't actually need latin1??
         return obj.encode('US-ASCII')
     else:
-        return bytes(obj)
+        return text(obj).encode('US-ASCII')
 
 
 def udict(*args, **kwargs):
@@ -75,6 +78,6 @@ def ndict(*args, **kwargs):
 
 def open(*args, **kwargs):
     """Override the builtin open() to return text and use utf8 by default."""
-    from io import open
+    import io
     kwargs.setdefault('encoding', 'UTF-8')
-    return open(*args, **kwargs)
+    return io.open(*args, **kwargs)

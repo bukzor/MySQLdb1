@@ -1,5 +1,14 @@
 from __future__ import unicode_literals
 from __future__ import explicit_encoding
+from future import standard_library
+standard_library.install_hooks()
+
+import five
+import future.builtins as future
+from future.builtins import bytes
+from future.builtins import filter
+from future.builtins import int
+from future.builtins import str
 """MySQLdb type conversion module
 
 This module handles all the type conversions for MySQL. If the default
@@ -43,25 +52,7 @@ from MySQLdb.times import (
 )
 
 
-try:
-    from types import (
-        IntType, LongType, FloatType, NoneType, TupleType, ListType, DictType,
-        InstanceType, StringType, UnicodeType, ObjectType, BooleanType,
-        ClassType, TypeType
-    )
-except ImportError:
-    # Python 3
-    long = int
-    IntType, LongType, FloatType, NoneType = int, long, float, type(None)
-    TupleType, ListType, DictType, InstanceType = tuple, list, dict, None
-    StringType, UnicodeType, ObjectType, BooleanType = bytes, str, object, bool
-
-import array
-
-try:
-    ArrayType = array.ArrayType
-except AttributeError:
-    ArrayType = array.array
+from array import array
 
 try:
     set
@@ -110,7 +101,6 @@ def Thing2Literal(o, d):
     MySQL-3.23 or newer, string_literal() is a method of the
     _mysql.MYSQL object, and this function will be overridden with
     that method when the connection is created."""
-
     return string_literal(o, d)
 
 
@@ -125,20 +115,23 @@ def Instance2Str(o, d):
     first class it can find for which o is an instance.
 
     """
+    # TODO: respect the mro.
+    assert five.PY2
+    from types import ClassType
 
     if o.__class__ in d:
         return d[o.__class__](o, d)
-    cl = filter(lambda x, o=o:
+    cl = list(filter(lambda x, o=o:
                 type(x) is ClassType
-                and isinstance(o, x), d.keys())
+                and isinstance(o, x), list(d.keys())))
     if not cl:
-        cl = filter(lambda x, o=o:
-                    type(x) is TypeType
+        cl = list(filter(lambda x, o=o:
+                    type(x) is type
                     and isinstance(o, x)
                     and d[x] is not Instance2Str,
-                    d.keys())
+                    list(d.keys())))
     if not cl:
-        return d[StringType](o, d)
+        return d[bytes](o, d)
     d[o.__class__] = d[cl[0]]
     return d[cl[0]](o, d)
 
@@ -155,30 +148,28 @@ def quote_tuple(t, d):
     return "(%s)" % (','.join(escape_sequence(t, d)))
 
 conversions = {
-    IntType: Thing2Str,
-    LongType: Long2Int,
-    FloatType: Float2Str,
-    NoneType: None2NULL,
-    TupleType: quote_tuple,
-    ListType: quote_tuple,
-    DictType: escape_dict,
-    InstanceType: Instance2Str,
-    ArrayType: array2Str,
-    StringType: Thing2Literal,  # default
-    UnicodeType: Unicode2Str,
-    ObjectType: Instance2Str,
-    BooleanType: Bool2Str,
+    int: Thing2Str,
+    float: Float2Str,
+    type(None): None2NULL,
+    tuple: quote_tuple,
+    list: quote_tuple,
+    dict: escape_dict,
+    array: array2Str,
+    bytes: Thing2Literal,  # default
+    str: Unicode2Str,
+    object: Instance2Str,
+    bool: Bool2Str,
     DateTimeType: DateTime2literal,
     DateTimeDeltaType: DateTimeDelta2literal,
     set: Set2Str,
     FIELD_TYPE.TINY: int,
     FIELD_TYPE.SHORT: int,
-    FIELD_TYPE.LONG: long,
+    FIELD_TYPE.LONG: int,
     FIELD_TYPE.FLOAT: float,
     FIELD_TYPE.DOUBLE: float,
     FIELD_TYPE.DECIMAL: float,
     FIELD_TYPE.NEWDECIMAL: float,
-    FIELD_TYPE.LONGLONG: long,
+    FIELD_TYPE.LONGLONG: int,
     FIELD_TYPE.INT24: int,
     FIELD_TYPE.YEAR: int,
     FIELD_TYPE.SET: Str2Set,
@@ -186,11 +177,21 @@ conversions = {
     FIELD_TYPE.DATETIME: DateTime_or_None,
     FIELD_TYPE.TIME: TimeDelta_or_None,
     FIELD_TYPE.DATE: Date_or_None,
-    FIELD_TYPE.BLOB: [(FLAG.BINARY, str)],
-    FIELD_TYPE.STRING: [(FLAG.BINARY, str)],
-    FIELD_TYPE.VAR_STRING: [(FLAG.BINARY, str)],
-    FIELD_TYPE.VARCHAR: [(FLAG.BINARY, str)],
+    FIELD_TYPE.BLOB: [(FLAG.BINARY, five.b)],
+    FIELD_TYPE.STRING: [(FLAG.BINARY, five.b)],
+    FIELD_TYPE.VAR_STRING: [(FLAG.BINARY, five.b)],
+    FIELD_TYPE.VARCHAR: [(FLAG.BINARY, five.b)],
 }
+
+if False: #five.PY2:
+    # TODO: how come these aren't necessary?
+    from types import InstanceType
+    conversions.update({
+        InstanceType: Instance2Str,
+        # handle the non-futured types too.
+        five.bytes: Thing2Literal,  # default
+        five.text: Unicode2Str,
+    })
 
 try:
     from decimal import Decimal
