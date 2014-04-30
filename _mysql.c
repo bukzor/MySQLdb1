@@ -78,14 +78,14 @@ static PyObject *_mysql_MySQLError;
 static PyObject *_mysql_Warning;
 static PyObject *_mysql_Error;
 static PyObject *_mysql_DatabaseError;
-static PyObject *_mysql_InterfaceError; 
+static PyObject *_mysql_InterfaceError;
 static PyObject *_mysql_DataError;
-static PyObject *_mysql_OperationalError; 
-static PyObject *_mysql_IntegrityError; 
-static PyObject *_mysql_InternalError; 
+static PyObject *_mysql_OperationalError;
+static PyObject *_mysql_IntegrityError;
+static PyObject *_mysql_InternalError;
 static PyObject *_mysql_ProgrammingError;
 static PyObject *_mysql_NotSupportedError;
- 
+
 typedef struct {
 	PyObject_HEAD
 	MYSQL connection;
@@ -103,13 +103,12 @@ typedef struct {
 // nothing, yet
 #endif
 
-/* TODO: inline or macro */
 inline char * get_string(PyObject * uniobj) {
 	// TODO: re-evalutate if utf8 is always appropriate here.
-    PyObject *strobj = PyUnicode_AsEncodedString(uniobj, "UTF-8", "strict");
-    if (!strobj) return NULL;
+	PyObject *strobj = PyUnicode_AsEncodedString(uniobj, "UTF-8", "strict");
+	if (!strobj) return NULL;
 	Py_INCREF(strobj);
-    return PyBytes_AS_STRING(strobj);
+	return PyBytes_AS_STRING(strobj);
 }
 
 extern PyTypeObject _mysql_ConnectionObject_Type;
@@ -1159,7 +1158,7 @@ _escape_item(
 
 	if (!(item->ob_type && (mro = item->ob_type->tp_mro)))
 		goto error;
-	
+
 	len = PyTuple_Size(mro);
 	while ( i<len && !itemconv ) {
 		PyErr_Clear();

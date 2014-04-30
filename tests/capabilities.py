@@ -30,7 +30,6 @@ class DatabaseTest(unittest.TestCase):
         db = connection_factory(**self.connect_kwargs)
         self.connection = db
         self.cursor = db.cursor()
-        # TODO: this needs to be re-evaluated for Python 3
         self.BLOBText = bytes(range(256)) * 100
         self.BLOBUText = u''.join([chr(i) for i in range(16384)])
         self.BLOBBinary = self.db_module.Binary(bytes(range(256)) * 16)

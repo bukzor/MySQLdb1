@@ -1,0 +1,5 @@
+- Implement %s for bytestrings
+- Fix empty result.describe (\_result objects not hooked up to their type)
+- Figure out memory PyFree things
+- Respect the MRO during db literal conversion
+- Setup Travis for 2.6, 2.7, 3.3 and 3.4
