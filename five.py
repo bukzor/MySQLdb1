@@ -58,7 +58,9 @@ def b(obj):
 
 
 def udict(*args, **kwargs):
-    """Similar to dict(), but keyword-keys are text."""
+    """Similar to dict(), but keyword-keys are text.
+    TODO: refactor out udict in favor of future.newdict
+    """
     kwargs = dict([
         (u(key), val)
         for key, val in kwargs.items()
@@ -81,3 +83,42 @@ def open(*args, **kwargs):
     import io
     kwargs.setdefault('encoding', 'UTF-8')
     return io.open(*args, **kwargs)
+
+
+def bytemod(b, i):
+    import re
+    percent_RE = re.compile(b'%(.)')
+
+    if isinstance(i, tuple):
+        i = iter(i)
+    else:
+        i = iter((i,))
+
+    def sub(match):
+        format = match.group(1)
+        if format == b's':
+            try:
+                next_part = next(i)
+                if type(next_part) is not bytes:
+                    raise TypeError('Expected bytes, got %s: %r' % (
+                        type(next_part).__name__, next_part,
+                    ))  # TODO: test me!
+                return next_part
+            except StopIteration:
+                raise TypeError("not enough arguments for format string")
+        elif format == b'%':
+            return b'%'
+        else:
+            raise TypeError(
+                "unsupported format character '%c' (0x%x) at index %i"
+                % (format[0], format[0], match.start() + 1)
+            )
+
+    result = percent_RE.sub(sub, b)
+
+    try:
+        next(i)
+    except StopIteration:
+        return result
+    else:
+        raise TypeError("not all arguments converted during string formatting")

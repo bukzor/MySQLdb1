@@ -3062,13 +3062,8 @@ init_mysql(void)
 	      _mysql_NewException(dict, edict, "NotSupportedError")))
 		goto error;
 	Py_DECREF(emod);
-#ifdef IS_PY3K
-	if (!(_mysql_NULL = PyUnicode_FromString("NULL")))
-		goto error;
-#else
 	if (!(_mysql_NULL = PyBytes_FromString("NULL")))
 		goto error;
-#endif
 	if (PyDict_SetItemString(dict, "NULL", _mysql_NULL)) goto error;
   error:
 	if (PyErr_Occurred()) {

@@ -74,7 +74,7 @@ def Set2Str(s, d):
 
 def Thing2Str(s, d):
     """Convert something into a string via str()."""
-    return str(s)
+    return str(s).encode('UTF-8')
 
 
 def Unicode2Str(s, d):

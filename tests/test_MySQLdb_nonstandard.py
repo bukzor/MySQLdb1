@@ -31,7 +31,7 @@ class CoreModule(unittest.TestCase):
 
     def test_NULL(self):
         """Should have a NULL constant."""
-        self.assertEqual(_mysql.NULL, 'NULL')
+        self.assertEqual(_mysql.NULL, b'NULL')
 
     def test_version(self):
         """Version information sanity."""

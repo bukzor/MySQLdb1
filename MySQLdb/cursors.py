@@ -8,6 +8,7 @@ This module implements Cursors of various types for MySQLdb. By
 default, MySQLdb uses the Cursor class.
 
 """
+from five import bytemod
 from five import text
 
 import re
@@ -186,10 +187,11 @@ class BaseCursor(object):
             query = query.encode(db.unicode_literal.charset)
         if args is not None:
             if isinstance(args, dict):
+                raise NotImplementedError('five.bytemod does not support dicts yet')  # TODO
                 query = query % dict((key, db.literal(item))
                                      for key, item in args.items())
             else:
-                query = query % tuple([db.literal(item) for item in args])
+                query = bytemod(query, tuple([db.literal(item) for item in args]))
         try:
             r = None
             r = self._query(query)
@@ -250,10 +252,11 @@ class BaseCursor(object):
             q = []
             for a in args:
                 if isinstance(a, dict):
+                    raise NotImplementedError('five.bytemod does not support dicts yet')  # TODO
                     q.append(qv % dict((key, db.literal(item))
                                        for key, item in a.items()))
                 else:
-                    q.append(qv % tuple([db.literal(item) for item in a]))
+                    q.append(bytemod(qv, tuple([db.literal(item) for item in a])))
         except TypeError as msg:
             if msg.args[0] in ("not enough arguments for format string",
                                "not all arguments converted"):
