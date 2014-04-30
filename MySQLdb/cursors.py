@@ -13,7 +13,7 @@ from five import text
 import re
 import sys
 
-restr = r"""
+restr = br"""
     \s
     values
     \s*

@@ -1116,15 +1116,18 @@ _mysql_string_literal(
 {
 	PyObject *str, *s, *o, *d;
 	char *in, *out;
-	int len, size, isstring;
+	int len, size, isbytes;
 	if (!PyArg_ParseTuple(args, "O|O:string_literal", &o, &d)) return NULL;
-	isstring = PyBytes_Check(o);
-	if (isstring) {
+	isbytes = PyBytes_Check(o);
+	if (isbytes) {
 		s = o;
+	} else if (PyUnicode_Check(o)) {
+		s = PyUnicode_AsEncodedString(o, "UTF-8", "strict");
 	} else {
-		s = PyObject_Str(o);
-		if (!s) return NULL;
+		s = PyObject_Bytes(o);
 	}
+	if (!s) return NULL;
+
 	in = PyBytes_AS_STRING(s);
 	size = PyBytes_GET_SIZE(s);
 	str = PyBytes_FromStringAndSize((char *) NULL, size*2+3);
@@ -1137,7 +1140,7 @@ _mysql_string_literal(
 #endif
 	*out = *(out+len+1) = '\'';
 	if (_PyBytes_Resize(&str, len+2) < 0) return NULL;
-	if (!isstring) {
+	if (!isbytes) {
 		Py_DECREF(s);
 	}
 	return (str);

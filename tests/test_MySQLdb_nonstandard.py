@@ -6,7 +6,7 @@ import unittest
 import _mysql
 import MySQLdb
 from MySQLdb.constants import FIELD_TYPE
-from configdb import connection_factory
+from .configdb import connection_factory
 from five import text
 import warnings
 warnings.simplefilter("ignore")
