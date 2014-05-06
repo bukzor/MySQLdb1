@@ -86,22 +86,16 @@ static PyObject *_mysql_InternalError;
 static PyObject *_mysql_ProgrammingError;
 static PyObject *_mysql_NotSupportedError;
 
+#define check_connection(c) if (!(c->open)) return _mysql_Exception(c)
+#define result_connection(r) ((_mysql_ConnectionObject *)r->conn)
+#define check_result_connection(r) check_connection(result_connection(r))
+
 typedef struct {
 	PyObject_HEAD
 	MYSQL connection;
 	int open;
 	PyObject *converter;
 } _mysql_ConnectionObject;
-
-#define check_connection(c) if (!(c->open)) return _mysql_Exception(c)
-#define result_connection(r) ((_mysql_ConnectionObject *)r->conn)
-#define check_result_connection(r) check_connection(result_connection(r))
-
-#ifdef IS_PY3K
-// nothing, yet
-#else
-// nothing, yet
-#endif
 
 inline char * get_string(PyObject * uniobj) {
 	// TODO: re-evalutate if utf8 is always appropriate here.
@@ -2701,7 +2695,7 @@ PyTypeObject _mysql_ConnectionObject_Type = {
 	0, /* (hashfunc) tp_hash */
 	0, /* (ternaryfunc) tp_call */
 	0, /* (reprfunc) tp_str */
-	0, /* (getattrofunc) tp_getattro */
+	PyObject_GenericGetAttr, /* (getattrofunc) tp_getattro */
 	0, /* (setattrofunc) tp_setattro */
 	
 	/* Functions to access object as input/output buffer */
@@ -2789,7 +2783,7 @@ PyTypeObject _mysql_ResultObject_Type = {
 	0, /* (hashfunc) tp_hash */
 	0, /* (ternaryfunc) tp_call */
 	0, /* (reprfunc) tp_str */
-	0, /* (getattrofunc) tp_getattro */
+	PyObject_GenericGetAttr, /* (getattrofunc) tp_getattro */
 	0, /* (setattrofunc) tp_setattro */
 	
 	/* Functions to access object as input/output buffer */
@@ -2996,13 +2990,11 @@ init_mysql(void)
 #endif
 #if PY_VERSION_HEX >= 0x02020000
 	_mysql_ConnectionObject_Type.tp_alloc = PyType_GenericAlloc;
-	_mysql_ConnectionObject_Type.tp_new = PyType_GenericNew;
-#ifndef IS_PY3K
-	_mysql_ConnectionObject_Type.tp_free = _PyObject_GC_Del;
-#endif
 	_mysql_ResultObject_Type.tp_alloc = PyType_GenericAlloc;
+	_mysql_ConnectionObject_Type.tp_new = PyType_GenericNew;
 	_mysql_ResultObject_Type.tp_new = PyType_GenericNew;
 #ifndef IS_PY3K
+	_mysql_ConnectionObject_Type.tp_free = _PyObject_GC_Del;
 	_mysql_ResultObject_Type.tp_free = _PyObject_GC_Del;
 #endif
 #endif
