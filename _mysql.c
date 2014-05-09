@@ -1307,6 +1307,9 @@ _mysql_ResultObject_describe(
 				  (long) fields[i].length,
 				  (long) fields[i].decimals,
 				  (long) !(IS_NOT_NULL(fields[i].flags)));
+#ifndef IS_PY3K
+		//TODO: Convert .name to unicode.
+#endif
 		if (!t) goto error;
 		PyTuple_SET_ITEM(d, i, t);
 	}
@@ -1354,7 +1357,12 @@ _mysql_field_to_python(
 	if (rowitem) {
 		if (converter != Py_None)
 			v = PyObject_CallFunction(converter,
+// We want bytes in both py2 and py3.
+#ifdef IS_PY3K
+						  "y#",
+#else
 						  "s#",
+#endif
 						  rowitem,
 						  (int)length);
 		else

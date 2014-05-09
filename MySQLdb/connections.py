@@ -5,6 +5,7 @@ from future.builtins import int
 from future.builtins import super
 from future.utils import raise_with_traceback
 from five import text
+from five import b
 """
 
 This module implements connections for MySQLdb. Presently there is
@@ -235,14 +236,14 @@ class Connection(_mysql.connection):
                 return db.literal(u.encode(unicode_literal.charset))
             return unicode_literal
 
-        def _get_string_decoder():
-            def string_decoder(s):
-                return s.decode(string_decoder.charset)
-            return string_decoder
+        def _get_bytes_decoder():
+            def bytes_decoder(s):
+                return s.decode(bytes_decoder.charset)
+            return bytes_decoder
 
         string_literal = _get_string_literal()
         self.unicode_literal = unicode_literal = _get_unicode_literal()
-        self.string_decoder = string_decoder = _get_string_decoder()
+        self.bytes_decoder = bytes_decoder = _get_bytes_decoder()
         if not charset:
             charset = self.character_set_name()
         self.set_character_set(charset)
@@ -251,12 +252,12 @@ class Connection(_mysql.connection):
             self.set_sql_mode(sql_mode)
 
         if use_unicode:
-            self.converter[FIELD_TYPE.STRING].append((None, string_decoder))
+            self.converter[FIELD_TYPE.STRING].append((None, bytes_decoder))
             self.converter[FIELD_TYPE.VAR_STRING].append(
-                (None, string_decoder)
+                (None, bytes_decoder)
             )
-            self.converter[FIELD_TYPE.VARCHAR].append((None, string_decoder))
-            self.converter[FIELD_TYPE.BLOB].append((None, string_decoder))
+            self.converter[FIELD_TYPE.VARCHAR].append((None, bytes_decoder))
+            self.converter[FIELD_TYPE.BLOB].append((None, bytes_decoder))
 
         self.encoders[bytes] = string_literal
         self.encoders[text] = unicode_literal
@@ -344,7 +345,7 @@ class Connection(_mysql.connection):
                     raise NotSupportedError("server is too old to set charset")
                 self.query('SET NAMES %s' % charset)
                 self.store_result()
-        self.string_decoder.charset = py_charset
+        self.bytes_decoder.charset = py_charset
         self.unicode_literal.charset = py_charset
 
     def set_sql_mode(self, sql_mode):

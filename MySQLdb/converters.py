@@ -81,7 +81,7 @@ def Unicode2Str(s, d):
     """Convert a unicode object to a string using the default encoding.
     This is only used as a placeholder for the real function, which
     is connection-dependent."""
-    return s.encode()
+    return s.encode('US-ASCII')
 
 Long2Int = Thing2Str
 
