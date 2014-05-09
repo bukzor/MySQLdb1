@@ -42,8 +42,8 @@ from _mysql import (
     string_literal, version_info,
 )
 from MySQLdb.constants import FIELD_TYPE
-from MySQLdb.times import Date, Time, Timestamp, \
-    DateFromTicks, TimeFromTicks, TimestampFromTicks
+from MySQLdb.times import DateFromTicks, TimeFromTicks, TimestampFromTicks
+from datetime import date as Date, datetime as Timestamp, time as Time
 
 try:
     frozenset

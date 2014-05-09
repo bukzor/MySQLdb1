@@ -6,21 +6,11 @@ from future.builtins import int
 from five import n
 """times module
 
-This module provides some Date and Time classes for dealing with MySQL data.
-
 Use Python datetime module to handle date and time columns."""
 
 from time import localtime
 from datetime import date, datetime, time, timedelta
 from _mysql import string_literal
-
-Date = date
-Time = time
-TimeDelta = timedelta
-Timestamp = datetime
-
-DateTimeDeltaType = timedelta
-DateTimeType = datetime
 
 
 def DateFromTicks(ticks):
@@ -127,7 +117,7 @@ def DateTimeDelta2literal(d, c):
 
 
 def mysql_timestamp_converter(s):
-    """Convert a MySQL TIMESTAMP to a Timestamp object."""
+    """Convert a MySQL TIMESTAMP to a datetime object."""
     # MySQL>4.1 returns TIMESTAMP in the same format as DATETIME
     if s[4] == b'-':
         return DateTime_or_None(s)
@@ -135,7 +125,7 @@ def mysql_timestamp_converter(s):
     parts = list(map(int, [_f for _f in (s[:4], s[4:6], s[6:8],
                                    s[8:10], s[10:12], s[12:14]) if _f]))
     try:
-        return Timestamp(*parts)
+        return datetime(*parts)
     except (SystemExit, KeyboardInterrupt):
         raise
     except:

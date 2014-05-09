@@ -4,7 +4,6 @@ from future import standard_library
 standard_library.install_hooks()
 
 import five
-import future.builtins as future
 from future.builtins import bytes
 from future.builtins import filter
 from future.builtins import int
@@ -46,13 +45,14 @@ MySQL.connect().
 from _mysql import string_literal, escape_sequence, escape_dict, NULL
 from MySQLdb.constants import FIELD_TYPE, FLAG
 from MySQLdb.times import (
-    DateTimeType, DateTime2literal, DateTimeDeltaType, DateTimeDelta2literal,
-    mysql_timestamp_converter, DateTime_or_None, TimeDelta_or_None,
-    Date_or_None,
+    DateTime2literal, DateTimeDelta2literal, mysql_timestamp_converter,
+    DateTime_or_None, TimeDelta_or_None, Date_or_None,
 )
+from datetime import datetime, timedelta
 
 
 from array import array
+from decimal import Decimal
 
 try:
     set
@@ -60,34 +60,35 @@ except NameError:
     from sets import Set as set
 
 
-def Bool2Str(s, d):
+def Bool2Bytes(s, d):
     return str(int(s))
 
 
-def Str2Set(s):
+def Bytes2Set(s):
     return set([i for i in s.split(',') if i])
 
 
-def Set2Str(s, d):
+def Set2Bytes(s, d):
     return string_literal(','.join(s), d)
 
 
-def Thing2Str(s, d):
+def Thing2Bytes(s, d):
     """Convert something into a string via str()."""
     return str(s).encode('UTF-8')
 
 
-def Unicode2Str(s, d):
+def Unicode2Bytes(s, d):
     """Convert a unicode object to a string using the default encoding.
     This is only used as a placeholder for the real function, which
-    is connection-dependent."""
+    is connection-dependent.
+    """
     return s.encode('US-ASCII')
 
-Long2Int = Thing2Str
+Long2Int = Thing2Bytes
 
 
-def Float2Str(o, d):
-    return '%.15g' % o
+def Float2Bytes(o, d):
+    return ('%.15g' % o).encode('US-ASCII')
 
 
 def None2NULL(o, d):
@@ -95,84 +96,78 @@ def None2NULL(o, d):
     return NULL  # duh
 
 
-def Thing2Literal(o, d):
-
+def Bytes2Literal(o, d):
     """Convert something into a SQL string literal.  If using
     MySQL-3.23 or newer, string_literal() is a method of the
     _mysql.MYSQL object, and this function will be overridden with
-    that method when the connection is created."""
+    that method when the connection is created.
+    """
     return string_literal(o, d)
 
 
-def Instance2Str(o, d):
+def Thing2Literal(o, d):
+    return Bytes2Literal(Thing2Bytes(o, d), d)
 
-    """
 
-    Convert an Instance to a string representation.  If the __str__()
+def Object2Literal(o, d):
+    """Convert an Instance to a string representation.  If the __str__()
     method produces acceptable output, then you don't need to add the
     class to conversions; it will be handled by the default
     converter. If the exact class is not found in d, it will use the
     first class it can find for which o is an instance.
-
     """
-    # TODO: respect the mro.
-    assert five.PY2
-    from types import ClassType
+    cls = type(o)
+    for supercls in type.mro(cls)[1:-1]:
+        if supercls in d:
+            convertor = d[supercls]
+            break
+    else:
+        convertor = Thing2Literal
 
-    if o.__class__ in d:
-        return d[o.__class__](o, d)
-    cl = list(filter(lambda x, o=o:
-                type(x) is ClassType
-                and isinstance(o, x), list(d.keys())))
-    if not cl:
-        cl = list(filter(lambda x, o=o:
-                    type(x) is type
-                    and isinstance(o, x)
-                    and d[x] is not Instance2Str,
-                    list(d.keys())))
-    if not cl:
-        return d[bytes](o, d)
-    d[o.__class__] = d[cl[0]]
-    return d[cl[0]](o, d)
+    if cls is not object:
+        d[cls] = convertor
+    return convertor(o, d)
 
 
 def char_array(s):
     return array.array('c', s)
 
 
-def array2Str(o, d):
-    return Thing2Literal(o.tostring(), d)
+def array2Bytes(o, d):
+    return Bytes2Literal(o.tostring(), d)
 
+def bytes2Decimal(s):
+    return Decimal(s.decode('US-ASCII'))
 
 def quote_tuple(t, d):
     return "(%s)" % (','.join(escape_sequence(t, d)))
 
 conversions = {
-    int: Thing2Str,
-    float: Float2Str,
+    int: Thing2Bytes,
+    float: Float2Bytes,
     type(None): None2NULL,
     tuple: quote_tuple,
     list: quote_tuple,
     dict: escape_dict,
-    array: array2Str,
-    bytes: Thing2Literal,  # default
-    str: Unicode2Str,
-    object: Instance2Str,
-    bool: Bool2Str,
-    DateTimeType: DateTime2literal,
-    DateTimeDeltaType: DateTimeDelta2literal,
-    set: Set2Str,
+    array: array2Bytes,
+    bytes: Bytes2Literal,
+    str: Unicode2Bytes,
+    object: Object2Literal,
+    bool: Bool2Bytes,
+    datetime: DateTime2literal,
+    timedelta: DateTimeDelta2literal,
+    set: Set2Bytes,
     FIELD_TYPE.TINY: int,
     FIELD_TYPE.SHORT: int,
     FIELD_TYPE.LONG: int,
     FIELD_TYPE.FLOAT: float,
     FIELD_TYPE.DOUBLE: float,
-    FIELD_TYPE.DECIMAL: float,
-    FIELD_TYPE.NEWDECIMAL: float,
+    FIELD_TYPE.DECIMAL: bytes2Decimal,
+    FIELD_TYPE.NEWDECIMAL: bytes2Decimal,
     FIELD_TYPE.LONGLONG: int,
     FIELD_TYPE.INT24: int,
     FIELD_TYPE.YEAR: int,
-    FIELD_TYPE.SET: Str2Set,
+    FIELD_TYPE.SET: Bytes2Set,
     FIELD_TYPE.TIMESTAMP: mysql_timestamp_converter,
     FIELD_TYPE.DATETIME: DateTime_or_None,
     FIELD_TYPE.TIME: TimeDelta_or_None,
@@ -187,15 +182,8 @@ if False: #five.PY2:
     # TODO: how come these aren't necessary?
     from types import InstanceType
     conversions.update({
-        InstanceType: Instance2Str,
+        InstanceType: Object2Literal,
         # handle the non-futured types too.
-        five.bytes: Thing2Literal,  # default
-        five.text: Unicode2Str,
+        five.bytes: Bytes2Literal,  # default
+        five.text: Unicode2Bytes,
     })
-
-try:
-    from decimal import Decimal
-    conversions[FIELD_TYPE.DECIMAL] = Decimal
-    conversions[FIELD_TYPE.NEWDECIMAL] = Decimal
-except ImportError:
-    pass

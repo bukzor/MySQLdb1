@@ -1100,7 +1100,9 @@ within single quotes. In other words, it performs:\n\
 \"'%s'\" % escape_string(str(obj))\n\
 \n\
 Use connection.string_literal(obj), if you use it at all.\n\
-_mysql.string_literal(obj) cannot handle character sets.";
+_mysql.string_literal(obj) cannot handle character sets.\n\
+\n\
+This is most efficient when given a bytestring.\n";
 
 static PyObject *
 _mysql_string_literal(
@@ -1111,6 +1113,7 @@ _mysql_string_literal(
 	char *in, *out;
 	int len, size, isbytes;
 	if (!PyArg_ParseTuple(args, "O|O:string_literal", &o, &d)) return NULL;
+	// TODO: Would be better to *only* accept bytes here.
 	isbytes = PyBytes_Check(o);
 	if (isbytes) {
 		s = o;
@@ -1162,6 +1165,9 @@ _escape_item(
 	}
 	*/
 	PyObject *quoted=NULL, *itemtype, *itemconv;
+	// Is there a better way to reference <object>?
+	PyObject *object = (PyObject *) PyType_Type.tp_base;
+
 	if (!(itemtype = PyObject_Type(item)))
 		goto error;
 	itemconv = PyObject_GetItem(d, itemtype);
@@ -1169,7 +1175,7 @@ _escape_item(
 	if (!itemconv) {
 		PyErr_Clear();
 		// TODO: final fallback should be PyNative_Type
-		itemconv = PyObject_GetItem(d, (PyObject *) &PyBytes_Type);
+		itemconv = PyObject_GetItem(d, object);
 	}
 	if (!itemconv) {
 		PyErr_SetString(PyExc_TypeError,
