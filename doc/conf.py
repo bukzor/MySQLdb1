@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-#from __future__ import explicit_encoding
+from __future__ import explicit_encoding
 #
 # MySQLdb documentation build configuration file, created by
 # sphinx-quickstart on Sun Oct 07 19:36:17 2012.

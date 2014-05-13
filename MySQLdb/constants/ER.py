@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-#from __future__ import explicit_encoding
+from __future__ import explicit_encoding
 """MySQL ER Constants
 
 These constants are error codes for the bulk of the error conditions

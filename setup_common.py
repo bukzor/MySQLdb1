@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-#from __future__ import explicit_encoding
+from __future__ import explicit_encoding
 from future import standard_library
 standard_library.install_hooks()
 
@@ -37,7 +37,7 @@ def create_release_file(metadata):
     rel = open("MySQLdb/release.py", 'w')
     rel.write("""\
 from __future__ import unicode_literals
-#from __future__ import explicit_encoding
+from __future__ import explicit_encoding
 
 __author__ = "%(author)s <%(author_email)s>"
 version_info = %(version_info)s

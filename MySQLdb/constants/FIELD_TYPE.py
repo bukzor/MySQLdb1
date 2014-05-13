@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-#from __future__ import explicit_encoding
+from __future__ import explicit_encoding
 """MySQL FIELD_TYPE Constants
 
 These constants represent the various column (field) types that are

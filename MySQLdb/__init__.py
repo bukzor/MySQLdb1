@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-#from __future__ import explicit_encoding
+from __future__ import explicit_encoding
 from five import b
 """MySQLdb - A DB API v2.0 compatible interface to MySQL.
 

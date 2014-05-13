@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-#from __future__ import explicit_encoding
+from __future__ import explicit_encoding
 """MySQL Connection Errors
 
 Nearly all of these raise OperationalError. COMMANDS_OUT_OF_SYNC
