@@ -228,8 +228,6 @@ class Connection(_mysql.connection):
 
         def _get_unicode_literal():
             def unicode_literal(u, dummy=None):
-                # TODO: this one should fail a test:
-                return db.literal(str(u).encode(unicode_literal.charset))
                 return db.literal(u.encode(unicode_literal.charset))
             return unicode_literal
 
