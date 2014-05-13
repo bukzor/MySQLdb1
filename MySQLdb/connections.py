@@ -5,7 +5,6 @@ from future.builtins import int
 from future.builtins import super
 from future.utils import raise_with_traceback
 from five import text
-from five import b
 """
 
 This module implements connections for MySQLdb. Presently there is
@@ -169,7 +168,8 @@ class Connection(_mysql.connection):
         from MySQLdb.converters import conversions
         from weakref import proxy
 
-        kwargs2 = dict(**kwargs)
+        from five import udict
+        kwargs2 = udict(**kwargs)
 
         if 'conv' in kwargs:
             conv = kwargs['conv']
