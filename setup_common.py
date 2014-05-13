@@ -4,7 +4,7 @@ from future import standard_library
 standard_library.install_hooks()
 
 from future.builtins import dict
-from five import u, open
+from five import open
 from configparser import ConfigParser
 
 
