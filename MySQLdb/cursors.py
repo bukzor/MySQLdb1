@@ -305,18 +305,23 @@ class BaseCursor(object):
         """
 
         db = self._get_db()
+        if isinstance(procname, text):
+            procname = procname.encode(db.unicode_literal.charset)
+
         for index, arg in enumerate(args):
-            q = "SET @_%s_%d=%s" % (
-                procname, index, db.literal(arg)
-            )
-            if isinstance(q, text):
-                q = q.encode(db.unicode_literal.charset)
+            q = bytemod(b"SET @_%s_%s=%s", (
+                procname, repr(index).encode('US-ASCII'), db.literal(arg)
+            ))
             self._query(q)
             self.nextset()
 
-        q = "CALL %s(%s)" % (procname,
-                             ','.join(['@_%s_%d' % (procname, i)
-                                       for i in range(len(args))]))
+        q = bytemod(b"CALL %s(%s)", (
+            procname,
+            b','.join([
+                bytemod(b'@_%s_%s', (procname, repr(i).encode('US-ASCII')))
+                for i in range(len(args))
+            ])
+        ))
         if isinstance(q, text):
             q = q.encode(db.unicode_literal.charset)
         self._query(q)

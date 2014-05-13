@@ -56,21 +56,23 @@ class test_MySQLdb(capabilities.DatabaseTest):
         )
         db.commit()
 
-        c.execute("""
-        CREATE PROCEDURE test_sp(IN t VARCHAR(255))
-        BEGIN
-            SELECT pos FROM %s WHERE tree = t;
-        END
-        """ % self.table)
-        db.commit()
+        try:
+            c.execute("""
+            CREATE PROCEDURE test_sp(IN t VARCHAR(255))
+            BEGIN
+                SELECT pos FROM %s WHERE tree = t;
+            END
+            """ % self.table)
+            db.commit()
 
-        c.callproc('test_sp', ('larch',))
-        rows = c.fetchall()
-        self.assertEquals(len(rows), 1)
-        self.assertEquals(rows[0][0], 3)
-        c.nextset()
+            c.callproc('test_sp', ('larch',))
+            rows = c.fetchall()
+            self.assertEquals(len(rows), 1)
+            self.assertEquals(rows[0][0], 3)
+            c.nextset()
+        finally:
+            c.execute("DROP PROCEDURE IF EXISTS test_sp")
 
-        c.execute("DROP PROCEDURE test_sp")
         c.execute('drop table %s' % (self.table))
 
     def test_small_CHAR(self):
