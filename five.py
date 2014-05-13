@@ -125,7 +125,7 @@ def bytemod(b, i):
         else:
             raise TypeError(
                 "unsupported format character '%c' (0x%x) at index %i"
-                % (format[0], format[0], match.start() + 1)
+                % (format[0], ord(format[0:1]), match.start() + 1)
             )
 
     result = percent_RE.sub(sub, b)
