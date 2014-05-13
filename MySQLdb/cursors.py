@@ -10,6 +10,7 @@ default, MySQLdb uses the Cursor class.
 """
 from five import bytemod
 from five import text
+from five import n
 
 import re
 import sys
@@ -309,8 +310,9 @@ class BaseCursor(object):
             procname = procname.encode(db.unicode_literal.charset)
 
         for index, arg in enumerate(args):
-            q = bytemod(b"SET @_%s_%s=%s", (
-                procname, repr(index).encode('US-ASCII'), db.literal(arg)
+            arg = db.literal(arg)
+            q = bytemod(b"SET @_%s_%d=%s", (
+                procname, index, arg,
             ))
             self._query(q)
             self.nextset()
@@ -318,7 +320,7 @@ class BaseCursor(object):
         q = bytemod(b"CALL %s(%s)", (
             procname,
             b','.join([
-                bytemod(b'@_%s_%s', (procname, repr(i).encode('US-ASCII')))
+                bytemod(b'@_%s_%d', (procname, i))
                 for i in range(len(args))
             ])
         ))

@@ -1,4 +1,7 @@
-"""five: six, redux"""
+"""five: six, redux
+
+The b/u/n functions should really only be used with string literals.
+"""
 # pylint:disable=invalid-name,redefined-builtin
 str = str
 bytes = bytes
@@ -108,6 +111,17 @@ def bytemod(b, i):
                 raise TypeError("not enough arguments for format string")
         elif format == b'%':
             return b'%'
+        elif format in b'id':
+            #TODO: DRY
+            try:
+                next_part = next(i)
+                if type(next_part) is not int:
+                    raise TypeError('Expected int, got %s: %r' % (
+                        type(next_part).__name__, next_part,
+                    ))  # TODO: test me!
+                return repr(next_part).encode('US-ASCII')
+            except StopIteration:
+                raise TypeError("not enough arguments for format string")
         else:
             raise TypeError(
                 "unsupported format character '%c' (0x%x) at index %i"
