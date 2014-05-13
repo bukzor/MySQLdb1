@@ -119,7 +119,7 @@ def DateTimeDelta2literal(d, c):
 def mysql_timestamp_converter(s):
     """Convert a MySQL TIMESTAMP to a datetime object."""
     # MySQL>4.1 returns TIMESTAMP in the same format as DATETIME
-    if s[4] == b'-':
+    if s[4:5] == b'-':
         return DateTime_or_None(s)
     s = s + b"0" * (14 - len(s))  # padding
     parts = list(map(int, [_f for _f in (s[:4], s[4:6], s[6:8],
