@@ -1,3 +1,3 @@
 #!/bin/sh
 find -name '*.py' |
-    xargs sed -i 's/^#from __future__ import explicit_encoding/from __future__ import explicit_encoding/'
+    xargs sed -i 's/^from __future__ import explicit_encoding/#from __future__ import explicit_encoding/'

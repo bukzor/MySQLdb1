@@ -14,7 +14,7 @@ If you get an error saying the test database already exists, just skip this step
     echo 'create database test;' | mysql --port 33060 -h 0.0.0.0 -u root
 
 
-In your MySQLdb1 directory (this directory), run the tests:  
+In your MySQLdb1 directory (this directory), run the tests:
 
     virtualenv mysql-venv
     source mysql-venv/bin/activate

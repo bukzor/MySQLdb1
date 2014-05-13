@@ -7,7 +7,7 @@ reproduced below.
 
 Copyright 1999 by Comstar.net, Inc., Atlanta, GA, US.
 
-						All Rights Reserved
+                        All Rights Reserved
 
 Permission to use, copy, modify, and distribute this software and its
 documentation for any purpose and without fee is hereby granted,
@@ -59,7 +59,7 @@ PERFORMANCE OF THIS SOFTWARE.
 # define MyMemberlist(x) struct PyMemberDef x
 # define MyAlloc(s,t) (s *) t.tp_alloc(&t,0)
 #ifdef IS_PY3K
-# define MyFree(o) PyObject_Del(o)
+# define MyFree(o) Py_TYPE(o)->tp_free((PyObject*)o)
 #else
 # define MyFree(ob) ob->ob_type->tp_free((PyObject *)ob)
 #endif
@@ -2156,7 +2156,7 @@ _mysql_ConnectionObject_dealloc(
 		o = _mysql_ConnectionObject_close(self, NULL);
 		Py_XDECREF(o);
 	}
-	// MyFree(self);
+	MyFree(self);
 }
 
 static PyObject *
@@ -2237,7 +2237,7 @@ _mysql_ResultObject_dealloc(
 	PyObject_GC_UnTrack((PyObject *)self);
 	mysql_free_result(self->result);
 	_mysql_ResultObject_clear(self);
-	// MyFree(self);
+	MyFree(self);
 }
 
 static PyObject *

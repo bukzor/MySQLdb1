@@ -126,11 +126,12 @@ class Connection(_mysql.connection):
           class object, used to create cursors (keyword only)
 
         use_unicode
-          If True, text-like columns are returned as unicode objects
-          using the connection's character set.  Otherwise, text-like
-          columns are returned as strings.  columns are returned as
-          normal strings. Unicode objects will always be encoded to
-          the connection's character set regardless of this setting.
+          If True (the default), text-like columns are returned as
+          unicode objects using the connection's character set.
+          Otherwise, text-like columns are returned as strings.
+          columns are returned as normal strings. Unicode objects will
+          always be encoded to the connection's character set
+          regardless of this setting.
 
         charset
           If supplied, the connection character set will be changed
@@ -168,8 +169,7 @@ class Connection(_mysql.connection):
         from MySQLdb.converters import conversions
         from weakref import proxy
 
-        from five import udict
-        kwargs2 = udict(**kwargs)
+        kwargs2 = dict(**kwargs)
 
         if 'conv' in kwargs:
             conv = kwargs['conv']
@@ -187,12 +187,7 @@ class Connection(_mysql.connection):
         cursorclass = kwargs2.pop('cursorclass', self.default_cursor)
         charset = kwargs2.pop('charset', '')
 
-        if charset:
-            use_unicode = True
-        else:
-            use_unicode = False
-
-        use_unicode = kwargs2.pop('use_unicode', use_unicode)
+        use_unicode = kwargs2.pop('use_unicode', True)
         sql_mode = kwargs2.pop('sql_mode', '')
 
         client_flag = kwargs.get('client_flag', 0)
@@ -233,6 +228,8 @@ class Connection(_mysql.connection):
 
         def _get_unicode_literal():
             def unicode_literal(u, dummy=None):
+                # TODO: this one should fail a test:
+                return db.literal(str(u).encode(unicode_literal.charset))
                 return db.literal(u.encode(unicode_literal.charset))
             return unicode_literal
 

@@ -49,55 +49,43 @@ def DateTime_or_None(s):
     else:
         return Date_or_None(s)
 
-    try:
-        d, t = s.split(sep, 1)
-        if b'.' in t:
-            t, ms = t.split(b'.', 1)
-            ms = ms.ljust(6, b'0')
-        else:
-            ms = 0
-        return datetime(*[
-            int(x) for x in d.split(b'-') + t.split(b':') + [ms]
-        ])
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        return Date_or_None(s)
+    d, t = s.split(sep, 1)
+    if b'.' in t:
+        t, ms = t.split(b'.', 1)
+        ms = ms.ljust(6, b'0')
+    else:
+        ms = 0
+    return datetime(*[
+        int(x) for x in d.split(b'-') + t.split(b':') + [ms]
+    ])
 
 
 def TimeDelta_or_None(s):
-    try:
-        h, m, s = s.split(b':')
-        if b'.' in s:
-            s, ms = s.split(b'.')
-            ms = ms.ljust(6, b'0')
-        else:
-            ms = 0
-        h, m, s, ms = int(h), int(m), int(s), int(ms)
-        td = timedelta(hours=abs(h), minutes=m, seconds=s,
-                       microseconds=ms)
-        if h < 0:
-            return -td
-        else:
-            return td
-    except ValueError:
-        # unpacking or int/float conversion failed
-        return None
+    h, m, s = s.split(b':')
+    if b'.' in s:
+        s, ms = s.split(b'.')
+        ms = ms.ljust(6, b'0')
+    else:
+        ms = 0
+    h, m, s, ms = int(h), int(m), int(s), int(ms)
+    td = timedelta(hours=abs(h), minutes=m, seconds=s,
+                   microseconds=ms)
+    if h < 0:
+        return -td
+    else:
+        return td
 
 
 def Time_or_None(s):
-    try:
-        h, m, s = s.split(':')
-        if '.' in s:
-            s, ms = s.split('.')
-            ms = ms.ljust(6, '0')
-        else:
-            ms = 0
-        h, m, s, ms = int(h), int(m), int(s), int(ms)
-        return time(hour=h, minute=m, second=s,
-                    microsecond=ms)
-    except ValueError:
-        return None
+    h, m, s = s.split(':')
+    if '.' in s:
+        s, ms = s.split('.')
+        ms = ms.ljust(6, '0')
+    else:
+        ms = 0
+    h, m, s, ms = int(h), int(m), int(s), int(ms)
+    return time(hour=h, minute=m, second=s,
+                microsecond=ms)
 
 
 def Date_or_None(s):
@@ -124,9 +112,4 @@ def mysql_timestamp_converter(s):
     s = s + b"0" * (14 - len(s))  # padding
     parts = list(map(int, [_f for _f in (s[:4], s[4:6], s[6:8],
                                    s[8:10], s[10:12], s[12:14]) if _f]))
-    try:
-        return datetime(*parts)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        return None
+    return datetime(*parts)

@@ -1,8 +1,10 @@
 language: python
-python:
- - "2.6"
- - "2.7"
- - "pypy"
-install: python setup.py install
-before_script: mysql -e 'create database mysqldb_test charset utf8;'
-script: TESTDB=travis.cnf nosetests
+env:  # These should match the tox env list
+ - TOXENV=py26
+ - TOXENV=py27
+ - TOXENV=py33
+ - TOXENV=py34
+before_script:
+ - pip install future
+ - mysql -e 'create database mysqldb_test charset utf8;'
+script: TESTDB=travis.cnf tox
