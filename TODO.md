@@ -1,6 +1,6 @@
 Milestone 2
 ===========
-- [ ] fix future dependency
+- [ ] get rid of future pre-dependency
 - [x] travis bling
 - [ ] some benchmarking
 - [ ] run the refcount checking tool

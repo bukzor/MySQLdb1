@@ -6,7 +6,7 @@ env:  # These should match the tox env list
  - TOXENV=py34
  - TOXENV=pypy
 install:
- - pip install tox 'future<0.12.0'
+ - pip install tox future # TODO: this should not be necessary
 before_script:
  - mysql -e 'create database mysqldb_test charset utf8;'
 script: TESTDB=travis.cnf tox
