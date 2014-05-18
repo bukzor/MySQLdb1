@@ -1,7 +1,7 @@
 Milestone 2
 ===========
 - [ ] fix future dependency
-- [ ] travis bling
+- [x] travis bling
 - [ ] some benchmarking
 - [ ] run the refcount checking tool
 - [ ] travis py27-hack13
