@@ -1,11 +1,13 @@
+# NOTE: can't use `future` package here, as this module is a setup.py dependency.
 from __future__ import unicode_literals
 #from __future__ import explicit_encoding
-from future import standard_library
-standard_library.install_hooks()
 
-from future.builtins import dict
-from five import open
-from configparser import ConfigParser
+from five import open, PY3
+
+if PY3:
+    from configparser import ConfigParser  # pylint:disable=import-error
+else:
+    from ConfigParser import ConfigParser
 
 
 def get_metadata_and_options():

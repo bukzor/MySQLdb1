@@ -1,6 +1,6 @@
 Milestone 2
 ===========
-- [ ] get rid of future pre-dependency
+- [x] get rid of pre-dependency on `future` package
 - [x] travis bling
 - [ ] some benchmarking
 - [ ] run the refcount checking tool
@@ -16,6 +16,6 @@ Milestone 1
 
 Backlog
 =======
-- [ ] future bytes.\__mod__ ?
-- [ ] try to get five stuff into future ?
+- [ ] future bytes.\_\_mod\_\_ (?)
+- [ ] try to get five stuff into future (?)
 - [ ] pypy support?
