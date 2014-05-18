@@ -5,6 +5,7 @@ env:  # These should match the tox env list
  - TOXENV=py33
  - TOXENV=py34
  - TOXENV=pypy
+ - TOXENV=pyhack
 install:
  - pip install tox future # TODO: this should not be necessary
 before_script:
