@@ -16,6 +16,6 @@ Milestone 1
 
 Backlog
 =======
-- [ ] future bytes.\__mod__ ?
-- [ ] try to get five stuff into future ?
+- [ ] future bytes.\_\_mod\_\_ (?)
+- [ ] try to get five stuff into future (?)
 - [ ] pypy support?
