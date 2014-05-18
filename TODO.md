@@ -1,6 +1,6 @@
 Milestone 2
 ===========
-- [ ] get rid of future pre-dependency
+- [x] get rid of pre-dependency on `future` package
 - [x] travis bling
 - [ ] some benchmarking
 - [ ] run the refcount checking tool
