@@ -1,0 +1,495 @@
+<html>
+  <head>
+    <title>_mysql_ConnectionObject_Initialize</title>
+    <style type="text/css">
+.unreached-line {
+    #margin:1em;
+    #border:0.1em dotted #00aa00;
+
+    opacity:1.0;
+    filter:alpha(opacity=0);
+    #color:black;
+}
+
+.reached-line {
+    #margin:1em;
+    #border:0.1em dotted #00aa00;
+    border: 0.1em solid blue;
+    font-weight: bold;
+
+    opacity:1.0;
+    filter:alpha(opacity=0);
+    #color:black;
+}
+
+.reached-lineno {
+    border: 0.1em solid blue;
+    font-weight: bold;
+}
+
+pre {
+    #line-height:200%
+}
+
+._jsPlumb_connector { z-index: -2; }
+._jsPlumb_endpoint { z-index: -1; }
+
+.transition {
+    #border: 0.1em dotted #ddffdd;
+    #padding: 1em;
+    border: 0.1em solid #ccc;
+    -moz-box-shadow: 2px 2px 2px #ccc;
+    -webkit-box-shadow: 2px 2px 2px #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    margin-left: 5em;
+    font-family: proportional;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.error {
+    #border: 0.1em dotted #ddffdd;
+    #padding: 1em;
+    border: 0.1em solid #cc0000;
+    -moz-box-shadow: 2px 2px 2px #cc0000;
+    -webkit-box-shadow: 2px 2px 2px #cc0000;
+    box-shadow: 2px 2px 2px #cc0000;
+    margin-left: 5em;
+    color: red;
+    font-family: proportional;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.note {
+    #border: 0.1em dotted #ddffdd;
+    #padding: 1em;
+    border: 0.1em solid #ccc;
+    -moz-box-shadow: 2px 2px 2px #ccc;
+    -webkit-box-shadow: 2px 2px 2px #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    margin-left: 5em;
+    font-family: proportional;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.hll { background-color: #ffffcc }
+.source_c { color: #408080; font-style: italic } /* Comment */
+.source_err { border: 1px solid #FF0000 } /* Error */
+.source_k { color: #008000; font-weight: bold } /* Keyword */
+.source_o { color: #666666 } /* Operator */
+.source_cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.source_cp { color: #BC7A00 } /* Comment.Preproc */
+.source_c1 { color: #408080; font-style: italic } /* Comment.Single */
+.source_cs { color: #408080; font-style: italic } /* Comment.Special */
+.source_gd { color: #A00000 } /* Generic.Deleted */
+.source_ge { font-style: italic } /* Generic.Emph */
+.source_gr { color: #FF0000 } /* Generic.Error */
+.source_gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.source_gi { color: #00A000 } /* Generic.Inserted */
+.source_go { color: #888888 } /* Generic.Output */
+.source_gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.source_gs { font-weight: bold } /* Generic.Strong */
+.source_gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.source_gt { color: #0044DD } /* Generic.Traceback */
+.source_kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.source_kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.source_kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.source_kp { color: #008000 } /* Keyword.Pseudo */
+.source_kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.source_kt { color: #B00040 } /* Keyword.Type */
+.source_m { color: #666666 } /* Literal.Number */
+.source_s { color: #BA2121 } /* Literal.String */
+.source_na { color: #7D9029 } /* Name.Attribute */
+.source_nb { color: #008000 } /* Name.Builtin */
+.source_nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.source_no { color: #880000 } /* Name.Constant */
+.source_nd { color: #AA22FF } /* Name.Decorator */
+.source_ni { color: #999999; font-weight: bold } /* Name.Entity */
+.source_ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.source_nf { color: #0000FF } /* Name.Function */
+.source_nl { color: #A0A000 } /* Name.Label */
+.source_nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.source_nt { color: #008000; font-weight: bold } /* Name.Tag */
+.source_nv { color: #19177C } /* Name.Variable */
+.source_ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.source_w { color: #bbbbbb } /* Text.Whitespace */
+.source_mf { color: #666666 } /* Literal.Number.Float */
+.source_mh { color: #666666 } /* Literal.Number.Hex */
+.source_mi { color: #666666 } /* Literal.Number.Integer */
+.source_mo { color: #666666 } /* Literal.Number.Oct */
+.source_sb { color: #BA2121 } /* Literal.String.Backtick */
+.source_sc { color: #BA2121 } /* Literal.String.Char */
+.source_sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.source_s2 { color: #BA2121 } /* Literal.String.Double */
+.source_se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.source_sh { color: #BA2121 } /* Literal.String.Heredoc */
+.source_si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.source_sx { color: #008000 } /* Literal.String.Other */
+.source_sr { color: #BB6688 } /* Literal.String.Regex */
+.source_s1 { color: #BA2121 } /* Literal.String.Single */
+.source_ss { color: #19177C } /* Literal.String.Symbol */
+.source_bp { color: #008000 } /* Name.Builtin.Pseudo */
+.source_vc { color: #19177C } /* Name.Variable.Class */
+.source_vg { color: #19177C } /* Name.Variable.Global */
+.source_vi { color: #19177C } /* Name.Variable.Instance */
+.source_il { color: #666666 } /* Literal.Number.Integer.Long */    </style>
+  </head>
+  <body>
+<script type="text/javascript" src="http://explorercanvas.googlecode.com/svn/trunk/excanvas.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://jsplumb.googlecode.com/files/jquery.jsPlumb-1.2.6-all-min.js"></script>
+<div id="report-0">
+<table>
+  <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
+  <tr><td>Function:</td> <td><b>_mysql_ConnectionObject_Initialize</b></td></tr>
+  <tr><td>Error:</td> <td><b>ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</b></td></tr>
+</table>
+<div class="highlight"><pre><span class="lineno">528</span> <span id="trace0-line528" class="unreached-line"><span class="source_k">static</span> <span class="source_kt">int</span></span>
+<span class="lineno">529</span> <span id="trace0-line529" class="unreached-line"><span class="source_nf">_mysql_ConnectionObject_Initialize</span><span class="source_p">(</span></span>
+<span class="lineno">530</span> <span id="trace0-line530" class="unreached-line">	<span class="source_n">_mysql_ConnectionObject</span> <span class="source_o">*</span><span class="source_n">self</span><span class="source_p">,</span></span>
+<span class="lineno">531</span> <span id="trace0-line531" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">args</span><span class="source_p">,</span></span>
+<span class="lineno">532</span> <span id="trace0-line532" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">kwargs</span><span class="source_p">)</span></span>
+<span class="lineno">533</span> <span id="trace0-line533" class="unreached-line"><span class="source_p">{</span></span>
+<span class="reached-lineno">534</span> <span id="trace0-line534" class="reached-line">	<span class="source_n">MYSQL</span> <span class="source_o">*</span><span class="source_n">conn</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">535</span> <span id="trace0-line535" class="reached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">conv</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">536</span> <span id="trace0-line536" class="reached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">ssl</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">537</span> <span id="trace0-line537" class="unreached-line"><span class="source_cp">#if HAVE_OPENSSL</span></span>
+<span class="reached-lineno">538</span> <span id="trace0-line538" class="reached-line">	<span class="source_kt">char</span> <span class="source_o">*</span><span class="source_n">key</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">cert</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">ca</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">,</span></span>
+<span class="reached-lineno">539</span> <span id="trace0-line539" class="reached-line">		<span class="source_o">*</span><span class="source_n">capath</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">cipher</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">540</span> <span id="trace0-line540" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="reached-lineno">541</span> <span id="trace0-line541" class="reached-line">	<span class="source_kt">char</span> <span class="source_o">*</span><span class="source_n">host</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">user</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">passwd</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">,</span></span>
+<span class="reached-lineno">542</span> <span id="trace0-line542" class="reached-line">		<span class="source_o">*</span><span class="source_n">db</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">unix_socket</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">543</span> <span id="trace0-line543" class="reached-line">	<span class="source_kt">unsigned</span> <span class="source_kt">int</span> <span class="source_n">port</span> <span class="source_o">=</span> <span class="source_mi">0</span><span class="source_p">;</span></span>
+<span class="reached-lineno">544</span> <span id="trace0-line544" class="reached-line">	<span class="source_kt">unsigned</span> <span class="source_kt">int</span> <span class="source_n">client_flag</span> <span class="source_o">=</span> <span class="source_mi">0</span><span class="source_p">;</span></span>
+<span class="lineno">545</span> <span id="trace0-line545" class="unreached-line">	<span class="source_k">static</span> <span class="source_kt">char</span> <span class="source_o">*</span><span class="source_n">kwlist</span><span class="source_p">[]</span> <span class="source_o">=</span> <span class="source_p">{</span> <span class="source_s">&quot;host&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;user&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;passwd&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;db&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;port&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">546</span> <span id="trace0-line546" class="unreached-line">				  <span class="source_s">&quot;unix_socket&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;conv&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">547</span> <span id="trace0-line547" class="unreached-line">				  <span class="source_s">&quot;connect_timeout&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;compress&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">548</span> <span id="trace0-line548" class="unreached-line">				  <span class="source_s">&quot;named_pipe&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;init_command&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">549</span> <span id="trace0-line549" class="unreached-line">				  <span class="source_s">&quot;read_default_file&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;read_default_group&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">550</span> <span id="trace0-line550" class="unreached-line">				  <span class="source_s">&quot;client_flag&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;ssl&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">551</span> <span id="trace0-line551" class="unreached-line">				  <span class="source_s">&quot;local_infile&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">552</span> <span id="trace0-line552" class="unreached-line"><span class="source_cp">#ifdef HAVE_MYSQL_OPT_TIMEOUTS</span></span>
+<span class="lineno">553</span> <span id="trace0-line553" class="unreached-line">				  <span class="source_s">&quot;read_timeout&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">554</span> <span id="trace0-line554" class="unreached-line">				  <span class="source_s">&quot;write_timeout&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">555</span> <span id="trace0-line555" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="lineno">556</span> <span id="trace0-line556" class="unreached-line">				  <span class="source_nb">NULL</span> <span class="source_p">}</span> <span class="source_p">;</span></span>
+<span class="reached-lineno">557</span> <span id="trace0-line557" class="reached-line">	<span class="source_kt">int</span> <span class="source_n">connect_timeout</span> <span class="source_o">=</span> <span class="source_mi">0</span><span class="source_p">;</span></span>
+<span class="lineno">558</span> <span id="trace0-line558" class="unreached-line"><span class="source_cp">#ifdef HAVE_MYSQL_OPT_TIMEOUTS</span></span>
+<span class="reached-lineno">559</span> <span id="trace0-line559" class="reached-line">	<span class="source_kt">int</span> <span class="source_n">read_timeout</span> <span class="source_o">=</span> <span class="source_mi">0</span><span class="source_p">;</span></span>
+<span class="reached-lineno">560</span> <span id="trace0-line560" class="reached-line">	<span class="source_kt">int</span> <span class="source_n">write_timeout</span> <span class="source_o">=</span> <span class="source_mi">0</span><span class="source_p">;</span></span>
+<span class="lineno">561</span> <span id="trace0-line561" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="reached-lineno">562</span> <span id="trace0-line562" class="reached-line">	<span class="source_kt">int</span> <span class="source_n">compress</span> <span class="source_o">=</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">,</span> <span class="source_n">named_pipe</span> <span class="source_o">=</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">,</span> <span class="source_n">local_infile</span> <span class="source_o">=</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="reached-lineno">563</span> <span id="trace0-line563" class="reached-line">	<span class="source_kt">char</span> <span class="source_o">*</span><span class="source_n">init_command</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span></span>
+<span class="reached-lineno">564</span> <span id="trace0-line564" class="reached-line">	     <span class="source_o">*</span><span class="source_n">read_default_file</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span></span>
+<span class="reached-lineno">565</span> <span id="trace0-line565" class="reached-line">	     <span class="source_o">*</span><span class="source_n">read_default_group</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">566</span> <span id="trace0-line566" class="unreached-line">	</span>
+<span class="reached-lineno">567</span> <span id="trace0-line567" class="reached-line">	<span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">converter</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">568</span> <span id="trace0-line568" class="reached-line">	<span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">open</span> <span class="source_o">=</span> <span class="source_mi">0</span><span class="source_p">;</span></span>
+<span class="reached-lineno">569</span> <span id="trace0-line569" class="reached-line">	<span class="source_n">check_server_init</span><span class="source_p">(</span><span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">);</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking False path</span>
+<span class="lineno">570</span> <span id="trace0-line570" class="unreached-line"></span>
+<span class="reached-lineno">571</span> <span id="trace0-line571" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PyArg_ParseTupleAndKeywords</span><span class="source_p">(</span><span class="source_n">args</span><span class="source_p">,</span> <span class="source_n">kwargs</span><span class="source_p">,</span></span>
+<span class="transition">when PyArg_ParseTupleAndKeywords() succeeds</span>
+<span class="transition">taking False path</span>
+<span class="lineno">572</span> <span id="trace0-line572" class="unreached-line"><span class="source_cp">#ifdef HAVE_MYSQL_OPT_TIMEOUTS</span></span>
+<span class="lineno">573</span> <span id="trace0-line573" class="unreached-line">					 <span class="source_s">&quot;|ssssisOiiisssiOiii:connect&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">574</span> <span id="trace0-line574" class="unreached-line"><span class="source_cp">#else</span></span>
+<span class="lineno">575</span> <span id="trace0-line575" class="unreached-line">					 <span class="source_s">&quot;|ssssisOiiisssiOi:connect&quot;</span><span class="source_p">,</span></span>
+<span class="lineno">576</span> <span id="trace0-line576" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="lineno">577</span> <span id="trace0-line577" class="unreached-line">					 <span class="source_n">kwlist</span><span class="source_p">,</span></span>
+<span class="lineno">578</span> <span id="trace0-line578" class="unreached-line">					 <span class="source_o">&amp;</span><span class="source_n">host</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">user</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">passwd</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">db</span><span class="source_p">,</span></span>
+<span class="lineno">579</span> <span id="trace0-line579" class="unreached-line">					 <span class="source_o">&amp;</span><span class="source_n">port</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">unix_socket</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">conv</span><span class="source_p">,</span></span>
+<span class="lineno">580</span> <span id="trace0-line580" class="unreached-line">					 <span class="source_o">&amp;</span><span class="source_n">connect_timeout</span><span class="source_p">,</span></span>
+<span class="lineno">581</span> <span id="trace0-line581" class="unreached-line">					 <span class="source_o">&amp;</span><span class="source_n">compress</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">named_pipe</span><span class="source_p">,</span></span>
+<span class="lineno">582</span> <span id="trace0-line582" class="unreached-line">					 <span class="source_o">&amp;</span><span class="source_n">init_command</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">read_default_file</span><span class="source_p">,</span></span>
+<span class="lineno">583</span> <span id="trace0-line583" class="unreached-line">					 <span class="source_o">&amp;</span><span class="source_n">read_default_group</span><span class="source_p">,</span></span>
+<span class="lineno">584</span> <span id="trace0-line584" class="unreached-line">					 <span class="source_o">&amp;</span><span class="source_n">client_flag</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">ssl</span><span class="source_p">,</span></span>
+<span class="lineno">585</span> <span id="trace0-line585" class="unreached-line">		     <span class="source_o">&amp;</span><span class="source_n">local_infile</span></span>
+<span class="lineno">586</span> <span id="trace0-line586" class="unreached-line"><span class="source_cp">#ifdef HAVE_MYSQL_OPT_TIMEOUTS</span></span>
+<span class="lineno">587</span> <span id="trace0-line587" class="unreached-line">		     <span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">read_timeout</span></span>
+<span class="lineno">588</span> <span id="trace0-line588" class="unreached-line">		     <span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">write_timeout</span></span>
+<span class="lineno">589</span> <span id="trace0-line589" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="lineno">590</span> <span id="trace0-line590" class="unreached-line">	<span class="source_p">))</span></span>
+<span class="lineno">591</span> <span id="trace0-line591" class="unreached-line">		<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">592</span> <span id="trace0-line592" class="unreached-line"></span>
+<span class="lineno">593</span> <span id="trace0-line593" class="unreached-line"><span class="source_cp">#define _stringsuck(d,t,s) {t=PyMapping_GetItemString(s,#d);\</span></span>
+<span class="lineno">594</span> <span id="trace0-line594" class="unreached-line"><span class="source_cp">	if(t){d=get_string(t);Py_DECREF(t);}\</span></span>
+<span class="lineno">595</span> <span id="trace0-line595" class="unreached-line"><span class="source_cp">	PyErr_Clear();}</span></span>
+<span class="lineno">596</span> <span id="trace0-line596" class="unreached-line"></span>
+<span class="reached-lineno">597</span> <span id="trace0-line597" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">ssl</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">taking True path</span>
+<span class="lineno">598</span> <span id="trace0-line598" class="unreached-line"><span class="source_cp">#if HAVE_OPENSSL</span></span>
+<span class="reached-lineno">599</span> <span id="trace0-line599" class="reached-line">		<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">value</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">600</span> <span id="trace0-line600" class="reached-line">		<span class="source_n">_stringsuck</span><span class="source_p">(</span><span class="source_n">ca</span><span class="source_p">,</span> <span class="source_n">value</span><span class="source_p">,</span> <span class="source_n">ssl</span><span class="source_p">);</span></span>
+<span class="transition">when PyMapping_GetItemString() succeeds</span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="transition">calling PyErr_Clear()</span>
+<span class="reached-lineno">601</span> <span id="trace0-line601" class="reached-line">		<span class="source_n">_stringsuck</span><span class="source_p">(</span><span class="source_n">capath</span><span class="source_p">,</span> <span class="source_n">value</span><span class="source_p">,</span> <span class="source_n">ssl</span><span class="source_p">);</span></span>
+<span class="transition">when PyMapping_GetItemString() succeeds</span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="transition">calling PyErr_Clear()</span>
+<span class="reached-lineno">602</span> <span id="trace0-line602" class="reached-line">		<span class="source_n">_stringsuck</span><span class="source_p">(</span><span class="source_n">cert</span><span class="source_p">,</span> <span class="source_n">value</span><span class="source_p">,</span> <span class="source_n">ssl</span><span class="source_p">);</span></span>
+<span class="transition">when PyMapping_GetItemString() succeeds</span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="transition">calling PyErr_Clear()</span>
+<span class="reached-lineno">603</span> <span id="trace0-line603" class="reached-line">		<span class="source_n">_stringsuck</span><span class="source_p">(</span><span class="source_n">key</span><span class="source_p">,</span> <span class="source_n">value</span><span class="source_p">,</span> <span class="source_n">ssl</span><span class="source_p">);</span></span>
+<span class="transition">when PyMapping_GetItemString() succeeds</span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="transition">calling PyErr_Clear()</span>
+<span class="reached-lineno">604</span> <span id="trace0-line604" class="reached-line">		<span class="source_n">_stringsuck</span><span class="source_p">(</span><span class="source_n">cipher</span><span class="source_p">,</span> <span class="source_n">value</span><span class="source_p">,</span> <span class="source_n">ssl</span><span class="source_p">);</span></span>
+<span class="transition">when PyMapping_GetItemString() succeeds</span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="transition">calling PyErr_Clear()</span>
+<span class="lineno">605</span> <span id="trace0-line605" class="unreached-line"><span class="source_cp">#else</span></span>
+<span class="lineno">606</span> <span id="trace0-line606" class="unreached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">_mysql_NotSupportedError</span><span class="source_p">,</span></span>
+<span class="lineno">607</span> <span id="trace0-line607" class="unreached-line">				<span class="source_s">&quot;client library does not have SSL support&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">608</span> <span id="trace0-line608" class="unreached-line">		<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">609</span> <span id="trace0-line609" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="lineno">610</span> <span id="trace0-line610" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">611</span> <span id="trace0-line611" class="unreached-line"></span>
+<span class="reached-lineno">612</span> <span id="trace0-line612" class="reached-line">	<span class="source_n">Py_BEGIN_ALLOW_THREADS</span> <span class="source_p">;</span></span>
+<span class="transition">releasing the GIL by calling PyEval_SaveThread()</span>
+<span class="reached-lineno">613</span> <span id="trace0-line613" class="reached-line">	<span class="source_n">conn</span> <span class="source_o">=</span> <span class="source_n">mysql_init</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">));</span></span>
+<span class="reached-lineno">614</span> <span id="trace0-line614" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">connect_timeout</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">615</span> <span id="trace0-line615" class="reached-line">		<span class="source_kt">unsigned</span> <span class="source_kt">int</span> <span class="source_n">timeout</span> <span class="source_o">=</span> <span class="source_n">connect_timeout</span><span class="source_p">;</span></span>
+<span class="reached-lineno">616</span> <span id="trace0-line616" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_CONNECT_TIMEOUT</span><span class="source_p">,</span> </span>
+<span class="lineno">617</span> <span id="trace0-line617" class="unreached-line">				<span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_o">&amp;</span><span class="source_n">timeout</span><span class="source_p">);</span></span>
+<span class="lineno">618</span> <span id="trace0-line618" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">619</span> <span id="trace0-line619" class="unreached-line"><span class="source_cp">#ifdef HAVE_MYSQL_OPT_TIMEOUTS</span></span>
+<span class="reached-lineno">620</span> <span id="trace0-line620" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">read_timeout</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">621</span> <span id="trace0-line621" class="reached-line">		<span class="source_kt">unsigned</span> <span class="source_kt">int</span> <span class="source_n">timeout</span> <span class="source_o">=</span> <span class="source_n">read_timeout</span><span class="source_p">;</span></span>
+<span class="reached-lineno">622</span> <span id="trace0-line622" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_READ_TIMEOUT</span><span class="source_p">,</span></span>
+<span class="lineno">623</span> <span id="trace0-line623" class="unreached-line">				<span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_o">&amp;</span><span class="source_n">timeout</span><span class="source_p">);</span></span>
+<span class="lineno">624</span> <span id="trace0-line624" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="reached-lineno">625</span> <span id="trace0-line625" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">write_timeout</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">626</span> <span id="trace0-line626" class="reached-line">		<span class="source_kt">unsigned</span> <span class="source_kt">int</span> <span class="source_n">timeout</span> <span class="source_o">=</span> <span class="source_n">write_timeout</span><span class="source_p">;</span></span>
+<span class="reached-lineno">627</span> <span id="trace0-line627" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_WRITE_TIMEOUT</span><span class="source_p">,</span></span>
+<span class="lineno">628</span> <span id="trace0-line628" class="unreached-line">				<span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_o">&amp;</span><span class="source_n">timeout</span><span class="source_p">);</span></span>
+<span class="lineno">629</span> <span id="trace0-line629" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">630</span> <span id="trace0-line630" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="reached-lineno">631</span> <span id="trace0-line631" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">compress</span> <span class="source_o">!=</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -2</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">632</span> <span id="trace0-line632" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_COMPRESS</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">);</span></span>
+<span class="reached-lineno">633</span> <span id="trace0-line633" class="reached-line">		<span class="source_n">client_flag</span> <span class="source_o">|=</span> <span class="source_n">CLIENT_COMPRESS</span><span class="source_p">;</span></span>
+<span class="lineno">634</span> <span id="trace0-line634" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="reached-lineno">635</span> <span id="trace0-line635" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">named_pipe</span> <span class="source_o">!=</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -2</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">636</span> <span id="trace0-line636" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_NAMED_PIPE</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">);</span></span>
+<span class="reached-lineno">637</span> <span id="trace0-line637" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">init_command</span> <span class="source_o">!=</span> <span class="source_nb">NULL</span><span class="source_p">)</span></span>
+<span class="transition">when treating unknown const char * from _mysql.c:571 as non-NULL</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">638</span> <span id="trace0-line638" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_INIT_COMMAND</span><span class="source_p">,</span> <span class="source_n">init_command</span><span class="source_p">);</span></span>
+<span class="reached-lineno">639</span> <span id="trace0-line639" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">read_default_file</span> <span class="source_o">!=</span> <span class="source_nb">NULL</span><span class="source_p">)</span></span>
+<span class="transition">when treating unknown const char * from _mysql.c:571 as non-NULL</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">640</span> <span id="trace0-line640" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_READ_DEFAULT_FILE</span><span class="source_p">,</span> <span class="source_n">read_default_file</span><span class="source_p">);</span></span>
+<span class="reached-lineno">641</span> <span id="trace0-line641" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">read_default_group</span> <span class="source_o">!=</span> <span class="source_nb">NULL</span><span class="source_p">)</span></span>
+<span class="transition">when treating unknown const char * from _mysql.c:571 as non-NULL</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">642</span> <span id="trace0-line642" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_READ_DEFAULT_GROUP</span><span class="source_p">,</span> <span class="source_n">read_default_group</span><span class="source_p">);</span></span>
+<span class="lineno">643</span> <span id="trace0-line643" class="unreached-line"></span>
+<span class="reached-lineno">644</span> <span id="trace0-line644" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">local_infile</span> <span class="source_o">!=</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -2</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">645</span> <span id="trace0-line645" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_LOCAL_INFILE</span><span class="source_p">,</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span> <span class="source_o">&amp;</span><span class="source_n">local_infile</span><span class="source_p">);</span></span>
+<span class="lineno">646</span> <span id="trace0-line646" class="unreached-line"></span>
+<span class="lineno">647</span> <span id="trace0-line647" class="unreached-line"><span class="source_cp">#if HAVE_OPENSSL</span></span>
+<span class="reached-lineno">648</span> <span id="trace0-line648" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">ssl</span><span class="source_p">)</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">649</span> <span id="trace0-line649" class="reached-line">		<span class="source_n">mysql_ssl_set</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span></span>
+<span class="lineno">650</span> <span id="trace0-line650" class="unreached-line">			      <span class="source_n">key</span><span class="source_p">,</span> <span class="source_n">cert</span><span class="source_p">,</span> <span class="source_n">ca</span><span class="source_p">,</span> <span class="source_n">capath</span><span class="source_p">,</span> <span class="source_n">cipher</span><span class="source_p">);</span></span>
+<span class="lineno">651</span> <span id="trace0-line651" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="lineno">652</span> <span id="trace0-line652" class="unreached-line"></span>
+<span class="reached-lineno">653</span> <span id="trace0-line653" class="reached-line">	<span class="source_n">conn</span> <span class="source_o">=</span> <span class="source_n">mysql_real_connect</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">host</span><span class="source_p">,</span> <span class="source_n">user</span><span class="source_p">,</span> <span class="source_n">passwd</span><span class="source_p">,</span> <span class="source_n">db</span><span class="source_p">,</span></span>
+<span class="lineno">654</span> <span id="trace0-line654" class="unreached-line">				  <span class="source_n">port</span><span class="source_p">,</span> <span class="source_n">unix_socket</span><span class="source_p">,</span> <span class="source_n">client_flag</span><span class="source_p">);</span></span>
+<span class="lineno">655</span> <span id="trace0-line655" class="unreached-line"></span>
+<span class="reached-lineno">656</span> <span id="trace0-line656" class="reached-line">	<span class="source_n">Py_END_ALLOW_THREADS</span> <span class="source_p">;</span></span>
+<span class="transition">reacquiring the GIL by calling PyEval_RestoreThread()</span>
+<span class="lineno">657</span> <span id="trace0-line657" class="unreached-line"></span>
+<span class="reached-lineno">658</span> <span id="trace0-line658" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">conn</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when treating unknown struct MYSQL * from _mysql.c:653 as NULL</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">659</span> <span id="trace0-line659" class="reached-line">		<span class="source_n">_mysql_Exception</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_p">);</span></span>
+<span class="transition">when _mysql_Exception() succeeds</span>
+<span class="note">new ref from (unknown) _mysql_Exception allocated at: 		_mysql_Exception(self);</span>
+<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="reached-lineno">660</span> <span id="trace0-line660" class="reached-line">		<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">661</span> <span id="trace0-line661" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">662</span> <span id="trace0-line662" class="unreached-line"></span>
+<span class="lineno">663</span> <span id="trace0-line663" class="unreached-line">	<span class="source_cm">/* Internal references to python-land objects */</span></span>
+<span class="lineno">664</span> <span id="trace0-line664" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">conv</span><span class="source_p">)</span></span>
+<span class="lineno">665</span> <span id="trace0-line665" class="unreached-line">		<span class="source_n">conv</span> <span class="source_o">=</span> <span class="source_n">PyDict_New</span><span class="source_p">();</span></span>
+<span class="lineno">666</span> <span id="trace0-line666" class="unreached-line">	<span class="source_k">else</span></span>
+<span class="lineno">667</span> <span id="trace0-line667" class="unreached-line">		<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">);</span></span>
+<span class="lineno">668</span> <span id="trace0-line668" class="unreached-line"></span>
+<span class="lineno">669</span> <span id="trace0-line669" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">conv</span><span class="source_p">)</span></span>
+<span class="lineno">670</span> <span id="trace0-line670" class="unreached-line">		<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">671</span> <span id="trace0-line671" class="unreached-line">	<span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">converter</span> <span class="source_o">=</span> <span class="source_n">conv</span><span class="source_p">;</span></span>
+<span class="lineno">672</span> <span id="trace0-line672" class="unreached-line"></span>
+<span class="lineno">673</span> <span id="trace0-line673" class="unreached-line">	<span class="source_cm">/*</span></span>
+<span class="lineno">674</span> <span id="trace0-line674" class="unreached-line"><span class="source_cm">	  PyType_GenericAlloc() automatically sets up GC allocation and</span></span>
+<span class="lineno">675</span> <span id="trace0-line675" class="unreached-line"><span class="source_cm">	  tracking for GC objects, at least in 2.2.1, so it does not need to</span></span>
+<span class="lineno">676</span> <span id="trace0-line676" class="unreached-line"><span class="source_cm">	  be done here. tp_dealloc still needs to call PyObject_GC_UnTrack(),</span></span>
+<span class="lineno">677</span> <span id="trace0-line677" class="unreached-line"><span class="source_cm">	  however.</span></span>
+<span class="lineno">678</span> <span id="trace0-line678" class="unreached-line"><span class="source_cm">	*/</span></span>
+<span class="lineno">679</span> <span id="trace0-line679" class="unreached-line">	<span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">open</span> <span class="source_o">=</span> <span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">680</span> <span id="trace0-line680" class="unreached-line">	<span class="source_k">return</span> <span class="source_mi">0</span><span class="source_p">;</span></span>
+<span class="lineno">681</span> <span id="trace0-line681" class="unreached-line"><span class="source_p">}</span></span>
+<span class="error">ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
+<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
+<span class="note">but final ob_refcnt is N + 1</span>
+</pre></div>
+
+<script type="text/javascript">
+  jsPlumb.bind("ready", function() {
+    /* Set up defaults: */
+    jsPlumb.Defaults.Connector = [ "Bezier", 1 ];
+    jsPlumb.Defaults.Connector = [ "Straight" ];
+    jsPlumb.Defaults.PaintStyle = { strokeStyle:"blue", lineWidth:1 };
+    jsPlumb.Defaults.EndpointStyle = { radius:2, fillStyle:"red" };
+    jsPlumb.Defaults.Anchors =  [ "BottomCenter", "TopCenter" ];
+
+    /* Add lines: */
+    jsPlumb.connect({source:'trace0-line569',
+                     target:'trace0-line571',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line571',
+                     target:'trace0-line571',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line571',
+                     target:'trace0-line597',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line597',
+                     target:'trace0-line599',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line600',
+                     target:'trace0-line601',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line601',
+                     target:'trace0-line602',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line602',
+                     target:'trace0-line603',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line603',
+                     target:'trace0-line604',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line604',
+                     target:'trace0-line612',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line612',
+                     target:'trace0-line613',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line614',
+                     target:'trace0-line615',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line620',
+                     target:'trace0-line621',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line625',
+                     target:'trace0-line626',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line631',
+                     target:'trace0-line632',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line635',
+                     target:'trace0-line636',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line637',
+                     target:'trace0-line638',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line639',
+                     target:'trace0-line640',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line641',
+                     target:'trace0-line642',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line644',
+                     target:'trace0-line645',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line648',
+                     target:'trace0-line649',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line656',
+                     target:'trace0-line658',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line658',
+                     target:'trace0-line659',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line659',
+                     target:'trace0-line660',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+  })
+</script>
+<hr/></div>
+  </body>

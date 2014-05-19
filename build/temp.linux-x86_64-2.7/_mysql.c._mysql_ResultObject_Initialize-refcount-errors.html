@@ -1,0 +1,430 @@
+<html>
+  <head>
+    <title>_mysql_ResultObject_Initialize</title>
+    <style type="text/css">
+.unreached-line {
+    #margin:1em;
+    #border:0.1em dotted #00aa00;
+
+    opacity:1.0;
+    filter:alpha(opacity=0);
+    #color:black;
+}
+
+.reached-line {
+    #margin:1em;
+    #border:0.1em dotted #00aa00;
+    border: 0.1em solid blue;
+    font-weight: bold;
+
+    opacity:1.0;
+    filter:alpha(opacity=0);
+    #color:black;
+}
+
+.reached-lineno {
+    border: 0.1em solid blue;
+    font-weight: bold;
+}
+
+pre {
+    #line-height:200%
+}
+
+._jsPlumb_connector { z-index: -2; }
+._jsPlumb_endpoint { z-index: -1; }
+
+.transition {
+    #border: 0.1em dotted #ddffdd;
+    #padding: 1em;
+    border: 0.1em solid #ccc;
+    -moz-box-shadow: 2px 2px 2px #ccc;
+    -webkit-box-shadow: 2px 2px 2px #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    margin-left: 5em;
+    font-family: proportional;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.error {
+    #border: 0.1em dotted #ddffdd;
+    #padding: 1em;
+    border: 0.1em solid #cc0000;
+    -moz-box-shadow: 2px 2px 2px #cc0000;
+    -webkit-box-shadow: 2px 2px 2px #cc0000;
+    box-shadow: 2px 2px 2px #cc0000;
+    margin-left: 5em;
+    color: red;
+    font-family: proportional;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.note {
+    #border: 0.1em dotted #ddffdd;
+    #padding: 1em;
+    border: 0.1em solid #ccc;
+    -moz-box-shadow: 2px 2px 2px #ccc;
+    -webkit-box-shadow: 2px 2px 2px #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    margin-left: 5em;
+    font-family: proportional;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.hll { background-color: #ffffcc }
+.source_c { color: #408080; font-style: italic } /* Comment */
+.source_err { border: 1px solid #FF0000 } /* Error */
+.source_k { color: #008000; font-weight: bold } /* Keyword */
+.source_o { color: #666666 } /* Operator */
+.source_cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.source_cp { color: #BC7A00 } /* Comment.Preproc */
+.source_c1 { color: #408080; font-style: italic } /* Comment.Single */
+.source_cs { color: #408080; font-style: italic } /* Comment.Special */
+.source_gd { color: #A00000 } /* Generic.Deleted */
+.source_ge { font-style: italic } /* Generic.Emph */
+.source_gr { color: #FF0000 } /* Generic.Error */
+.source_gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.source_gi { color: #00A000 } /* Generic.Inserted */
+.source_go { color: #888888 } /* Generic.Output */
+.source_gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.source_gs { font-weight: bold } /* Generic.Strong */
+.source_gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.source_gt { color: #0044DD } /* Generic.Traceback */
+.source_kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.source_kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.source_kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.source_kp { color: #008000 } /* Keyword.Pseudo */
+.source_kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.source_kt { color: #B00040 } /* Keyword.Type */
+.source_m { color: #666666 } /* Literal.Number */
+.source_s { color: #BA2121 } /* Literal.String */
+.source_na { color: #7D9029 } /* Name.Attribute */
+.source_nb { color: #008000 } /* Name.Builtin */
+.source_nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.source_no { color: #880000 } /* Name.Constant */
+.source_nd { color: #AA22FF } /* Name.Decorator */
+.source_ni { color: #999999; font-weight: bold } /* Name.Entity */
+.source_ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.source_nf { color: #0000FF } /* Name.Function */
+.source_nl { color: #A0A000 } /* Name.Label */
+.source_nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.source_nt { color: #008000; font-weight: bold } /* Name.Tag */
+.source_nv { color: #19177C } /* Name.Variable */
+.source_ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.source_w { color: #bbbbbb } /* Text.Whitespace */
+.source_mf { color: #666666 } /* Literal.Number.Float */
+.source_mh { color: #666666 } /* Literal.Number.Hex */
+.source_mi { color: #666666 } /* Literal.Number.Integer */
+.source_mo { color: #666666 } /* Literal.Number.Oct */
+.source_sb { color: #BA2121 } /* Literal.String.Backtick */
+.source_sc { color: #BA2121 } /* Literal.String.Char */
+.source_sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.source_s2 { color: #BA2121 } /* Literal.String.Double */
+.source_se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.source_sh { color: #BA2121 } /* Literal.String.Heredoc */
+.source_si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.source_sx { color: #008000 } /* Literal.String.Other */
+.source_sr { color: #BB6688 } /* Literal.String.Regex */
+.source_s1 { color: #BA2121 } /* Literal.String.Single */
+.source_ss { color: #19177C } /* Literal.String.Symbol */
+.source_bp { color: #008000 } /* Name.Builtin.Pseudo */
+.source_vc { color: #19177C } /* Name.Variable.Class */
+.source_vg { color: #19177C } /* Name.Variable.Global */
+.source_vi { color: #19177C } /* Name.Variable.Instance */
+.source_il { color: #666666 } /* Literal.Number.Integer.Long */    </style>
+  </head>
+  <body>
+<script type="text/javascript" src="http://explorercanvas.googlecode.com/svn/trunk/excanvas.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://jsplumb.googlecode.com/files/jquery.jsPlumb-1.2.6-all-min.js"></script>
+<div id="report-0">
+<table>
+  <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
+  <tr><td>Function:</td> <td><b>_mysql_ResultObject_Initialize</b></td></tr>
+  <tr><td>Error:</td> <td><b>ob_refcnt of PyTupleObject is 1 too high</b></td></tr>
+</table>
+<div class="highlight"><pre><span class="lineno">382</span> <span id="trace0-line382" class="unreached-line"><span class="source_k">static</span> <span class="source_kt">int</span></span>
+<span class="lineno">383</span> <span id="trace0-line383" class="unreached-line"><span class="source_nf">_mysql_ResultObject_Initialize</span><span class="source_p">(</span></span>
+<span class="lineno">384</span> <span id="trace0-line384" class="unreached-line">	<span class="source_n">_mysql_ResultObject</span> <span class="source_o">*</span><span class="source_n">self</span><span class="source_p">,</span></span>
+<span class="lineno">385</span> <span id="trace0-line385" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">args</span><span class="source_p">,</span></span>
+<span class="lineno">386</span> <span id="trace0-line386" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">kwargs</span><span class="source_p">)</span></span>
+<span class="lineno">387</span> <span id="trace0-line387" class="unreached-line"><span class="source_p">{</span></span>
+<span class="lineno">388</span> <span id="trace0-line388" class="unreached-line">	<span class="source_k">static</span> <span class="source_kt">char</span> <span class="source_o">*</span><span class="source_n">kwlist</span><span class="source_p">[]</span> <span class="source_o">=</span> <span class="source_p">{</span><span class="source_s">&quot;connection&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;use&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;converter&quot;</span><span class="source_p">,</span> <span class="source_nb">NULL</span><span class="source_p">};</span></span>
+<span class="lineno">389</span> <span id="trace0-line389" class="unreached-line">	<span class="source_n">MYSQL_RES</span> <span class="source_o">*</span><span class="source_n">result</span><span class="source_p">;</span> </span>
+<span class="reached-lineno">390</span> <span id="trace0-line390" class="reached-line">	<span class="source_n">_mysql_ConnectionObject</span> <span class="source_o">*</span><span class="source_n">conn</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">391</span> <span id="trace0-line391" class="reached-line">	<span class="source_kt">int</span> <span class="source_n">use</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> </span>
+<span class="reached-lineno">392</span> <span id="trace0-line392" class="reached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">conv</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">393</span> <span id="trace0-line393" class="unreached-line">	<span class="source_kt">int</span> <span class="source_n">n</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">;</span></span>
+<span class="lineno">394</span> <span id="trace0-line394" class="unreached-line">	<span class="source_n">MYSQL_FIELD</span> <span class="source_o">*</span><span class="source_n">fields</span><span class="source_p">;</span></span>
+<span class="lineno">395</span> <span id="trace0-line395" class="unreached-line"></span>
+<span class="reached-lineno">396</span> <span id="trace0-line396" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PyArg_ParseTupleAndKeywords</span><span class="source_p">(</span><span class="source_n">args</span><span class="source_p">,</span> <span class="source_n">kwargs</span><span class="source_p">,</span> <span class="source_s">&quot;O|iO&quot;</span><span class="source_p">,</span> <span class="source_n">kwlist</span><span class="source_p">,</span></span>
+<span class="transition">when PyArg_ParseTupleAndKeywords() succeeds</span>
+<span class="transition">taking False path</span>
+<span class="lineno">397</span> <span id="trace0-line397" class="unreached-line">					  <span class="source_o">&amp;</span><span class="source_n">conn</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">use</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">conv</span><span class="source_p">))</span></span>
+<span class="lineno">398</span> <span id="trace0-line398" class="unreached-line">		<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="reached-lineno">399</span> <span id="trace0-line399" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">conv</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">taking False path</span>
+<span class="lineno">400</span> <span id="trace0-line400" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">conv</span> <span class="source_o">=</span> <span class="source_n">PyDict_New</span><span class="source_p">()))</span></span>
+<span class="lineno">401</span> <span id="trace0-line401" class="unreached-line">			<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">402</span> <span id="trace0-line402" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">403</span> <span id="trace0-line403" class="unreached-line">	<span class="source_k">else</span></span>
+<span class="reached-lineno">404</span> <span id="trace0-line404" class="reached-line">		<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">);</span></span>
+<span class="lineno">405</span> <span id="trace0-line405" class="unreached-line"></span>
+<span class="reached-lineno">406</span> <span id="trace0-line406" class="reached-line">	<span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">conn</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span> <span class="source_n">conn</span><span class="source_p">;</span></span>
+<span class="reached-lineno">407</span> <span id="trace0-line407" class="reached-line">	<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">conn</span><span class="source_p">);</span></span>
+<span class="reached-lineno">408</span> <span id="trace0-line408" class="reached-line">	<span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">use</span> <span class="source_o">=</span> <span class="source_n">use</span><span class="source_p">;</span></span>
+<span class="reached-lineno">409</span> <span id="trace0-line409" class="reached-line">	<span class="source_n">Py_BEGIN_ALLOW_THREADS</span> <span class="source_p">;</span></span>
+<span class="transition">releasing the GIL by calling PyEval_SaveThread()</span>
+<span class="reached-lineno">410</span> <span id="trace0-line410" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">use</span><span class="source_p">)</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">411</span> <span id="trace0-line411" class="reached-line">		<span class="source_n">result</span> <span class="source_o">=</span> <span class="source_n">mysql_use_result</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">conn</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">));</span></span>
+<span class="lineno">412</span> <span id="trace0-line412" class="unreached-line">	<span class="source_k">else</span></span>
+<span class="lineno">413</span> <span id="trace0-line413" class="unreached-line">		<span class="source_n">result</span> <span class="source_o">=</span> <span class="source_n">mysql_store_result</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">conn</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">));</span></span>
+<span class="reached-lineno">414</span> <span id="trace0-line414" class="reached-line">	<span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">result</span> <span class="source_o">=</span> <span class="source_n">result</span><span class="source_p">;</span></span>
+<span class="reached-lineno">415</span> <span id="trace0-line415" class="reached-line">	<span class="source_n">Py_END_ALLOW_THREADS</span> <span class="source_p">;</span></span>
+<span class="transition">reacquiring the GIL by calling PyEval_RestoreThread()</span>
+<span class="reached-lineno">416</span> <span id="trace0-line416" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">result</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when treating unknown struct MYSQL_RES * from _mysql.c:411 as non-NULL</span>
+<span class="transition">taking False path</span>
+<span class="lineno">417</span> <span id="trace0-line417" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">mysql_field_count</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">conn</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">))</span> <span class="source_o">&gt;</span> <span class="source_mi">0</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="lineno">418</span> <span id="trace0-line418" class="unreached-line">		    <span class="source_n">_mysql_Exception</span><span class="source_p">(</span><span class="source_n">conn</span><span class="source_p">);</span></span>
+<span class="lineno">419</span> <span id="trace0-line419" class="unreached-line">		    <span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">420</span> <span id="trace0-line420" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">421</span> <span id="trace0-line421" class="unreached-line">		<span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">converter</span> <span class="source_o">=</span> <span class="source_n">PyTuple_New</span><span class="source_p">(</span><span class="source_mi">0</span><span class="source_p">);</span></span>
+<span class="lineno">422</span> <span id="trace0-line422" class="unreached-line">		<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">);</span></span>
+<span class="lineno">423</span> <span id="trace0-line423" class="unreached-line">		<span class="source_k">return</span> <span class="source_mi">0</span><span class="source_p">;</span></span>
+<span class="lineno">424</span> <span id="trace0-line424" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="reached-lineno">425</span> <span id="trace0-line425" class="reached-line">	<span class="source_n">n</span> <span class="source_o">=</span> <span class="source_n">mysql_num_fields</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">);</span></span>
+<span class="reached-lineno">426</span> <span id="trace0-line426" class="reached-line">	<span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">nfields</span> <span class="source_o">=</span> <span class="source_n">n</span><span class="source_p">;</span></span>
+<span class="reached-lineno">427</span> <span id="trace0-line427" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">converter</span> <span class="source_o">=</span> <span class="source_n">PyTuple_New</span><span class="source_p">(</span><span class="source_n">n</span><span class="source_p">)))</span> <span class="source_p">{</span></span>
+<span class="transition">when PyTuple_New() succeeds</span>
+<span class="transition">taking False path</span>
+<span class="note">PyTupleObject allocated at: 	if (!(self->converter = PyTuple_New(n))) {</span>
+<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="lineno">428</span> <span id="trace0-line428" class="unreached-line">		<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">);</span></span>
+<span class="lineno">429</span> <span id="trace0-line429" class="unreached-line">		<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">430</span> <span id="trace0-line430" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="reached-lineno">431</span> <span id="trace0-line431" class="reached-line">	<span class="source_n">fields</span> <span class="source_o">=</span> <span class="source_n">mysql_fetch_fields</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">);</span></span>
+<span class="reached-lineno">432</span> <span id="trace0-line432" class="reached-line">	<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">i</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">&lt;</span><span class="source_n">n</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when considering range: 1 <= n <= 0xffffffff</span>
+<span class="transition">taking True path</span>
+<span class="transition">when considering n == (unsigned int)1 from _mysql.c:425</span>
+<span class="transition">taking False path</span>
+<span class="lineno">433</span> <span id="trace0-line433" class="unreached-line">		<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">tmp</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">fun</span><span class="source_p">;</span></span>
+<span class="reached-lineno">434</span> <span id="trace0-line434" class="reached-line">		<span class="source_n">tmp</span> <span class="source_o">=</span> <span class="source_n">PyInt_FromLong</span><span class="source_p">((</span><span class="source_kt">long</span><span class="source_p">)</span> <span class="source_n">fields</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">].</span><span class="source_n">type</span><span class="source_p">);</span></span>
+<span class="transition">when treating unknown struct MYSQL_FIELD * from _mysql.c:434 as non-NULL</span>
+<span class="transition">when PyInt_FromLong() succeeds</span>
+<span class="reached-lineno">435</span> <span id="trace0-line435" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">tmp</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">taking False path</span>
+<span class="lineno">436</span> <span id="trace0-line436" class="unreached-line">			<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">);</span></span>
+<span class="lineno">437</span> <span id="trace0-line437" class="unreached-line">			<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">438</span> <span id="trace0-line438" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="reached-lineno">439</span> <span id="trace0-line439" class="reached-line">		<span class="source_n">fun</span> <span class="source_o">=</span> <span class="source_n">PyObject_GetItem</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">,</span> <span class="source_n">tmp</span><span class="source_p">);</span></span>
+<span class="transition">when PyObject_GetItem() succeeds</span>
+<span class="reached-lineno">440</span> <span id="trace0-line440" class="reached-line">		<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">tmp</span><span class="source_p">);</span></span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">441</span> <span id="trace0-line441" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">fun</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">taking False path</span>
+<span class="lineno">442</span> <span id="trace0-line442" class="unreached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyErr_Occurred</span><span class="source_p">())</span> <span class="source_p">{</span></span>
+<span class="lineno">443</span> <span id="trace0-line443" class="unreached-line">				<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PyErr_ExceptionMatches</span><span class="source_p">(</span><span class="source_n">PyExc_KeyError</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="lineno">444</span> <span id="trace0-line444" class="unreached-line">					<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">);</span></span>
+<span class="lineno">445</span> <span id="trace0-line445" class="unreached-line">					<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">446</span> <span id="trace0-line446" class="unreached-line">				<span class="source_p">}</span></span>
+<span class="lineno">447</span> <span id="trace0-line447" class="unreached-line">				<span class="source_n">PyErr_Clear</span><span class="source_p">();</span></span>
+<span class="lineno">448</span> <span id="trace0-line448" class="unreached-line">			<span class="source_p">}</span></span>
+<span class="lineno">449</span> <span id="trace0-line449" class="unreached-line">			<span class="source_n">fun</span> <span class="source_o">=</span> <span class="source_n">Py_None</span><span class="source_p">;</span></span>
+<span class="lineno">450</span> <span id="trace0-line450" class="unreached-line">			<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">Py_None</span><span class="source_p">);</span></span>
+<span class="lineno">451</span> <span id="trace0-line451" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="reached-lineno">452</span> <span id="trace0-line452" class="reached-line">		<span class="source_k">else</span> <span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PySequence_Check</span><span class="source_p">(</span><span class="source_n">fun</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">453</span> <span id="trace0-line453" class="reached-line">			<span class="source_kt">int</span> <span class="source_n">j</span><span class="source_p">,</span> <span class="source_n">n2</span><span class="source_o">=</span><span class="source_n">PySequence_Size</span><span class="source_p">(</span><span class="source_n">fun</span><span class="source_p">);</span></span>
+<span class="transition">when PySequence_Size() succeeds</span>
+<span class="reached-lineno">454</span> <span id="trace0-line454" class="reached-line">			<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">fun2</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">455</span> <span id="trace0-line455" class="reached-line">			<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">j</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">j</span><span class="source_o">&lt;</span><span class="source_n">n2</span><span class="source_p">;</span> <span class="source_n">j</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when considering range: -0x80000000 <= n2 <= 0</span>
+<span class="transition">taking False path</span>
+<span class="lineno">456</span> <span id="trace0-line456" class="unreached-line">				<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">t</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">fun</span><span class="source_p">,</span> <span class="source_n">j</span><span class="source_p">);</span></span>
+<span class="lineno">457</span> <span id="trace0-line457" class="unreached-line">				<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">t</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="lineno">458</span> <span id="trace0-line458" class="unreached-line">					<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">fun</span><span class="source_p">);</span></span>
+<span class="lineno">459</span> <span id="trace0-line459" class="unreached-line">					<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">);</span></span>
+<span class="lineno">460</span> <span id="trace0-line460" class="unreached-line">					<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">461</span> <span id="trace0-line461" class="unreached-line">				<span class="source_p">}</span></span>
+<span class="lineno">462</span> <span id="trace0-line462" class="unreached-line">				<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyTuple_Check</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">)</span> <span class="source_o">&amp;&amp;</span> <span class="source_n">PyTuple_GET_SIZE</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">)</span> <span class="source_o">==</span> <span class="source_mi">2</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="lineno">463</span> <span id="trace0-line463" class="unreached-line">					<span class="source_kt">long</span> <span class="source_n">mask</span><span class="source_p">,</span> <span class="source_n">flags</span><span class="source_p">;</span></span>
+<span class="lineno">464</span> <span id="trace0-line464" class="unreached-line">					<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">pmask</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">465</span> <span id="trace0-line465" class="unreached-line">					<span class="source_n">pmask</span> <span class="source_o">=</span> <span class="source_n">PyTuple_GET_ITEM</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">);</span></span>
+<span class="lineno">466</span> <span id="trace0-line466" class="unreached-line">					<span class="source_n">fun2</span> <span class="source_o">=</span> <span class="source_n">PyTuple_GET_ITEM</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">,</span> <span class="source_mi">1</span><span class="source_p">);</span></span>
+<span class="lineno">467</span> <span id="trace0-line467" class="unreached-line">					<span class="source_n">Py_XINCREF</span><span class="source_p">(</span><span class="source_n">fun2</span><span class="source_p">);</span></span>
+<span class="lineno">468</span> <span id="trace0-line468" class="unreached-line">					<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyInt_Check</span><span class="source_p">(</span><span class="source_n">pmask</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="lineno">469</span> <span id="trace0-line469" class="unreached-line">						<span class="source_n">mask</span> <span class="source_o">=</span> <span class="source_n">PyInt_AS_LONG</span><span class="source_p">(</span><span class="source_n">pmask</span><span class="source_p">);</span></span>
+<span class="lineno">470</span> <span id="trace0-line470" class="unreached-line">						<span class="source_n">flags</span> <span class="source_o">=</span> <span class="source_n">fields</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">].</span><span class="source_n">flags</span><span class="source_p">;</span></span>
+<span class="lineno">471</span> <span id="trace0-line471" class="unreached-line">						<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">fields</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">].</span><span class="source_n">charsetnr</span> <span class="source_o">!=</span> <span class="source_mi">63</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_cm">/* maaagic */</span></span>
+<span class="lineno">472</span> <span id="trace0-line472" class="unreached-line">							<span class="source_n">flags</span> <span class="source_o">&amp;=</span> <span class="source_o">~</span><span class="source_n">BINARY_FLAG</span><span class="source_p">;</span></span>
+<span class="lineno">473</span> <span id="trace0-line473" class="unreached-line">						<span class="source_p">}</span></span>
+<span class="lineno">474</span> <span id="trace0-line474" class="unreached-line">						<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">mask</span> <span class="source_o">&amp;</span> <span class="source_n">flags</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="lineno">475</span> <span id="trace0-line475" class="unreached-line">							<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">);</span></span>
+<span class="lineno">476</span> <span id="trace0-line476" class="unreached-line">							<span class="source_k">break</span><span class="source_p">;</span></span>
+<span class="lineno">477</span> <span id="trace0-line477" class="unreached-line">						<span class="source_p">}</span></span>
+<span class="lineno">478</span> <span id="trace0-line478" class="unreached-line">						<span class="source_k">else</span> <span class="source_p">{</span></span>
+<span class="lineno">479</span> <span id="trace0-line479" class="unreached-line">							<span class="source_n">fun2</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">480</span> <span id="trace0-line480" class="unreached-line">						<span class="source_p">}</span></span>
+<span class="lineno">481</span> <span id="trace0-line481" class="unreached-line">					<span class="source_p">}</span> <span class="source_k">else</span> <span class="source_p">{</span></span>
+<span class="lineno">482</span> <span id="trace0-line482" class="unreached-line">						<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">);</span></span>
+<span class="lineno">483</span> <span id="trace0-line483" class="unreached-line">						<span class="source_k">break</span><span class="source_p">;</span></span>
+<span class="lineno">484</span> <span id="trace0-line484" class="unreached-line">					<span class="source_p">}</span></span>
+<span class="lineno">485</span> <span id="trace0-line485" class="unreached-line">				<span class="source_p">}</span></span>
+<span class="lineno">486</span> <span id="trace0-line486" class="unreached-line">				<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">);</span></span>
+<span class="lineno">487</span> <span id="trace0-line487" class="unreached-line">			<span class="source_p">}</span></span>
+<span class="reached-lineno">488</span> <span id="trace0-line488" class="reached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">fun2</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">489</span> <span id="trace0-line489" class="reached-line">				<span class="source_n">fun2</span> <span class="source_o">=</span> <span class="source_n">Py_None</span><span class="source_p">;</span></span>
+<span class="reached-lineno">490</span> <span id="trace0-line490" class="reached-line">				<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">fun2</span><span class="source_p">);</span></span>
+<span class="lineno">491</span> <span id="trace0-line491" class="unreached-line">			<span class="source_p">}</span></span>
+<span class="reached-lineno">492</span> <span id="trace0-line492" class="reached-line">			<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">fun</span><span class="source_p">);</span></span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">493</span> <span id="trace0-line493" class="reached-line">			<span class="source_n">fun</span> <span class="source_o">=</span> <span class="source_n">fun2</span><span class="source_p">;</span></span>
+<span class="lineno">494</span> <span id="trace0-line494" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="reached-lineno">495</span> <span id="trace0-line495" class="reached-line">		<span class="source_n">PyTuple_SET_ITEM</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">converter</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">,</span> <span class="source_n">fun</span><span class="source_p">);</span></span>
+<span class="lineno">496</span> <span id="trace0-line496" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">497</span> <span id="trace0-line497" class="unreached-line"></span>
+<span class="reached-lineno">498</span> <span id="trace0-line498" class="reached-line">	<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">);</span></span>
+<span class="transition">when considering range: -0x8000000000000000 <= value <= -1</span>
+<span class="transition">taking True path</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">499</span> <span id="trace0-line499" class="reached-line">	<span class="source_k">return</span> <span class="source_mi">0</span><span class="source_p">;</span></span>
+<span class="lineno">500</span> <span id="trace0-line500" class="unreached-line"><span class="source_p">}</span></span>
+<span class="error">ob_refcnt of PyTupleObject is 1 too high</span>
+<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
+<span class="note">but final ob_refcnt is N + 1</span>
+<span class="note">found 8 similar trace(s) to this</span>
+</pre></div>
+
+<script type="text/javascript">
+  jsPlumb.bind("ready", function() {
+    /* Set up defaults: */
+    jsPlumb.Defaults.Connector = [ "Bezier", 1 ];
+    jsPlumb.Defaults.Connector = [ "Straight" ];
+    jsPlumb.Defaults.PaintStyle = { strokeStyle:"blue", lineWidth:1 };
+    jsPlumb.Defaults.EndpointStyle = { radius:2, fillStyle:"red" };
+    jsPlumb.Defaults.Anchors =  [ "BottomCenter", "TopCenter" ];
+
+    /* Add lines: */
+    jsPlumb.connect({source:'trace0-line396',
+                     target:'trace0-line396',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line396',
+                     target:'trace0-line399',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line399',
+                     target:'trace0-line404',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line409',
+                     target:'trace0-line410',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line410',
+                     target:'trace0-line411',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line415',
+                     target:'trace0-line416',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line416',
+                     target:'trace0-line425',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line427',
+                     target:'trace0-line427',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line427',
+                     target:'trace0-line431',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line432',
+                     target:'trace0-line434',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line434',
+                     target:'trace0-line435',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line435',
+                     target:'trace0-line439',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line439',
+                     target:'trace0-line440',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line440',
+                     target:'trace0-line441',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line441',
+                     target:'trace0-line452',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line452',
+                     target:'trace0-line453',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line453',
+                     target:'trace0-line453',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line455',
+                     target:'trace0-line488',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line488',
+                     target:'trace0-line489',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line492',
+                     target:'trace0-line493',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line432',
+                     target:'trace0-line498',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+  })
+</script>
+<hr/></div>
+  </body>

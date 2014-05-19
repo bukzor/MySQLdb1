@@ -1,0 +1,410 @@
+<html>
+  <head>
+    <title>_mysql_ConnectionObject_store_result</title>
+    <style type="text/css">
+.unreached-line {
+    #margin:1em;
+    #border:0.1em dotted #00aa00;
+
+    opacity:1.0;
+    filter:alpha(opacity=0);
+    #color:black;
+}
+
+.reached-line {
+    #margin:1em;
+    #border:0.1em dotted #00aa00;
+    border: 0.1em solid blue;
+    font-weight: bold;
+
+    opacity:1.0;
+    filter:alpha(opacity=0);
+    #color:black;
+}
+
+.reached-lineno {
+    border: 0.1em solid blue;
+    font-weight: bold;
+}
+
+pre {
+    #line-height:200%
+}
+
+._jsPlumb_connector { z-index: -2; }
+._jsPlumb_endpoint { z-index: -1; }
+
+.transition {
+    #border: 0.1em dotted #ddffdd;
+    #padding: 1em;
+    border: 0.1em solid #ccc;
+    -moz-box-shadow: 2px 2px 2px #ccc;
+    -webkit-box-shadow: 2px 2px 2px #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    margin-left: 5em;
+    font-family: proportional;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.error {
+    #border: 0.1em dotted #ddffdd;
+    #padding: 1em;
+    border: 0.1em solid #cc0000;
+    -moz-box-shadow: 2px 2px 2px #cc0000;
+    -webkit-box-shadow: 2px 2px 2px #cc0000;
+    box-shadow: 2px 2px 2px #cc0000;
+    margin-left: 5em;
+    color: red;
+    font-family: proportional;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.note {
+    #border: 0.1em dotted #ddffdd;
+    #padding: 1em;
+    border: 0.1em solid #ccc;
+    -moz-box-shadow: 2px 2px 2px #ccc;
+    -webkit-box-shadow: 2px 2px 2px #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    margin-left: 5em;
+    font-family: proportional;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.hll { background-color: #ffffcc }
+.source_c { color: #408080; font-style: italic } /* Comment */
+.source_err { border: 1px solid #FF0000 } /* Error */
+.source_k { color: #008000; font-weight: bold } /* Keyword */
+.source_o { color: #666666 } /* Operator */
+.source_cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.source_cp { color: #BC7A00 } /* Comment.Preproc */
+.source_c1 { color: #408080; font-style: italic } /* Comment.Single */
+.source_cs { color: #408080; font-style: italic } /* Comment.Special */
+.source_gd { color: #A00000 } /* Generic.Deleted */
+.source_ge { font-style: italic } /* Generic.Emph */
+.source_gr { color: #FF0000 } /* Generic.Error */
+.source_gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.source_gi { color: #00A000 } /* Generic.Inserted */
+.source_go { color: #888888 } /* Generic.Output */
+.source_gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.source_gs { font-weight: bold } /* Generic.Strong */
+.source_gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.source_gt { color: #0044DD } /* Generic.Traceback */
+.source_kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.source_kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.source_kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.source_kp { color: #008000 } /* Keyword.Pseudo */
+.source_kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.source_kt { color: #B00040 } /* Keyword.Type */
+.source_m { color: #666666 } /* Literal.Number */
+.source_s { color: #BA2121 } /* Literal.String */
+.source_na { color: #7D9029 } /* Name.Attribute */
+.source_nb { color: #008000 } /* Name.Builtin */
+.source_nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.source_no { color: #880000 } /* Name.Constant */
+.source_nd { color: #AA22FF } /* Name.Decorator */
+.source_ni { color: #999999; font-weight: bold } /* Name.Entity */
+.source_ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.source_nf { color: #0000FF } /* Name.Function */
+.source_nl { color: #A0A000 } /* Name.Label */
+.source_nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.source_nt { color: #008000; font-weight: bold } /* Name.Tag */
+.source_nv { color: #19177C } /* Name.Variable */
+.source_ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.source_w { color: #bbbbbb } /* Text.Whitespace */
+.source_mf { color: #666666 } /* Literal.Number.Float */
+.source_mh { color: #666666 } /* Literal.Number.Hex */
+.source_mi { color: #666666 } /* Literal.Number.Integer */
+.source_mo { color: #666666 } /* Literal.Number.Oct */
+.source_sb { color: #BA2121 } /* Literal.String.Backtick */
+.source_sc { color: #BA2121 } /* Literal.String.Char */
+.source_sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.source_s2 { color: #BA2121 } /* Literal.String.Double */
+.source_se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.source_sh { color: #BA2121 } /* Literal.String.Heredoc */
+.source_si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.source_sx { color: #008000 } /* Literal.String.Other */
+.source_sr { color: #BB6688 } /* Literal.String.Regex */
+.source_s1 { color: #BA2121 } /* Literal.String.Single */
+.source_ss { color: #19177C } /* Literal.String.Symbol */
+.source_bp { color: #008000 } /* Name.Builtin.Pseudo */
+.source_vc { color: #19177C } /* Name.Variable.Class */
+.source_vg { color: #19177C } /* Name.Variable.Global */
+.source_vi { color: #19177C } /* Name.Variable.Instance */
+.source_il { color: #666666 } /* Literal.Number.Integer.Long */    </style>
+  </head>
+  <body>
+<script type="text/javascript" src="http://explorercanvas.googlecode.com/svn/trunk/excanvas.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://jsplumb.googlecode.com/files/jquery.jsPlumb-1.2.6-all-min.js"></script>
+<div id="report-0">
+<table>
+  <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
+  <tr><td>Function:</td> <td><b>_mysql_ConnectionObject_store_result</b></td></tr>
+  <tr><td>Error:</td> <td><b>ob_refcnt of '*r' is 1 too high</b></td></tr>
+</table>
+<div class="highlight"><pre><span class="lineno">2057</span> <span id="trace0-line2057" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
+<span class="lineno">2058</span> <span id="trace0-line2058" class="unreached-line"><span class="source_nf">_mysql_ConnectionObject_store_result</span><span class="source_p">(</span></span>
+<span class="lineno">2059</span> <span id="trace0-line2059" class="unreached-line">	<span class="source_n">_mysql_ConnectionObject</span> <span class="source_o">*</span><span class="source_n">self</span><span class="source_p">,</span></span>
+<span class="lineno">2060</span> <span id="trace0-line2060" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">args</span><span class="source_p">)</span></span>
+<span class="lineno">2061</span> <span id="trace0-line2061" class="unreached-line"><span class="source_p">{</span></span>
+<span class="reached-lineno">2062</span> <span id="trace0-line2062" class="reached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">arglist</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">kwarglist</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">result</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">2063</span> <span id="trace0-line2063" class="reached-line">	<span class="source_n">_mysql_ResultObject</span> <span class="source_o">*</span><span class="source_n">r</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">2064</span> <span id="trace0-line2064" class="unreached-line"></span>
+<span class="reached-lineno">2065</span> <span id="trace0-line2065" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PyArg_ParseTuple</span><span class="source_p">(</span><span class="source_n">args</span><span class="source_p">,</span> <span class="source_s">&quot;&quot;</span><span class="source_p">))</span> <span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="transition">when PyArg_ParseTuple() succeeds</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2066</span> <span id="trace0-line2066" class="reached-line">	<span class="source_n">check_connection</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_p">);</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2067</span> <span id="trace0-line2067" class="reached-line">	<span class="source_n">arglist</span> <span class="source_o">=</span> <span class="source_n">Py_BuildValue</span><span class="source_p">(</span><span class="source_s">&quot;(OiO)&quot;</span><span class="source_p">,</span> <span class="source_n">self</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">,</span> <span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">converter</span><span class="source_p">);</span></span>
+<span class="transition">when Py_BuildValue() succeeds</span>
+<span class="reached-lineno">2068</span> <span id="trace0-line2068" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">arglist</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2069</span> <span id="trace0-line2069" class="reached-line">	<span class="source_n">kwarglist</span> <span class="source_o">=</span> <span class="source_n">PyDict_New</span><span class="source_p">();</span></span>
+<span class="transition">when PyDict_New() succeeds</span>
+<span class="reached-lineno">2070</span> <span id="trace0-line2070" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">kwarglist</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2071</span> <span id="trace0-line2071" class="reached-line">	<span class="source_n">r</span> <span class="source_o">=</span> <span class="source_n">MyAlloc</span><span class="source_p">(</span><span class="source_n">_mysql_ResultObject</span><span class="source_p">,</span> <span class="source_n">_mysql_ResultObject_Type</span><span class="source_p">);</span></span>
+<span class="transition">when call succeeds</span>
+<span class="note">new ref from call through function pointer allocated at: 	r = MyAlloc(_mysql_ResultObject, _mysql_ResultObject_Type);</span>
+<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="reached-lineno">2072</span> <span id="trace0-line2072" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">r</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2073</span> <span id="trace0-line2073" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">_mysql_ResultObject_Initialize</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_p">,</span> <span class="source_n">arglist</span><span class="source_p">,</span> <span class="source_n">kwarglist</span><span class="source_p">))</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking True path</span>
+<span class="lineno">2074</span> <span id="trace0-line2074" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
+<span class="lineno">2075</span> <span id="trace0-line2075" class="unreached-line">	<span class="source_n">result</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span> <span class="source_n">r</span><span class="source_p">;</span></span>
+<span class="lineno">2076</span> <span id="trace0-line2076" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_o">-&gt;</span><span class="source_n">result</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="lineno">2077</span> <span id="trace0-line2077" class="unreached-line">		<span class="source_c1">// Py_DECREF(result);</span></span>
+<span class="lineno">2078</span> <span id="trace0-line2078" class="unreached-line">		<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">Py_None</span><span class="source_p">);</span></span>
+<span class="lineno">2079</span> <span id="trace0-line2079" class="unreached-line">		<span class="source_n">result</span> <span class="source_o">=</span> <span class="source_n">Py_None</span><span class="source_p">;</span></span>
+<span class="lineno">2080</span> <span id="trace0-line2080" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">2081</span> <span id="trace0-line2081" class="unreached-line">  <span class="source_nl">error:</span></span>
+<span class="reached-lineno">2082</span> <span id="trace0-line2082" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">arglist</span><span class="source_p">);</span></span>
+<span class="transition">taking False path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2083</span> <span id="trace0-line2083" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">kwarglist</span><span class="source_p">);</span></span>
+<span class="transition">taking False path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2084</span> <span id="trace0-line2084" class="reached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
+<span class="lineno">2085</span> <span id="trace0-line2085" class="unreached-line"><span class="source_p">}</span></span>
+<span class="error">ob_refcnt of '*r' is 1 too high</span>
+<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
+<span class="note">but final ob_refcnt is N + 1</span>
+<span class="note">found 11 similar trace(s) to this</span>
+</pre></div>
+
+<script type="text/javascript">
+  jsPlumb.bind("ready", function() {
+    /* Set up defaults: */
+    jsPlumb.Defaults.Connector = [ "Bezier", 1 ];
+    jsPlumb.Defaults.Connector = [ "Straight" ];
+    jsPlumb.Defaults.PaintStyle = { strokeStyle:"blue", lineWidth:1 };
+    jsPlumb.Defaults.EndpointStyle = { radius:2, fillStyle:"red" };
+    jsPlumb.Defaults.Anchors =  [ "BottomCenter", "TopCenter" ];
+
+    /* Add lines: */
+    jsPlumb.connect({source:'trace0-line2065',
+                     target:'trace0-line2065',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2065',
+                     target:'trace0-line2066',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2066',
+                     target:'trace0-line2067',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2067',
+                     target:'trace0-line2068',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2068',
+                     target:'trace0-line2069',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2069',
+                     target:'trace0-line2070',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2070',
+                     target:'trace0-line2071',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2071',
+                     target:'trace0-line2072',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2072',
+                     target:'trace0-line2073',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2073',
+                     target:'trace0-line0',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2082',
+                     target:'trace0-line2083',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line2083',
+                     target:'trace0-line2084',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+  })
+</script>
+<hr/></div>
+<div id="report-1">
+<table>
+  <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
+  <tr><td>Function:</td> <td><b>_mysql_ConnectionObject_store_result</b></td></tr>
+  <tr><td>Error:</td> <td><b>returning (PyObject*)NULL without setting an exception</b></td></tr>
+</table>
+<div class="highlight"><pre><span class="lineno">2057</span> <span id="trace1-line2057" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
+<span class="lineno">2058</span> <span id="trace1-line2058" class="unreached-line"><span class="source_nf">_mysql_ConnectionObject_store_result</span><span class="source_p">(</span></span>
+<span class="lineno">2059</span> <span id="trace1-line2059" class="unreached-line">	<span class="source_n">_mysql_ConnectionObject</span> <span class="source_o">*</span><span class="source_n">self</span><span class="source_p">,</span></span>
+<span class="lineno">2060</span> <span id="trace1-line2060" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">args</span><span class="source_p">)</span></span>
+<span class="lineno">2061</span> <span id="trace1-line2061" class="unreached-line"><span class="source_p">{</span></span>
+<span class="reached-lineno">2062</span> <span id="trace1-line2062" class="reached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">arglist</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">kwarglist</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">result</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">2063</span> <span id="trace1-line2063" class="reached-line">	<span class="source_n">_mysql_ResultObject</span> <span class="source_o">*</span><span class="source_n">r</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">2064</span> <span id="trace1-line2064" class="unreached-line"></span>
+<span class="reached-lineno">2065</span> <span id="trace1-line2065" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PyArg_ParseTuple</span><span class="source_p">(</span><span class="source_n">args</span><span class="source_p">,</span> <span class="source_s">&quot;&quot;</span><span class="source_p">))</span> <span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="transition">when PyArg_ParseTuple() succeeds</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2066</span> <span id="trace1-line2066" class="reached-line">	<span class="source_n">check_connection</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_p">);</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2067</span> <span id="trace1-line2067" class="reached-line">	<span class="source_n">arglist</span> <span class="source_o">=</span> <span class="source_n">Py_BuildValue</span><span class="source_p">(</span><span class="source_s">&quot;(OiO)&quot;</span><span class="source_p">,</span> <span class="source_n">self</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">,</span> <span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">converter</span><span class="source_p">);</span></span>
+<span class="transition">when Py_BuildValue() succeeds</span>
+<span class="reached-lineno">2068</span> <span id="trace1-line2068" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">arglist</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2069</span> <span id="trace1-line2069" class="reached-line">	<span class="source_n">kwarglist</span> <span class="source_o">=</span> <span class="source_n">PyDict_New</span><span class="source_p">();</span></span>
+<span class="transition">when PyDict_New() succeeds</span>
+<span class="reached-lineno">2070</span> <span id="trace1-line2070" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">kwarglist</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2071</span> <span id="trace1-line2071" class="reached-line">	<span class="source_n">r</span> <span class="source_o">=</span> <span class="source_n">MyAlloc</span><span class="source_p">(</span><span class="source_n">_mysql_ResultObject</span><span class="source_p">,</span> <span class="source_n">_mysql_ResultObject_Type</span><span class="source_p">);</span></span>
+<span class="transition">when call succeeds</span>
+<span class="reached-lineno">2072</span> <span id="trace1-line2072" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">r</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2073</span> <span id="trace1-line2073" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">_mysql_ResultObject_Initialize</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_p">,</span> <span class="source_n">arglist</span><span class="source_p">,</span> <span class="source_n">kwarglist</span><span class="source_p">))</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking True path</span>
+<span class="lineno">2074</span> <span id="trace1-line2074" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
+<span class="lineno">2075</span> <span id="trace1-line2075" class="unreached-line">	<span class="source_n">result</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span> <span class="source_n">r</span><span class="source_p">;</span></span>
+<span class="lineno">2076</span> <span id="trace1-line2076" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_o">-&gt;</span><span class="source_n">result</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="lineno">2077</span> <span id="trace1-line2077" class="unreached-line">		<span class="source_c1">// Py_DECREF(result);</span></span>
+<span class="lineno">2078</span> <span id="trace1-line2078" class="unreached-line">		<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">Py_None</span><span class="source_p">);</span></span>
+<span class="lineno">2079</span> <span id="trace1-line2079" class="unreached-line">		<span class="source_n">result</span> <span class="source_o">=</span> <span class="source_n">Py_None</span><span class="source_p">;</span></span>
+<span class="lineno">2080</span> <span id="trace1-line2080" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">2081</span> <span id="trace1-line2081" class="unreached-line">  <span class="source_nl">error:</span></span>
+<span class="reached-lineno">2082</span> <span id="trace1-line2082" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">arglist</span><span class="source_p">);</span></span>
+<span class="transition">taking False path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2083</span> <span id="trace1-line2083" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">kwarglist</span><span class="source_p">);</span></span>
+<span class="transition">taking False path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">2084</span> <span id="trace1-line2084" class="reached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
+<span class="lineno">2085</span> <span id="trace1-line2085" class="unreached-line"><span class="source_p">}</span></span>
+<span class="error">returning (PyObject*)NULL without setting an exception</span>
+<span class="note">found 7 similar trace(s) to this</span>
+</pre></div>
+
+<script type="text/javascript">
+  jsPlumb.bind("ready", function() {
+    /* Set up defaults: */
+    jsPlumb.Defaults.Connector = [ "Bezier", 1 ];
+    jsPlumb.Defaults.Connector = [ "Straight" ];
+    jsPlumb.Defaults.PaintStyle = { strokeStyle:"blue", lineWidth:1 };
+    jsPlumb.Defaults.EndpointStyle = { radius:2, fillStyle:"red" };
+    jsPlumb.Defaults.Anchors =  [ "BottomCenter", "TopCenter" ];
+
+    /* Add lines: */
+    jsPlumb.connect({source:'trace1-line2065',
+                     target:'trace1-line2065',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2065',
+                     target:'trace1-line2066',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2066',
+                     target:'trace1-line2067',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2067',
+                     target:'trace1-line2068',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2068',
+                     target:'trace1-line2069',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2069',
+                     target:'trace1-line2070',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2070',
+                     target:'trace1-line2071',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2071',
+                     target:'trace1-line2072',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2072',
+                     target:'trace1-line2073',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2073',
+                     target:'trace1-line0',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2082',
+                     target:'trace1-line2083',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line2083',
+                     target:'trace1-line2084',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+  })
+</script>
+<hr/></div>
+  </body>
