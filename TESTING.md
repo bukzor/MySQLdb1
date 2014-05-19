@@ -31,3 +31,23 @@ When you're done, stop the server and remove its data:
 
     cd ~/tmp/mysqldb-test-server && cat data/*.pid | xargs kill
     rm -rf data
+
+
+Checking Refcounts
+==================
+
+    git clone git://git.fedorahosted.org/gcc-python-plugin.git
+    cd gcc-python-plugin
+    make plugin
+    export CC=$PWD/gcc-with-cpychecker
+
+    cd /path/to/MySQLdb1
+    git checkout gh-pages
+    git pull origin development
+    python setup.py build
+    git add -f build/temp.linux-x86_64-2.7/_mysql.*html
+    git commit
+    git push origin HEAD
+
+Now you'll see the updated results at (for example):
+    http://bukzor.github.io/MySQLdb1/build/temp.linux-x86_64-2.7//_mysql.c.get_string-refcount-errors.html
