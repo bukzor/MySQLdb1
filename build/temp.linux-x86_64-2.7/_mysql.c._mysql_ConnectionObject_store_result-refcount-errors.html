@@ -178,7 +178,7 @@ pre {
 <span class="reached-lineno">2072</span> <span id="trace0-line2072" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">r</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="transition">taking False path</span>
 <span class="reached-lineno">2073</span> <span id="trace0-line2073" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">_mysql_ResultObject_Initialize</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_p">,</span> <span class="source_n">arglist</span><span class="source_p">,</span> <span class="source_n">kwarglist</span><span class="source_p">))</span></span>
-<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">when considering range: 1 <= value <= 0x7fffffff</span>
 <span class="transition">taking True path</span>
 <span class="lineno">2074</span> <span id="trace0-line2074" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">2075</span> <span id="trace0-line2075" class="unreached-line">	<span class="source_n">result</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span> <span class="source_n">r</span><span class="source_p">;</span></span>
@@ -190,16 +190,17 @@ pre {
 <span class="lineno">2081</span> <span id="trace0-line2081" class="unreached-line">  <span class="source_nl">error:</span></span>
 <span class="reached-lineno">2082</span> <span id="trace0-line2082" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">arglist</span><span class="source_p">);</span></span>
 <span class="transition">taking False path</span>
-<span class="transition">when taking True path</span>
+<span class="transition">when taking False path</span>
 <span class="reached-lineno">2083</span> <span id="trace0-line2083" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">kwarglist</span><span class="source_p">);</span></span>
 <span class="transition">taking False path</span>
 <span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
 <span class="reached-lineno">2084</span> <span id="trace0-line2084" class="reached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
 <span class="lineno">2085</span> <span id="trace0-line2085" class="unreached-line"><span class="source_p">}</span></span>
 <span class="error">ob_refcnt of '*r' is 1 too high</span>
 <span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
 <span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 11 similar trace(s) to this</span>
+<span class="note">found 10 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">
@@ -257,21 +258,6 @@ pre {
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
-    jsPlumb.connect({source:'trace0-line2073',
-                     target:'trace0-line0',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace0-line2082',
-                     target:'trace0-line2083',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace0-line2083',
-                     target:'trace0-line2084',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
   })
 </script>
 <hr/></div>
@@ -308,7 +294,7 @@ pre {
 <span class="reached-lineno">2072</span> <span id="trace1-line2072" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">r</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="transition">taking False path</span>
 <span class="reached-lineno">2073</span> <span id="trace1-line2073" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">_mysql_ResultObject_Initialize</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_p">,</span> <span class="source_n">arglist</span><span class="source_p">,</span> <span class="source_n">kwarglist</span><span class="source_p">))</span></span>
-<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">when considering range: 1 <= value <= 0x7fffffff</span>
 <span class="transition">taking True path</span>
 <span class="lineno">2074</span> <span id="trace1-line2074" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">2075</span> <span id="trace1-line2075" class="unreached-line">	<span class="source_n">result</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span> <span class="source_n">r</span><span class="source_p">;</span></span>
@@ -320,14 +306,15 @@ pre {
 <span class="lineno">2081</span> <span id="trace1-line2081" class="unreached-line">  <span class="source_nl">error:</span></span>
 <span class="reached-lineno">2082</span> <span id="trace1-line2082" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">arglist</span><span class="source_p">);</span></span>
 <span class="transition">taking False path</span>
-<span class="transition">when taking True path</span>
+<span class="transition">when taking False path</span>
 <span class="reached-lineno">2083</span> <span id="trace1-line2083" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">kwarglist</span><span class="source_p">);</span></span>
 <span class="transition">taking False path</span>
 <span class="transition">when taking True path</span>
+<span class="transition">taking False path</span>
 <span class="reached-lineno">2084</span> <span id="trace1-line2084" class="reached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
 <span class="lineno">2085</span> <span id="trace1-line2085" class="unreached-line"><span class="source_p">}</span></span>
 <span class="error">returning (PyObject*)NULL without setting an exception</span>
-<span class="note">found 7 similar trace(s) to this</span>
+<span class="note">found 6 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">
@@ -382,21 +369,6 @@ pre {
                    });
     jsPlumb.connect({source:'trace1-line2072',
                      target:'trace1-line2073',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line2073',
-                     target:'trace1-line0',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line2082',
-                     target:'trace1-line2083',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line2083',
-                     target:'trace1-line2084',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });

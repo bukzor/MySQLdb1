@@ -1,9 +1,9 @@
-
+#!/usr/bin/env python
 
 def make_html_list_from_dir(dirname, filter=lambda f:True, format=lambda f:f):
     from os import listdir
     result = '<ul>'
-    for fname in listdir(dirname):
+    for fname in sorted(listdir(dirname)):
         if not filter(fname):
             continue
 
@@ -21,6 +21,7 @@ def html_filter(fname):
 def format_refcount_errors(fname):
     first, second = fname.split('.c.')
     second = second.replace('-refcount-errors.html', '')
+    second = second.replace('-refcount-errors.v2.html', ' v2')
 
     return '%s.c %s' % (first, second)
 
