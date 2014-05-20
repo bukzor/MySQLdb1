@@ -3067,14 +3067,15 @@ init_mysql(void)
 	if (!(_mysql_NotSupportedError =
 	      _mysql_NewException(dict, edict, "NotSupportedError")))
 		goto error;
-	Py_DECREF(emod);
 	if (!(_mysql_NULL = PyBytes_FromString("NULL")))
 		goto error;
 	if (PyDict_SetItemString(dict, "NULL", _mysql_NULL)) goto error;
   error:
+	if (emod) Py_DECREF(emod);
 	if (PyErr_Occurred()) {
 		PyErr_SetString(PyExc_ImportError,
 				"_mysql: init failed");
+		if (module) Py_DECREF(module);
 		module = NULL;
     }
 #ifdef IS_PY3K

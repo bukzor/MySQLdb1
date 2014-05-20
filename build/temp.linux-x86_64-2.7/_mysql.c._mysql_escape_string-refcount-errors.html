@@ -147,7 +147,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_escape_string</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of '*str.192' is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>ob_refcnt of '*str.190' is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1072</span> <span id="trace0-line1072" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1073</span> <span id="trace0-line1073" class="unreached-line"><span class="source_nf">_mysql_escape_string</span><span class="source_p">(</span></span>
@@ -181,10 +181,10 @@ pre {
 <span class="transition">taking True path</span>
 <span class="lineno">1092</span> <span id="trace0-line1092" class="unreached-line">	<span class="source_k">return</span> <span class="source_p">(</span><span class="source_n">str</span><span class="source_p">);</span></span>
 <span class="lineno">1093</span> <span id="trace0-line1093" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">ob_refcnt of '*str.192' is 1 too high</span>
+<span class="error">ob_refcnt of '*str.190' is 1 too high</span>
 <span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
 <span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 1 similar trace(s) to this</span>
+<span class="note">found 2 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">
@@ -307,85 +307,6 @@ pre {
                    });
     jsPlumb.connect({source:'trace1-line1091',
                      target:'trace1-line1091',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-  })
-</script>
-<hr/></div>
-<div id="report-2">
-<table>
-  <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
-  <tr><td>Function:</td> <td><b>_mysql_escape_string</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of '*str' is 1 too high</b></td></tr>
-</table>
-<div class="highlight"><pre><span class="lineno">1072</span> <span id="trace2-line1072" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
-<span class="lineno">1073</span> <span id="trace2-line1073" class="unreached-line"><span class="source_nf">_mysql_escape_string</span><span class="source_p">(</span></span>
-<span class="lineno">1074</span> <span id="trace2-line1074" class="unreached-line">	<span class="source_n">_mysql_ConnectionObject</span> <span class="source_o">*</span><span class="source_n">self</span><span class="source_p">,</span></span>
-<span class="lineno">1075</span> <span id="trace2-line1075" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">args</span><span class="source_p">)</span></span>
-<span class="lineno">1076</span> <span id="trace2-line1076" class="unreached-line"><span class="source_p">{</span></span>
-<span class="lineno">1077</span> <span id="trace2-line1077" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">str</span><span class="source_p">;</span></span>
-<span class="lineno">1078</span> <span id="trace2-line1078" class="unreached-line">	<span class="source_kt">char</span> <span class="source_o">*</span><span class="source_n">in</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">out</span><span class="source_p">;</span></span>
-<span class="lineno">1079</span> <span id="trace2-line1079" class="unreached-line">	<span class="source_kt">int</span> <span class="source_n">len</span><span class="source_p">,</span> <span class="source_n">size</span><span class="source_p">;</span></span>
-<span class="reached-lineno">1080</span> <span id="trace2-line1080" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PyArg_ParseTuple</span><span class="source_p">(</span><span class="source_n">args</span><span class="source_p">,</span> <span class="source_s">&quot;s#:escape_string&quot;</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">in</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">size</span><span class="source_p">))</span> <span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
-<span class="transition">when PyArg_ParseTuple() succeeds</span>
-<span class="transition">taking False path</span>
-<span class="reached-lineno">1081</span> <span id="trace2-line1081" class="reached-line">	<span class="source_n">str</span> <span class="source_o">=</span> <span class="source_n">PyUnicode_FromStringAndSize</span><span class="source_p">((</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span> <span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_n">size</span><span class="source_o">*</span><span class="source_mi">2</span><span class="source_o">+</span><span class="source_mi">1</span><span class="source_p">);</span></span>
-<span class="transition">when PyUnicodeUCS4_FromStringAndSize() succeeds</span>
-<span class="note">new ref from (unknown) PyUnicodeUCS4_FromStringAndSize allocated at: 	str = PyUnicode_FromStringAndSize((char *) NULL, size*2+1);</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
-<span class="reached-lineno">1082</span> <span id="trace2-line1082" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">str</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_n">PyErr_NoMemory</span><span class="source_p">();</span></span>
-<span class="transition">taking False path</span>
-<span class="reached-lineno">1083</span> <span id="trace2-line1083" class="reached-line">	<span class="source_n">out</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">str</span><span class="source_p">);</span></span>
-<span class="reached-lineno">1084</span> <span id="trace2-line1084" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">out</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
-<span class="transition">when treating unknown char * from _mysql.c:1083 as NULL</span>
-<span class="transition">taking True path</span>
-<span class="lineno">1085</span> <span id="trace2-line1085" class="unreached-line"><span class="source_cp">#if MYSQL_VERSION_ID &lt; 32321</span></span>
-<span class="lineno">1086</span> <span id="trace2-line1086" class="unreached-line">	<span class="source_c1">// TODO: we don&#39;t support mysql 3.1...</span></span>
-<span class="lineno">1087</span> <span id="trace2-line1087" class="unreached-line">	<span class="source_n">len</span> <span class="source_o">=</span> <span class="source_n">mysql_escape_string</span><span class="source_p">(</span><span class="source_n">out</span><span class="source_p">,</span> <span class="source_n">in</span><span class="source_p">,</span> <span class="source_n">size</span><span class="source_p">);</span></span>
-<span class="lineno">1088</span> <span id="trace2-line1088" class="unreached-line"><span class="source_cp">#else</span></span>
-<span class="lineno">1089</span> <span id="trace2-line1089" class="unreached-line">	<span class="source_n">len</span> <span class="source_o">=</span> <span class="source_n">mysql_real_escape_string</span><span class="source_p">(</span><span class="source_n">utf8conn</span><span class="source_p">,</span> <span class="source_n">out</span><span class="source_p">,</span> <span class="source_n">in</span><span class="source_p">,</span> <span class="source_n">size</span><span class="source_p">);</span></span>
-<span class="lineno">1090</span> <span id="trace2-line1090" class="unreached-line"><span class="source_cp">#endif</span></span>
-<span class="lineno">1091</span> <span id="trace2-line1091" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyUnicode_Resize</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">str</span><span class="source_p">,</span> <span class="source_n">len</span><span class="source_p">)</span> <span class="source_o">&lt;</span> <span class="source_mi">0</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
-<span class="lineno">1092</span> <span id="trace2-line1092" class="unreached-line">	<span class="source_k">return</span> <span class="source_p">(</span><span class="source_n">str</span><span class="source_p">);</span></span>
-<span class="lineno">1093</span> <span id="trace2-line1093" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">ob_refcnt of '*str' is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
-</pre></div>
-
-<script type="text/javascript">
-  jsPlumb.bind("ready", function() {
-    /* Set up defaults: */
-    jsPlumb.Defaults.Connector = [ "Bezier", 1 ];
-    jsPlumb.Defaults.Connector = [ "Straight" ];
-    jsPlumb.Defaults.PaintStyle = { strokeStyle:"blue", lineWidth:1 };
-    jsPlumb.Defaults.EndpointStyle = { radius:2, fillStyle:"red" };
-    jsPlumb.Defaults.Anchors =  [ "BottomCenter", "TopCenter" ];
-
-    /* Add lines: */
-    jsPlumb.connect({source:'trace2-line1080',
-                     target:'trace2-line1080',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace2-line1080',
-                     target:'trace2-line1081',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace2-line1081',
-                     target:'trace2-line1081',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace2-line1082',
-                     target:'trace2-line1083',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace2-line1084',
-                     target:'trace2-line1084',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
