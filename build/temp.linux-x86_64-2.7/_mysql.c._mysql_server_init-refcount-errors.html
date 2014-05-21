@@ -147,7 +147,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_server_init</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">259</span> <span id="trace0-line259" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_nf">_mysql_server_init</span><span class="source_p">(</span></span>
 <span class="lineno">260</span> <span id="trace0-line260" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">self</span><span class="source_p">,</span></span>
@@ -242,8 +242,8 @@ pre {
 <span class="transition">taking True path</span>
 <span class="reached-lineno">327</span> <span id="trace0-line327" class="reached-line">		<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
 <span class="transition">when _mysql_Exception() succeeds</span>
-<span class="note">new ref from (unknown) _mysql_Exception allocated at: 		_mysql_Exception(NULL);</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="note">new ref from (unknown) _mysql_Exception was allocated at: 		_mysql_Exception(NULL);</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
 <span class="lineno">328</span> <span id="trace0-line328" class="unreached-line">	<span class="source_p">}</span></span>
 <span class="lineno">329</span> <span id="trace0-line329" class="unreached-line"><span class="source_cp">#endif</span></span>
 <span class="lineno">330</span> <span id="trace0-line330" class="unreached-line">	<span class="source_n">ret</span> <span class="source_o">=</span> <span class="source_n">Py_None</span><span class="source_p">;</span></span>
@@ -257,10 +257,9 @@ pre {
 <span class="transition">calling PyMem_Free on PyMem_Malloc allocated at _mysql.c:292</span>
 <span class="reached-lineno">337</span> <span id="trace0-line337" class="reached-line"><span class="source_p">}</span></span>
 <span class="lineno">338</span> <span id="trace0-line338" class="unreached-line"></pre></div></span>
-<span class="error">ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 4 similar trace(s) to this</span>
+<span class="error">memory leak: ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) _mysql_Exception to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</span>
+<span class="note">found 5 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">
@@ -484,7 +483,7 @@ pre {
 <span class="reached-lineno">337</span> <span id="trace1-line337" class="reached-line"><span class="source_p">}</span></span>
 <span class="lineno">338</span> <span id="trace1-line338" class="unreached-line"></pre></div></span>
 <span class="error">returning (PyObject*)NULL without setting an exception</span>
-<span class="note">found 4 similar trace(s) to this</span>
+<span class="note">found 5 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">

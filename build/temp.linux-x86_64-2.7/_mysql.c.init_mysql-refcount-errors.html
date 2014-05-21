@@ -147,7 +147,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>init_mysql</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of '*module' is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>future use-after-free: ob_refcnt of '*module' is 1 too low</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">2981</span> <span id="trace0-line2981" class="unreached-line"><span class="source_n">DL_EXPORT</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
 <span class="lineno">2982</span> <span id="trace0-line2982" class="unreached-line"><span class="source_n">init_mysql</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
@@ -164,17 +164,16 @@ pre {
 <span class="lineno">2992</span> <span id="trace0-line2992" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="lineno">2993</span> <span id="trace0-line2993" class="unreached-line"><span class="source_cp">#else</span></span>
 <span class="reached-lineno">2994</span> <span id="trace0-line2994" class="reached-line">	<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_n">Py_InitModule4</span><span class="source_p">(</span><span class="source_s">&quot;_mysql&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_methods</span><span class="source_p">,</span> <span class="source_n">_mysql___doc__</span><span class="source_p">,</span></span>
-<span class="transition">when Py_InitModule4TraceRefs_64() succeeds</span>
-<span class="note">new ref from (unknown) Py_InitModule4TraceRefs_64 allocated at: 	module = Py_InitModule4("_mysql", _mysql_methods, _mysql___doc__,</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="transition">when Py_InitModule4_64() succeeds</span>
+<span class="note">'*module' was allocated at: 	module = Py_InitModule4("_mysql", _mysql_methods, _mysql___doc__,</span>
+<span class="transition">ob_refcnt is now refs: 0 owned, 1 borrowed</span>
 <span class="lineno">2995</span> <span id="trace0-line2995" class="unreached-line">				<span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_n">PYTHON_API_VERSION</span><span class="source_p">);</span></span>
 <span class="reached-lineno">2996</span> <span id="trace0-line2996" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="transition">taking False path</span>
 <span class="transition">returning</span>
-<span class="error">ob_refcnt of '*module' is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 1 similar trace(s) to this</span>
+<span class="error">future use-after-free: ob_refcnt of '*module' is 1 too low</span>
+<span class="note">was expecting final owned ob_refcnt of '*module' to be 0 since nothing references it but final ob_refcnt is refs: -1 owned, 1 borrowed</span>
+<span class="note">found 5 similar trace(s) to this</span>
 <span class="lineno">2997</span> <span id="trace0-line2997" class="unreached-line"><span class="source_cp">#endif</span></span>
 <span class="lineno">2998</span> <span id="trace0-line2998" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">2999</span> <span id="trace0-line2999" class="unreached-line">	<span class="source_n">Py_TYPE</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">_mysql_ConnectionObject_Type</span><span class="source_p">)</span> <span class="source_o">=</span> <span class="source_o">&amp;</span><span class="source_n">PyType_Type</span><span class="source_p">;</span></span>
@@ -280,29 +279,29 @@ pre {
 <span class="transition">when _mysql_NewException() succeeds</span>
 <span class="lineno">3066</span> <span id="trace0-line3066" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="reached-lineno">3067</span> <span id="trace0-line3067" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NotSupportedError</span> <span class="source_o">=</span></span>
-<span class="transition">taking False path</span>
+<span class="transition">taking True path</span>
 <span class="reached-lineno">3068</span> <span id="trace0-line3068" class="reached-line">	      <span class="source_n">_mysql_NewException</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_n">edict</span><span class="source_p">,</span> <span class="source_s">&quot;NotSupportedError&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when _mysql_NewException() succeeds</span>
+<span class="transition">when _mysql_NewException() fails</span>
 <span class="lineno">3069</span> <span id="trace0-line3069" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3070</span> <span id="trace0-line3070" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when PyString_FromString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3070</span> <span id="trace0-line3070" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
 <span class="lineno">3071</span> <span id="trace0-line3071" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3072</span> <span id="trace0-line3072" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="transition">when PyDict_SetItemString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3072</span> <span id="trace0-line3072" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">3073</span> <span id="trace0-line3073" class="unreached-line">  <span class="source_nl">error:</span></span>
 <span class="reached-lineno">3074</span> <span id="trace0-line3074" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">);</span></span>
 <span class="transition">taking True path</span>
-<span class="transition">when taking True path</span>
-<span class="transition">taking False path</span>
+<span class="transition">when taking False path</span>
+<span class="transition">calling tp_dealloc on PyModuleObject allocated at _mysql.c:3032</span>
 <span class="reached-lineno">3075</span> <span id="trace0-line3075" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyErr_Occurred</span><span class="source_p">())</span> <span class="source_p">{</span></span>
 <span class="transition">PyErr_Occurred()</span>
-<span class="transition">taking False path</span>
-<span class="lineno">3076</span> <span id="trace0-line3076" class="unreached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">3076</span> <span id="trace0-line3076" class="reached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">calling PyErr_SetString()</span>
 <span class="lineno">3077</span> <span id="trace0-line3077" class="unreached-line">				<span class="source_s">&quot;_mysql: init failed&quot;</span><span class="source_p">);</span></span>
-<span class="lineno">3078</span> <span id="trace0-line3078" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
-<span class="lineno">3079</span> <span id="trace0-line3079" class="unreached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">3078</span> <span id="trace0-line3078" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="transition">ob_refcnt is now refs: -1 owned, 1 borrowed</span>
+<span class="reached-lineno">3079</span> <span id="trace0-line3079" class="reached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="lineno">3080</span> <span id="trace0-line3080" class="unreached-line">    <span class="source_p">}</span></span>
 <span class="lineno">3081</span> <span id="trace0-line3081" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">3082</span> <span id="trace0-line3082" class="unreached-line">    <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span></span>
@@ -491,26 +490,6 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace0-line3067',
-                     target:'trace0-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace0-line3070',
-                     target:'trace0-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace0-line3070',
-                     target:'trace0-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace0-line3072',
-                     target:'trace0-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace0-line3072',
                      target:'trace0-line0',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
@@ -520,8 +499,33 @@ pre {
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
+    jsPlumb.connect({source:'trace0-line3074',
+                     target:'trace0-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
     jsPlumb.connect({source:'trace0-line3075',
                      target:'trace0-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line3075',
+                     target:'trace0-line3076',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line3076',
+                     target:'trace0-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line3078',
+                     target:'trace0-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line3078',
+                     target:'trace0-line3079',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
@@ -532,7 +536,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>init_mysql</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of '*_mysql_ConnectionObject_Type.355' is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of '*_mysql_ConnectionObject_Type.85' is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">2981</span> <span id="trace1-line2981" class="unreached-line"><span class="source_n">DL_EXPORT</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
 <span class="lineno">2982</span> <span id="trace1-line2982" class="unreached-line"><span class="source_n">init_mysql</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
@@ -549,15 +553,14 @@ pre {
 <span class="lineno">2992</span> <span id="trace1-line2992" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="lineno">2993</span> <span id="trace1-line2993" class="unreached-line"><span class="source_cp">#else</span></span>
 <span class="reached-lineno">2994</span> <span id="trace1-line2994" class="reached-line">	<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_n">Py_InitModule4</span><span class="source_p">(</span><span class="source_s">&quot;_mysql&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_methods</span><span class="source_p">,</span> <span class="source_n">_mysql___doc__</span><span class="source_p">,</span></span>
-<span class="transition">when Py_InitModule4TraceRefs_64() succeeds</span>
+<span class="transition">when Py_InitModule4_64() succeeds</span>
 <span class="lineno">2995</span> <span id="trace1-line2995" class="unreached-line">				<span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_n">PYTHON_API_VERSION</span><span class="source_p">);</span></span>
 <span class="reached-lineno">2996</span> <span id="trace1-line2996" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="transition">taking False path</span>
 <span class="transition">returning</span>
-<span class="error">ob_refcnt of '*_mysql_ConnectionObject_Type.355' is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 9 similar trace(s) to this</span>
+<span class="error">memory leak: ob_refcnt of '*_mysql_ConnectionObject_Type.85' is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of '*_mysql_ConnectionObject_Type.85' to be 0 since nothing references it but final ob_refcnt is refs: 1 owned, 2 borrowed</span>
+<span class="note">found 12 similar trace(s) to this</span>
 <span class="lineno">2997</span> <span id="trace1-line2997" class="unreached-line"><span class="source_cp">#endif</span></span>
 <span class="lineno">2998</span> <span id="trace1-line2998" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">2999</span> <span id="trace1-line2999" class="unreached-line">	<span class="source_n">Py_TYPE</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">_mysql_ConnectionObject_Type</span><span class="source_p">)</span> <span class="source_o">=</span> <span class="source_o">&amp;</span><span class="source_n">PyType_Type</span><span class="source_p">;</span></span>
@@ -595,11 +598,11 @@ pre {
 <span class="reached-lineno">3024</span> <span id="trace1-line3024" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;connection&quot;</span><span class="source_p">,</span></span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="transition">taking False path</span>
-<span class="transition">ob_refcnt is now refs: 0 + N where N >= 2</span>
+<span class="transition">ob_refcnt is now refs: 0 owned, 2 borrowed</span>
 <span class="lineno">3025</span> <span id="trace1-line3025" class="unreached-line">			       <span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_o">&amp;</span><span class="source_n">_mysql_ConnectionObject_Type</span><span class="source_p">))</span></span>
 <span class="lineno">3026</span> <span id="trace1-line3026" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="reached-lineno">3027</span> <span id="trace1-line3027" class="reached-line">	<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">_mysql_ConnectionObject_Type</span><span class="source_p">);</span></span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 2</span>
+<span class="transition">ob_refcnt is now refs: 1 owned, 2 borrowed</span>
 <span class="reached-lineno">3028</span> <span id="trace1-line3028" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;result&quot;</span><span class="source_p">,</span></span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="transition">taking False path</span>
@@ -665,29 +668,28 @@ pre {
 <span class="transition">when _mysql_NewException() succeeds</span>
 <span class="lineno">3066</span> <span id="trace1-line3066" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="reached-lineno">3067</span> <span id="trace1-line3067" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NotSupportedError</span> <span class="source_o">=</span></span>
-<span class="transition">taking False path</span>
+<span class="transition">taking True path</span>
 <span class="reached-lineno">3068</span> <span id="trace1-line3068" class="reached-line">	      <span class="source_n">_mysql_NewException</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_n">edict</span><span class="source_p">,</span> <span class="source_s">&quot;NotSupportedError&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when _mysql_NewException() succeeds</span>
+<span class="transition">when _mysql_NewException() fails</span>
 <span class="lineno">3069</span> <span id="trace1-line3069" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3070</span> <span id="trace1-line3070" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when PyString_FromString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3070</span> <span id="trace1-line3070" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
 <span class="lineno">3071</span> <span id="trace1-line3071" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3072</span> <span id="trace1-line3072" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="transition">when PyDict_SetItemString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3072</span> <span id="trace1-line3072" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">3073</span> <span id="trace1-line3073" class="unreached-line">  <span class="source_nl">error:</span></span>
 <span class="reached-lineno">3074</span> <span id="trace1-line3074" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">);</span></span>
 <span class="transition">taking True path</span>
-<span class="transition">when taking True path</span>
-<span class="transition">taking False path</span>
+<span class="transition">when taking False path</span>
+<span class="transition">calling tp_dealloc on PyModuleObject allocated at _mysql.c:3032</span>
 <span class="reached-lineno">3075</span> <span id="trace1-line3075" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyErr_Occurred</span><span class="source_p">())</span> <span class="source_p">{</span></span>
 <span class="transition">PyErr_Occurred()</span>
-<span class="transition">taking False path</span>
-<span class="lineno">3076</span> <span id="trace1-line3076" class="unreached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">3076</span> <span id="trace1-line3076" class="reached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">calling PyErr_SetString()</span>
 <span class="lineno">3077</span> <span id="trace1-line3077" class="unreached-line">				<span class="source_s">&quot;_mysql: init failed&quot;</span><span class="source_p">);</span></span>
-<span class="lineno">3078</span> <span id="trace1-line3078" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
-<span class="lineno">3079</span> <span id="trace1-line3079" class="unreached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">3078</span> <span id="trace1-line3078" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="reached-lineno">3079</span> <span id="trace1-line3079" class="reached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="lineno">3080</span> <span id="trace1-line3080" class="unreached-line">    <span class="source_p">}</span></span>
 <span class="lineno">3081</span> <span id="trace1-line3081" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">3082</span> <span id="trace1-line3082" class="unreached-line">    <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span></span>
@@ -876,26 +878,6 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace1-line3067',
-                     target:'trace1-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line3070',
-                     target:'trace1-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line3070',
-                     target:'trace1-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line3072',
-                     target:'trace1-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line3072',
                      target:'trace1-line0',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
@@ -905,8 +887,33 @@ pre {
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
+    jsPlumb.connect({source:'trace1-line3074',
+                     target:'trace1-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
     jsPlumb.connect({source:'trace1-line3075',
                      target:'trace1-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line3075',
+                     target:'trace1-line3076',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line3076',
+                     target:'trace1-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line3078',
+                     target:'trace1-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line3078',
+                     target:'trace1-line3079',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
@@ -917,7 +924,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>init_mysql</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of '*_mysql_ResultObject_Type.358' is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of '*_mysql_ResultObject_Type.86' is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">2981</span> <span id="trace2-line2981" class="unreached-line"><span class="source_n">DL_EXPORT</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
 <span class="lineno">2982</span> <span id="trace2-line2982" class="unreached-line"><span class="source_n">init_mysql</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
@@ -934,15 +941,14 @@ pre {
 <span class="lineno">2992</span> <span id="trace2-line2992" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="lineno">2993</span> <span id="trace2-line2993" class="unreached-line"><span class="source_cp">#else</span></span>
 <span class="reached-lineno">2994</span> <span id="trace2-line2994" class="reached-line">	<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_n">Py_InitModule4</span><span class="source_p">(</span><span class="source_s">&quot;_mysql&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_methods</span><span class="source_p">,</span> <span class="source_n">_mysql___doc__</span><span class="source_p">,</span></span>
-<span class="transition">when Py_InitModule4TraceRefs_64() succeeds</span>
+<span class="transition">when Py_InitModule4_64() succeeds</span>
 <span class="lineno">2995</span> <span id="trace2-line2995" class="unreached-line">				<span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_n">PYTHON_API_VERSION</span><span class="source_p">);</span></span>
 <span class="reached-lineno">2996</span> <span id="trace2-line2996" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="transition">taking False path</span>
 <span class="transition">returning</span>
-<span class="error">ob_refcnt of '*_mysql_ResultObject_Type.358' is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 9 similar trace(s) to this</span>
+<span class="error">memory leak: ob_refcnt of '*_mysql_ResultObject_Type.86' is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of '*_mysql_ResultObject_Type.86' to be 0 since nothing references it but final ob_refcnt is refs: 1 owned, 2 borrowed</span>
+<span class="note">found 12 similar trace(s) to this</span>
 <span class="lineno">2997</span> <span id="trace2-line2997" class="unreached-line"><span class="source_cp">#endif</span></span>
 <span class="lineno">2998</span> <span id="trace2-line2998" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">2999</span> <span id="trace2-line2999" class="unreached-line">	<span class="source_n">Py_TYPE</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">_mysql_ConnectionObject_Type</span><span class="source_p">)</span> <span class="source_o">=</span> <span class="source_o">&amp;</span><span class="source_n">PyType_Type</span><span class="source_p">;</span></span>
@@ -986,11 +992,11 @@ pre {
 <span class="reached-lineno">3028</span> <span id="trace2-line3028" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;result&quot;</span><span class="source_p">,</span></span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="transition">taking False path</span>
-<span class="transition">ob_refcnt is now refs: 0 + N where N >= 2</span>
+<span class="transition">ob_refcnt is now refs: 0 owned, 2 borrowed</span>
 <span class="lineno">3029</span> <span id="trace2-line3029" class="unreached-line">			       <span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_o">&amp;</span><span class="source_n">_mysql_ResultObject_Type</span><span class="source_p">))</span></span>
 <span class="lineno">3030</span> <span id="trace2-line3030" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span>	</span>
 <span class="reached-lineno">3031</span> <span id="trace2-line3031" class="reached-line">	<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">_mysql_ResultObject_Type</span><span class="source_p">);</span></span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 2</span>
+<span class="transition">ob_refcnt is now refs: 1 owned, 2 borrowed</span>
 <span class="reached-lineno">3032</span> <span id="trace2-line3032" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">emod</span> <span class="source_o">=</span> <span class="source_n">PyImport_ImportModule</span><span class="source_p">(</span><span class="source_s">&quot;_mysql_exceptions&quot;</span><span class="source_p">)))</span> <span class="source_p">{</span></span>
 <span class="transition">when PyImport_ImportModule() succeeds</span>
 <span class="transition">taking False path</span>
@@ -1050,29 +1056,28 @@ pre {
 <span class="transition">when _mysql_NewException() succeeds</span>
 <span class="lineno">3066</span> <span id="trace2-line3066" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="reached-lineno">3067</span> <span id="trace2-line3067" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NotSupportedError</span> <span class="source_o">=</span></span>
-<span class="transition">taking False path</span>
+<span class="transition">taking True path</span>
 <span class="reached-lineno">3068</span> <span id="trace2-line3068" class="reached-line">	      <span class="source_n">_mysql_NewException</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_n">edict</span><span class="source_p">,</span> <span class="source_s">&quot;NotSupportedError&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when _mysql_NewException() succeeds</span>
+<span class="transition">when _mysql_NewException() fails</span>
 <span class="lineno">3069</span> <span id="trace2-line3069" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3070</span> <span id="trace2-line3070" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when PyString_FromString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3070</span> <span id="trace2-line3070" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
 <span class="lineno">3071</span> <span id="trace2-line3071" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3072</span> <span id="trace2-line3072" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="transition">when PyDict_SetItemString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3072</span> <span id="trace2-line3072" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">3073</span> <span id="trace2-line3073" class="unreached-line">  <span class="source_nl">error:</span></span>
 <span class="reached-lineno">3074</span> <span id="trace2-line3074" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">);</span></span>
 <span class="transition">taking True path</span>
-<span class="transition">when taking True path</span>
-<span class="transition">taking False path</span>
+<span class="transition">when taking False path</span>
+<span class="transition">calling tp_dealloc on PyModuleObject allocated at _mysql.c:3032</span>
 <span class="reached-lineno">3075</span> <span id="trace2-line3075" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyErr_Occurred</span><span class="source_p">())</span> <span class="source_p">{</span></span>
 <span class="transition">PyErr_Occurred()</span>
-<span class="transition">taking False path</span>
-<span class="lineno">3076</span> <span id="trace2-line3076" class="unreached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">3076</span> <span id="trace2-line3076" class="reached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">calling PyErr_SetString()</span>
 <span class="lineno">3077</span> <span id="trace2-line3077" class="unreached-line">				<span class="source_s">&quot;_mysql: init failed&quot;</span><span class="source_p">);</span></span>
-<span class="lineno">3078</span> <span id="trace2-line3078" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
-<span class="lineno">3079</span> <span id="trace2-line3079" class="unreached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">3078</span> <span id="trace2-line3078" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="reached-lineno">3079</span> <span id="trace2-line3079" class="reached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="lineno">3080</span> <span id="trace2-line3080" class="unreached-line">    <span class="source_p">}</span></span>
 <span class="lineno">3081</span> <span id="trace2-line3081" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">3082</span> <span id="trace2-line3082" class="unreached-line">    <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span></span>
@@ -1261,26 +1266,6 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace2-line3067',
-                     target:'trace2-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace2-line3070',
-                     target:'trace2-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace2-line3070',
-                     target:'trace2-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace2-line3072',
-                     target:'trace2-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace2-line3072',
                      target:'trace2-line0',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
@@ -1290,8 +1275,33 @@ pre {
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
+    jsPlumb.connect({source:'trace2-line3074',
+                     target:'trace2-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
     jsPlumb.connect({source:'trace2-line3075',
                      target:'trace2-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line3075',
+                     target:'trace2-line3076',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line3076',
+                     target:'trace2-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line3078',
+                     target:'trace2-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line3078',
+                     target:'trace2-line3079',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
@@ -1302,7 +1312,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>init_mysql</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of new ref from (unknown) PyRun_StringFlags is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of new ref from (unknown) PyRun_StringFlags is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">2981</span> <span id="trace3-line2981" class="unreached-line"><span class="source_n">DL_EXPORT</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
 <span class="lineno">2982</span> <span id="trace3-line2982" class="unreached-line"><span class="source_n">init_mysql</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
@@ -1319,15 +1329,14 @@ pre {
 <span class="lineno">2992</span> <span id="trace3-line2992" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="lineno">2993</span> <span id="trace3-line2993" class="unreached-line"><span class="source_cp">#else</span></span>
 <span class="reached-lineno">2994</span> <span id="trace3-line2994" class="reached-line">	<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_n">Py_InitModule4</span><span class="source_p">(</span><span class="source_s">&quot;_mysql&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_methods</span><span class="source_p">,</span> <span class="source_n">_mysql___doc__</span><span class="source_p">,</span></span>
-<span class="transition">when Py_InitModule4TraceRefs_64() succeeds</span>
+<span class="transition">when Py_InitModule4_64() succeeds</span>
 <span class="lineno">2995</span> <span id="trace3-line2995" class="unreached-line">				<span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_n">PYTHON_API_VERSION</span><span class="source_p">);</span></span>
 <span class="reached-lineno">2996</span> <span id="trace3-line2996" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="transition">taking False path</span>
 <span class="transition">returning</span>
-<span class="error">ob_refcnt of new ref from (unknown) PyRun_StringFlags is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 9 similar trace(s) to this</span>
+<span class="error">memory leak: ob_refcnt of new ref from (unknown) PyRun_StringFlags is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) PyRun_StringFlags to be 0 since nothing references it but final ob_refcnt is refs: 1 owned, 1 borrowed</span>
+<span class="note">found 12 similar trace(s) to this</span>
 <span class="lineno">2997</span> <span id="trace3-line2997" class="unreached-line"><span class="source_cp">#endif</span></span>
 <span class="lineno">2998</span> <span id="trace3-line2998" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">2999</span> <span id="trace3-line2999" class="unreached-line">	<span class="source_n">Py_TYPE</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">_mysql_ConnectionObject_Type</span><span class="source_p">)</span> <span class="source_o">=</span> <span class="source_o">&amp;</span><span class="source_n">PyType_Type</span><span class="source_p">;</span></span>
@@ -1353,9 +1362,9 @@ pre {
 <span class="transition">when PyRun_StringFlags() succeeds</span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="transition">taking False path</span>
-<span class="note">new ref from (unknown) PyRun_StringFlags allocated at: 	if (PyDict_SetItemString(dict, "version_info",</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 1</span>
+<span class="note">new ref from (unknown) PyRun_StringFlags was allocated at: 	if (PyDict_SetItemString(dict, "version_info",</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
+<span class="transition">ob_refcnt is now refs: 1 owned, 1 borrowed</span>
 <span class="lineno">3018</span> <span id="trace3-line3018" class="unreached-line">			       <span class="source_n">PyRun_String</span><span class="source_p">(</span><span class="source_n">QUOTE</span><span class="source_p">(</span><span class="source_n">version_info</span><span class="source_p">),</span> <span class="source_n">Py_eval_input</span><span class="source_p">,</span></span>
 <span class="lineno">3019</span> <span id="trace3-line3019" class="unreached-line">				       <span class="source_n">dict</span><span class="source_p">,</span> <span class="source_n">dict</span><span class="source_p">)))</span></span>
 <span class="lineno">3020</span> <span id="trace3-line3020" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
@@ -1436,29 +1445,28 @@ pre {
 <span class="transition">when _mysql_NewException() succeeds</span>
 <span class="lineno">3066</span> <span id="trace3-line3066" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="reached-lineno">3067</span> <span id="trace3-line3067" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NotSupportedError</span> <span class="source_o">=</span></span>
-<span class="transition">taking False path</span>
+<span class="transition">taking True path</span>
 <span class="reached-lineno">3068</span> <span id="trace3-line3068" class="reached-line">	      <span class="source_n">_mysql_NewException</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_n">edict</span><span class="source_p">,</span> <span class="source_s">&quot;NotSupportedError&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when _mysql_NewException() succeeds</span>
+<span class="transition">when _mysql_NewException() fails</span>
 <span class="lineno">3069</span> <span id="trace3-line3069" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3070</span> <span id="trace3-line3070" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when PyString_FromString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3070</span> <span id="trace3-line3070" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
 <span class="lineno">3071</span> <span id="trace3-line3071" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3072</span> <span id="trace3-line3072" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="transition">when PyDict_SetItemString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3072</span> <span id="trace3-line3072" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">3073</span> <span id="trace3-line3073" class="unreached-line">  <span class="source_nl">error:</span></span>
 <span class="reached-lineno">3074</span> <span id="trace3-line3074" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">);</span></span>
 <span class="transition">taking True path</span>
-<span class="transition">when taking True path</span>
-<span class="transition">taking False path</span>
+<span class="transition">when taking False path</span>
+<span class="transition">calling tp_dealloc on PyModuleObject allocated at _mysql.c:3032</span>
 <span class="reached-lineno">3075</span> <span id="trace3-line3075" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyErr_Occurred</span><span class="source_p">())</span> <span class="source_p">{</span></span>
 <span class="transition">PyErr_Occurred()</span>
-<span class="transition">taking False path</span>
-<span class="lineno">3076</span> <span id="trace3-line3076" class="unreached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">3076</span> <span id="trace3-line3076" class="reached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">calling PyErr_SetString()</span>
 <span class="lineno">3077</span> <span id="trace3-line3077" class="unreached-line">				<span class="source_s">&quot;_mysql: init failed&quot;</span><span class="source_p">);</span></span>
-<span class="lineno">3078</span> <span id="trace3-line3078" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
-<span class="lineno">3079</span> <span id="trace3-line3079" class="unreached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">3078</span> <span id="trace3-line3078" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="reached-lineno">3079</span> <span id="trace3-line3079" class="reached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="lineno">3080</span> <span id="trace3-line3080" class="unreached-line">    <span class="source_p">}</span></span>
 <span class="lineno">3081</span> <span id="trace3-line3081" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">3082</span> <span id="trace3-line3082" class="unreached-line">    <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span></span>
@@ -1647,26 +1655,6 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace3-line3067',
-                     target:'trace3-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace3-line3070',
-                     target:'trace3-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace3-line3070',
-                     target:'trace3-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace3-line3072',
-                     target:'trace3-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace3-line3072',
                      target:'trace3-line0',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
@@ -1676,8 +1664,33 @@ pre {
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
+    jsPlumb.connect({source:'trace3-line3074',
+                     target:'trace3-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
     jsPlumb.connect({source:'trace3-line3075',
                      target:'trace3-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line3075',
+                     target:'trace3-line3076',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line3076',
+                     target:'trace3-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line3078',
+                     target:'trace3-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line3078',
+                     target:'trace3-line3079',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
@@ -1688,7 +1701,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>init_mysql</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">2981</span> <span id="trace4-line2981" class="unreached-line"><span class="source_n">DL_EXPORT</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
 <span class="lineno">2982</span> <span id="trace4-line2982" class="unreached-line"><span class="source_n">init_mysql</span><span class="source_p">(</span><span class="source_kt">void</span><span class="source_p">)</span></span>
@@ -1705,15 +1718,14 @@ pre {
 <span class="lineno">2992</span> <span id="trace4-line2992" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="lineno">2993</span> <span id="trace4-line2993" class="unreached-line"><span class="source_cp">#else</span></span>
 <span class="reached-lineno">2994</span> <span id="trace4-line2994" class="reached-line">	<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_n">Py_InitModule4</span><span class="source_p">(</span><span class="source_s">&quot;_mysql&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_methods</span><span class="source_p">,</span> <span class="source_n">_mysql___doc__</span><span class="source_p">,</span></span>
-<span class="transition">when Py_InitModule4TraceRefs_64() succeeds</span>
+<span class="transition">when Py_InitModule4_64() succeeds</span>
 <span class="lineno">2995</span> <span id="trace4-line2995" class="unreached-line">				<span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_n">PYTHON_API_VERSION</span><span class="source_p">);</span></span>
 <span class="reached-lineno">2996</span> <span id="trace4-line2996" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_k">return</span><span class="source_p">;</span> <span class="source_cm">/* this really should never happen */</span></span>
 <span class="transition">taking False path</span>
 <span class="transition">returning</span>
-<span class="error">ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 9 similar trace(s) to this</span>
+<span class="error">memory leak: ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString to be 0 since nothing references it but final ob_refcnt is refs: 1 owned, 1 borrowed</span>
+<span class="note">found 12 similar trace(s) to this</span>
 <span class="lineno">2997</span> <span id="trace4-line2997" class="unreached-line"><span class="source_cp">#endif</span></span>
 <span class="lineno">2998</span> <span id="trace4-line2998" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">2999</span> <span id="trace4-line2999" class="unreached-line">	<span class="source_n">Py_TYPE</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">_mysql_ConnectionObject_Type</span><span class="source_p">)</span> <span class="source_o">=</span> <span class="source_o">&amp;</span><span class="source_n">PyType_Type</span><span class="source_p">;</span></span>
@@ -1746,9 +1758,9 @@ pre {
 <span class="transition">when PyUnicodeUCS4_FromString() succeeds</span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="transition">taking False path</span>
-<span class="note">new ref from (unknown) PyUnicodeUCS4_FromString allocated at: 	if (PyDict_SetItemString(dict, "__version__",</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 1</span>
+<span class="note">new ref from (unknown) PyUnicodeUCS4_FromString was allocated at: 	if (PyDict_SetItemString(dict, "__version__",</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
+<span class="transition">ob_refcnt is now refs: 1 owned, 1 borrowed</span>
 <span class="lineno">3022</span> <span id="trace4-line3022" class="unreached-line">			       <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">QUOTE</span><span class="source_p">(</span><span class="source_n">__version__</span><span class="source_p">))))</span></span>
 <span class="lineno">3023</span> <span id="trace4-line3023" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="reached-lineno">3024</span> <span id="trace4-line3024" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;connection&quot;</span><span class="source_p">,</span></span>
@@ -1822,29 +1834,28 @@ pre {
 <span class="transition">when _mysql_NewException() succeeds</span>
 <span class="lineno">3066</span> <span id="trace4-line3066" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="reached-lineno">3067</span> <span id="trace4-line3067" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NotSupportedError</span> <span class="source_o">=</span></span>
-<span class="transition">taking False path</span>
+<span class="transition">taking True path</span>
 <span class="reached-lineno">3068</span> <span id="trace4-line3068" class="reached-line">	      <span class="source_n">_mysql_NewException</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_n">edict</span><span class="source_p">,</span> <span class="source_s">&quot;NotSupportedError&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when _mysql_NewException() succeeds</span>
+<span class="transition">when _mysql_NewException() fails</span>
 <span class="lineno">3069</span> <span id="trace4-line3069" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3070</span> <span id="trace4-line3070" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
-<span class="transition">when PyString_FromString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3070</span> <span id="trace4-line3070" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">_mysql_NULL</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromString</span><span class="source_p">(</span><span class="source_s">&quot;NULL&quot;</span><span class="source_p">)))</span></span>
 <span class="lineno">3071</span> <span id="trace4-line3071" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="reached-lineno">3072</span> <span id="trace4-line3072" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
-<span class="transition">when PyDict_SetItemString() succeeds</span>
-<span class="transition">taking False path</span>
+<span class="lineno">3072</span> <span id="trace4-line3072" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_s">&quot;NULL&quot;</span><span class="source_p">,</span> <span class="source_n">_mysql_NULL</span><span class="source_p">))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">3073</span> <span id="trace4-line3073" class="unreached-line">  <span class="source_nl">error:</span></span>
 <span class="reached-lineno">3074</span> <span id="trace4-line3074" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">emod</span><span class="source_p">);</span></span>
 <span class="transition">taking True path</span>
-<span class="transition">when taking True path</span>
-<span class="transition">taking False path</span>
+<span class="transition">when taking False path</span>
+<span class="transition">calling tp_dealloc on PyModuleObject allocated at _mysql.c:3032</span>
 <span class="reached-lineno">3075</span> <span id="trace4-line3075" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyErr_Occurred</span><span class="source_p">())</span> <span class="source_p">{</span></span>
 <span class="transition">PyErr_Occurred()</span>
-<span class="transition">taking False path</span>
-<span class="lineno">3076</span> <span id="trace4-line3076" class="unreached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">3076</span> <span id="trace4-line3076" class="reached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_ImportError</span><span class="source_p">,</span></span>
+<span class="transition">calling PyErr_SetString()</span>
 <span class="lineno">3077</span> <span id="trace4-line3077" class="unreached-line">				<span class="source_s">&quot;_mysql: init failed&quot;</span><span class="source_p">);</span></span>
-<span class="lineno">3078</span> <span id="trace4-line3078" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
-<span class="lineno">3079</span> <span id="trace4-line3079" class="unreached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">3078</span> <span id="trace4-line3078" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">module</span><span class="source_p">)</span> <span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">module</span><span class="source_p">);</span></span>
+<span class="transition">taking True path</span>
+<span class="transition">when taking True path</span>
+<span class="reached-lineno">3079</span> <span id="trace4-line3079" class="reached-line">		<span class="source_n">module</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="lineno">3080</span> <span id="trace4-line3080" class="unreached-line">    <span class="source_p">}</span></span>
 <span class="lineno">3081</span> <span id="trace4-line3081" class="unreached-line"><span class="source_cp">#ifdef IS_PY3K</span></span>
 <span class="lineno">3082</span> <span id="trace4-line3082" class="unreached-line">    <span class="source_k">return</span> <span class="source_n">module</span><span class="source_p">;</span></span>
@@ -2033,26 +2044,6 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace4-line3067',
-                     target:'trace4-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace4-line3070',
-                     target:'trace4-line3070',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace4-line3070',
-                     target:'trace4-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace4-line3072',
-                     target:'trace4-line3072',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace4-line3072',
                      target:'trace4-line0',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
@@ -2062,8 +2053,33 @@ pre {
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
+    jsPlumb.connect({source:'trace4-line3074',
+                     target:'trace4-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
     jsPlumb.connect({source:'trace4-line3075',
                      target:'trace4-line3075',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace4-line3075',
+                     target:'trace4-line3076',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace4-line3076',
+                     target:'trace4-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace4-line3078',
+                     target:'trace4-line3078',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace4-line3078',
+                     target:'trace4-line3079',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });

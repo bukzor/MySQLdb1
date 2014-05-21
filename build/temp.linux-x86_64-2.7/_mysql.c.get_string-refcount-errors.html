@@ -147,24 +147,23 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>get_string</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of '*strobj' is 2 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of '*strobj' is 2 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">99</span> <span id="trace0-line99" class="unreached-line"><span class="source_kr">inline</span> <span class="source_kt">char</span> <span class="source_o">*</span> <span class="source_nf">get_string</span><span class="source_p">(</span><span class="source_n">PyObject</span> <span class="source_o">*</span> <span class="source_n">uniobj</span><span class="source_p">)</span> <span class="source_p">{</span></span>
 <span class="lineno">100</span> <span id="trace0-line100" class="unreached-line">	<span class="source_c1">// TODO: re-evalutate if utf8 is always appropriate here.</span></span>
 <span class="lineno">101</span> <span id="trace0-line101" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">strobj</span> <span class="source_o">=</span> <span class="source_n">PyUnicode_AsEncodedString</span><span class="source_p">(</span><span class="source_n">uniobj</span><span class="source_p">,</span> <span class="source_s">&quot;UTF-8&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;strict&quot;</span><span class="source_p">);</span></span>
 <span class="reached-lineno">102</span> <span id="trace0-line102" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">strobj</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="transition">when PyUnicodeUCS4_AsEncodedString() succeeds</span>
-<span class="note">new ref from (unknown) PyUnicodeUCS4_AsEncodedString allocated at: 	PyObject *strobj = PyUnicode_AsEncodedString(uniobj, "UTF-8", "strict");</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="note">'*strobj' was allocated at: 	PyObject *strobj = PyUnicode_AsEncodedString(uniobj, "UTF-8", "strict");</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
 <span class="reached-lineno">103</span> <span id="trace0-line103" class="reached-line">	<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">strobj</span><span class="source_p">);</span></span>
 <span class="transition">taking False path</span>
 <span class="reached-lineno">104</span> <span id="trace0-line104" class="reached-line">	<span class="source_k">return</span> <span class="source_n">PyBytes_AS_STRING</span><span class="source_p">(</span><span class="source_n">strobj</span><span class="source_p">);</span></span>
-<span class="transition">ob_refcnt is now refs: 2 + N where N >= 0</span>
+<span class="transition">ob_refcnt is now refs: 2 owned</span>
 <span class="reached-lineno">105</span> <span id="trace0-line105" class="reached-line"><span class="source_p">}</span></span>
 <span class="lineno">106</span> <span id="trace0-line106" class="unreached-line"></pre></div></span>
-<span class="error">ob_refcnt of '*strobj' is 2 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 2</span>
+<span class="error">memory leak: ob_refcnt of '*strobj' is 2 too high</span>
+<span class="note">was expecting final owned ob_refcnt of '*strobj' to be 0 since nothing references it but final ob_refcnt is refs: 2 owned</span>
 </pre></div>
 
 <script type="text/javascript">

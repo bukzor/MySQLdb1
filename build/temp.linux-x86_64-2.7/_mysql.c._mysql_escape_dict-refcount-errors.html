@@ -147,7 +147,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_escape_dict</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of '*quoted' is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of '*quoted' is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1261</span> <span id="trace0-line1261" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1262</span> <span id="trace0-line1262" class="unreached-line"><span class="source_nf">_mysql_escape_dict</span><span class="source_p">(</span></span>
@@ -175,8 +175,8 @@ pre {
 <span class="transition">taking True path</span>
 <span class="reached-lineno">1277</span> <span id="trace0-line1277" class="reached-line">		<span class="source_n">quoted</span> <span class="source_o">=</span> <span class="source_n">_escape_item</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">,</span> <span class="source_n">d</span><span class="source_p">);</span></span>
 <span class="transition">when _escape_item() succeeds</span>
-<span class="note">new ref from (unknown) _escape_item allocated at: 		quoted = _escape_item(item, d);</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="note">'*quoted' was allocated at: 		quoted = _escape_item(item, d);</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
 <span class="reached-lineno">1278</span> <span id="trace0-line1278" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">quoted</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="transition">taking False path</span>
 <span class="reached-lineno">1279</span> <span id="trace0-line1279" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItem</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_p">,</span> <span class="source_n">pkey</span><span class="source_p">,</span> <span class="source_n">quoted</span><span class="source_p">)</span><span class="source_o">==-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
@@ -190,12 +190,10 @@ pre {
 <span class="reached-lineno">1284</span> <span id="trace0-line1284" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_p">);</span></span>
 <span class="transition">taking False path</span>
 <span class="transition">when taking True path</span>
-<span class="transition">taking False path</span>
 <span class="reached-lineno">1285</span> <span id="trace0-line1285" class="reached-line">	<span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="lineno">1286</span> <span id="trace0-line1286" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">ob_refcnt of '*quoted' is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
+<span class="error">memory leak: ob_refcnt of '*quoted' is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of '*quoted' to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</span>
 <span class="note">found 3 similar trace(s) to this</span>
 </pre></div>
 
@@ -224,6 +222,11 @@ pre {
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
+    jsPlumb.connect({source:'trace0-line1275',
+                     target:'trace0-line1276',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
     jsPlumb.connect({source:'trace0-line1276',
                      target:'trace0-line1277',
                      label:'',
@@ -241,6 +244,16 @@ pre {
                    });
     jsPlumb.connect({source:'trace0-line1279',
                      target:'trace0-line1279',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line1279',
+                     target:'trace0-line0',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line1284',
+                     target:'trace0-line1285',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });

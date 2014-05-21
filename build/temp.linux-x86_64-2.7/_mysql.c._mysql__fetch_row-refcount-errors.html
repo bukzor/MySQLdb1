@@ -147,7 +147,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql__fetch_row</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1490</span> <span id="trace0-line1490" class="unreached-line"><span class="source_kt">int</span></span>
 <span class="lineno">1491</span> <span id="trace0-line1491" class="unreached-line"><span class="source_nf">_mysql__fetch_row</span><span class="source_p">(</span></span>
@@ -182,8 +182,8 @@ pre {
 <span class="transition">taking True path</span>
 <span class="reached-lineno">1511</span> <span id="trace0-line1511" class="reached-line">			<span class="source_n">_mysql_Exception</span><span class="source_p">((</span><span class="source_n">_mysql_ConnectionObject</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">conn</span><span class="source_p">);</span></span>
 <span class="transition">when _mysql_Exception() succeeds</span>
-<span class="note">new ref from (unknown) _mysql_Exception allocated at: 			_mysql_Exception((_mysql_ConnectionObject *)self->conn);</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="note">new ref from (unknown) _mysql_Exception was allocated at: 			_mysql_Exception((_mysql_ConnectionObject *)self->conn);</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
 <span class="lineno">1512</span> <span id="trace0-line1512" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">1513</span> <span id="trace0-line1513" class="unreached-line">		<span class="source_p">}</span></span>
 <span class="lineno">1514</span> <span id="trace0-line1514" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">row</span><span class="source_p">)</span> <span class="source_p">{</span></span>
@@ -198,9 +198,8 @@ pre {
 <span class="lineno">1523</span> <span id="trace0-line1523" class="unreached-line">  <span class="source_nl">error:</span></span>
 <span class="reached-lineno">1524</span> <span id="trace0-line1524" class="reached-line">	<span class="source_k">return</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">;</span></span>
 <span class="lineno">1525</span> <span id="trace0-line1525" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
+<span class="error">memory leak: ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) _mysql_Exception to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</span>
 <span class="note">found 2 similar trace(s) to this</span>
 </pre></div>
 

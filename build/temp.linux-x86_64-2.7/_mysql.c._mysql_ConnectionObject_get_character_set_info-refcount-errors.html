@@ -147,7 +147,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_ConnectionObject_get_character_set_info</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1705</span> <span id="trace0-line1705" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1706</span> <span id="trace0-line1706" class="unreached-line"><span class="source_nf">_mysql_ConnectionObject_get_character_set_info</span><span class="source_p">(</span></span>
@@ -173,9 +173,9 @@ pre {
 <span class="reached-lineno">1718</span> <span id="trace0-line1718" class="reached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;name&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">csname</span><span class="source_p">));</span></span>
 <span class="transition">when PyUnicodeUCS4_FromString() succeeds</span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
-<span class="note">new ref from (unknown) PyUnicodeUCS4_FromString allocated at: 		PyDict_SetItemString(result, "name", PyUnicode_FromString(cs.csname));</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 1</span>
+<span class="note">new ref from (unknown) PyUnicodeUCS4_FromString was allocated at: 		PyDict_SetItemString(result, "name", PyUnicode_FromString(cs.csname));</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
+<span class="transition">ob_refcnt is now refs: 1 owned, 1 borrowed</span>
 <span class="reached-lineno">1719</span> <span id="trace0-line1719" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">name</span><span class="source_p">)</span></span>
 <span class="transition">when treating unknown const char * from _mysql.c:1719 as non-NULL</span>
 <span class="transition">taking True path</span>
@@ -183,11 +183,9 @@ pre {
 <span class="transition">when PyUnicodeUCS4_FromString() succeeds</span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="reached-lineno">1721</span> <span id="trace0-line1721" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">)</span></span>
-<span class="transition">when treating unknown const char * from _mysql.c:1721 as non-NULL</span>
-<span class="transition">taking True path</span>
-<span class="reached-lineno">1722</span> <span id="trace0-line1722" class="reached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;comment&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">));</span></span>
-<span class="transition">when PyUnicodeUCS4_FromString() succeeds</span>
-<span class="transition">when PyDict_SetItemString() succeeds</span>
+<span class="transition">when treating unknown const char * from _mysql.c:1721 as NULL</span>
+<span class="transition">taking False path</span>
+<span class="lineno">1722</span> <span id="trace0-line1722" class="unreached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;comment&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">));</span></span>
 <span class="reached-lineno">1723</span> <span id="trace0-line1723" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">dir</span><span class="source_p">)</span></span>
 <span class="transition">when treating unknown const char * from _mysql.c:1723 as non-NULL</span>
 <span class="transition">taking True path</span>
@@ -202,10 +200,9 @@ pre {
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="reached-lineno">1727</span> <span id="trace0-line1727" class="reached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
 <span class="lineno">1728</span> <span id="trace0-line1728" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 87 similar trace(s) to this</span>
+<span class="error">memory leak: ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString to be 0 since nothing references it but final ob_refcnt is refs: 1 owned, 1 borrowed</span>
+<span class="note">found 93 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">
@@ -259,11 +256,6 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace0-line1721',
-                     target:'trace0-line1722',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace0-line1722',
                      target:'trace0-line1723',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
@@ -295,7 +287,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_ConnectionObject_get_character_set_info</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of PyIntObject is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of PyIntObject is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1705</span> <span id="trace1-line1705" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1706</span> <span id="trace1-line1706" class="unreached-line"><span class="source_nf">_mysql_ConnectionObject_get_character_set_info</span><span class="source_p">(</span></span>
@@ -328,11 +320,9 @@ pre {
 <span class="transition">when PyUnicodeUCS4_FromString() succeeds</span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="reached-lineno">1721</span> <span id="trace1-line1721" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">)</span></span>
-<span class="transition">when treating unknown const char * from _mysql.c:1721 as non-NULL</span>
-<span class="transition">taking True path</span>
-<span class="reached-lineno">1722</span> <span id="trace1-line1722" class="reached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;comment&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">));</span></span>
-<span class="transition">when PyUnicodeUCS4_FromString() succeeds</span>
-<span class="transition">when PyDict_SetItemString() succeeds</span>
+<span class="transition">when treating unknown const char * from _mysql.c:1721 as NULL</span>
+<span class="transition">taking False path</span>
+<span class="lineno">1722</span> <span id="trace1-line1722" class="unreached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;comment&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">));</span></span>
 <span class="reached-lineno">1723</span> <span id="trace1-line1723" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">dir</span><span class="source_p">)</span></span>
 <span class="transition">when treating unknown const char * from _mysql.c:1723 as non-NULL</span>
 <span class="transition">taking True path</span>
@@ -342,18 +332,17 @@ pre {
 <span class="reached-lineno">1725</span> <span id="trace1-line1725" class="reached-line">	<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;mbminlen&quot;</span><span class="source_p">,</span> <span class="source_n">PyInt_FromLong</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">mbminlen</span><span class="source_p">));</span></span>
 <span class="transition">when PyInt_FromLong() succeeds</span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
-<span class="note">PyIntObject allocated at: 	PyDict_SetItemString(result, "mbminlen", PyInt_FromLong(cs.mbminlen));</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 1</span>
+<span class="note">PyIntObject was allocated at: 	PyDict_SetItemString(result, "mbminlen", PyInt_FromLong(cs.mbminlen));</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
+<span class="transition">ob_refcnt is now refs: 1 owned, 1 borrowed</span>
 <span class="reached-lineno">1726</span> <span id="trace1-line1726" class="reached-line">	<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;mbmaxlen&quot;</span><span class="source_p">,</span> <span class="source_n">PyInt_FromLong</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">mbmaxlen</span><span class="source_p">));</span></span>
 <span class="transition">when PyInt_FromLong() succeeds</span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="reached-lineno">1727</span> <span id="trace1-line1727" class="reached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
 <span class="lineno">1728</span> <span id="trace1-line1728" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">ob_refcnt of PyIntObject is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
-<span class="note">found 47 similar trace(s) to this</span>
+<span class="error">memory leak: ob_refcnt of PyIntObject is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of PyIntObject to be 0 since nothing references it but final ob_refcnt is refs: 1 owned, 1 borrowed</span>
+<span class="note">found 51 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">
@@ -407,11 +396,6 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace1-line1721',
-                     target:'trace1-line1722',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line1722',
                      target:'trace1-line1723',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
@@ -443,7 +427,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_ConnectionObject_get_character_set_info</b></td></tr>
-  <tr><td>Error:</td> <td><b>calling PyDict_SetItemString with NULL as argument 3 (D.14772) at _mysql.c:1726</b></td></tr>
+  <tr><td>Error:</td> <td><b>calling PyDict_SetItemString with NULL as argument 3 (D.15325) at _mysql.c:1726</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1705</span> <span id="trace2-line1705" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1706</span> <span id="trace2-line1706" class="unreached-line"><span class="source_nf">_mysql_ConnectionObject_get_character_set_info</span><span class="source_p">(</span></span>
@@ -476,11 +460,9 @@ pre {
 <span class="transition">when PyUnicodeUCS4_FromString() succeeds</span>
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="reached-lineno">1721</span> <span id="trace2-line1721" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">)</span></span>
-<span class="transition">when treating unknown const char * from _mysql.c:1721 as non-NULL</span>
-<span class="transition">taking True path</span>
-<span class="reached-lineno">1722</span> <span id="trace2-line1722" class="reached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;comment&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">));</span></span>
-<span class="transition">when PyUnicodeUCS4_FromString() succeeds</span>
-<span class="transition">when PyDict_SetItemString() succeeds</span>
+<span class="transition">when treating unknown const char * from _mysql.c:1721 as NULL</span>
+<span class="transition">taking False path</span>
+<span class="lineno">1722</span> <span id="trace2-line1722" class="unreached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;comment&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">));</span></span>
 <span class="reached-lineno">1723</span> <span id="trace2-line1723" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">dir</span><span class="source_p">)</span></span>
 <span class="transition">when treating unknown const char * from _mysql.c:1723 as non-NULL</span>
 <span class="transition">taking True path</span>
@@ -492,8 +474,8 @@ pre {
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="reached-lineno">1726</span> <span id="trace2-line1726" class="reached-line">	<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;mbmaxlen&quot;</span><span class="source_p">,</span> <span class="source_n">PyInt_FromLong</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">mbmaxlen</span><span class="source_p">));</span></span>
 <span class="transition">when PyInt_FromLong() fails</span>
-<span class="error">calling PyDict_SetItemString with NULL as argument 3 (D.14772) at _mysql.c:1726</span>
-<span class="note">found 11 similar trace(s) to this</span>
+<span class="error">calling PyDict_SetItemString with NULL as argument 3 (D.15325) at _mysql.c:1726</span>
+<span class="note">found 12 similar trace(s) to this</span>
 <span class="lineno">1727</span> <span id="trace2-line1727" class="unreached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
 <span class="lineno">1728</span> <span id="trace2-line1728" class="unreached-line"><span class="source_p">}</span></span>
 </pre></div>
@@ -549,11 +531,6 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace2-line1721',
-                     target:'trace2-line1722',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace2-line1722',
                      target:'trace2-line1723',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
@@ -580,7 +557,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_ConnectionObject_get_character_set_info</b></td></tr>
-  <tr><td>Error:</td> <td><b>calling PyDict_SetItemString with NULL as argument 3 (D.14769) at _mysql.c:1725</b></td></tr>
+  <tr><td>Error:</td> <td><b>calling PyDict_SetItemString with NULL as argument 3 (D.15322) at _mysql.c:1725</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1705</span> <span id="trace3-line1705" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1706</span> <span id="trace3-line1706" class="unreached-line"><span class="source_nf">_mysql_ConnectionObject_get_character_set_info</span><span class="source_p">(</span></span>
@@ -626,7 +603,7 @@ pre {
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="reached-lineno">1725</span> <span id="trace3-line1725" class="reached-line">	<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;mbminlen&quot;</span><span class="source_p">,</span> <span class="source_n">PyInt_FromLong</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">mbminlen</span><span class="source_p">));</span></span>
 <span class="transition">when PyInt_FromLong() fails</span>
-<span class="error">calling PyDict_SetItemString with NULL as argument 3 (D.14769) at _mysql.c:1725</span>
+<span class="error">calling PyDict_SetItemString with NULL as argument 3 (D.15322) at _mysql.c:1725</span>
 <span class="note">found 5 similar trace(s) to this</span>
 <span class="lineno">1726</span> <span id="trace3-line1726" class="unreached-line">	<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;mbmaxlen&quot;</span><span class="source_p">,</span> <span class="source_n">PyInt_FromLong</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">mbmaxlen</span><span class="source_p">));</span></span>
 <span class="lineno">1727</span> <span id="trace3-line1727" class="unreached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
@@ -710,7 +687,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_ConnectionObject_get_character_set_info</b></td></tr>
-  <tr><td>Error:</td> <td><b>calling PyDict_SetItemString with NULL as argument 3 (D.14766) at _mysql.c:1724</b></td></tr>
+  <tr><td>Error:</td> <td><b>calling PyDict_SetItemString with NULL as argument 3 (D.15319) at _mysql.c:1724</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1705</span> <span id="trace4-line1705" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1706</span> <span id="trace4-line1706" class="unreached-line"><span class="source_nf">_mysql_ConnectionObject_get_character_set_info</span><span class="source_p">(</span></span>
@@ -753,7 +730,7 @@ pre {
 <span class="transition">taking True path</span>
 <span class="reached-lineno">1724</span> <span id="trace4-line1724" class="reached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;dir&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">dir</span><span class="source_p">));</span></span>
 <span class="transition">when PyUnicodeUCS4_FromString() fails</span>
-<span class="error">calling PyDict_SetItemString with NULL as argument 3 (D.14766) at _mysql.c:1724</span>
+<span class="error">calling PyDict_SetItemString with NULL as argument 3 (D.15319) at _mysql.c:1724</span>
 <span class="note">found 1 similar trace(s) to this</span>
 <span class="lineno">1725</span> <span id="trace4-line1725" class="unreached-line">	<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;mbminlen&quot;</span><span class="source_p">,</span> <span class="source_n">PyInt_FromLong</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">mbminlen</span><span class="source_p">));</span></span>
 <span class="lineno">1726</span> <span id="trace4-line1726" class="unreached-line">	<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;mbmaxlen&quot;</span><span class="source_p">,</span> <span class="source_n">PyInt_FromLong</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">mbmaxlen</span><span class="source_p">));</span></span>
@@ -833,7 +810,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_ConnectionObject_get_character_set_info</b></td></tr>
-  <tr><td>Error:</td> <td><b>calling PyDict_SetItemString with NULL as argument 3 (D.14761) at _mysql.c:1722</b></td></tr>
+  <tr><td>Error:</td> <td><b>calling PyDict_SetItemString with NULL as argument 3 (D.15315) at _mysql.c:1722</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1705</span> <span id="trace5-line1705" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1706</span> <span id="trace5-line1706" class="unreached-line"><span class="source_nf">_mysql_ConnectionObject_get_character_set_info</span><span class="source_p">(</span></span>
@@ -870,7 +847,7 @@ pre {
 <span class="transition">taking True path</span>
 <span class="reached-lineno">1722</span> <span id="trace5-line1722" class="reached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;comment&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">comment</span><span class="source_p">));</span></span>
 <span class="transition">when PyUnicodeUCS4_FromString() fails</span>
-<span class="error">calling PyDict_SetItemString with NULL as argument 3 (D.14761) at _mysql.c:1722</span>
+<span class="error">calling PyDict_SetItemString with NULL as argument 3 (D.15315) at _mysql.c:1722</span>
 <span class="lineno">1723</span> <span id="trace5-line1723" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">dir</span><span class="source_p">)</span></span>
 <span class="lineno">1724</span> <span id="trace5-line1724" class="unreached-line">		<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;dir&quot;</span><span class="source_p">,</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">dir</span><span class="source_p">));</span></span>
 <span class="lineno">1725</span> <span id="trace5-line1725" class="unreached-line">	<span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">result</span><span class="source_p">,</span> <span class="source_s">&quot;mbminlen&quot;</span><span class="source_p">,</span> <span class="source_n">PyInt_FromLong</span><span class="source_p">(</span><span class="source_n">cs</span><span class="source_p">.</span><span class="source_n">mbminlen</span><span class="source_p">));</span></span>

@@ -147,7 +147,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_escape_string</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of '*str.190' is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of '*str.44' is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1072</span> <span id="trace0-line1072" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1073</span> <span id="trace0-line1073" class="unreached-line"><span class="source_nf">_mysql_escape_string</span><span class="source_p">(</span></span>
@@ -162,8 +162,8 @@ pre {
 <span class="transition">taking False path</span>
 <span class="reached-lineno">1081</span> <span id="trace0-line1081" class="reached-line">	<span class="source_n">str</span> <span class="source_o">=</span> <span class="source_n">PyUnicode_FromStringAndSize</span><span class="source_p">((</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span> <span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_n">size</span><span class="source_o">*</span><span class="source_mi">2</span><span class="source_o">+</span><span class="source_mi">1</span><span class="source_p">);</span></span>
 <span class="transition">when PyUnicodeUCS4_FromStringAndSize() succeeds</span>
-<span class="note">new ref from (unknown) PyUnicodeUCS4_FromStringAndSize allocated at: 	str = PyUnicode_FromStringAndSize((char *) NULL, size*2+1);</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="note">'*str.44' was allocated at: 	str = PyUnicode_FromStringAndSize((char *) NULL, size*2+1);</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
 <span class="reached-lineno">1082</span> <span id="trace0-line1082" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">str</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_n">PyErr_NoMemory</span><span class="source_p">();</span></span>
 <span class="transition">taking False path</span>
 <span class="reached-lineno">1083</span> <span id="trace0-line1083" class="reached-line">	<span class="source_n">out</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">str</span><span class="source_p">);</span></span>
@@ -181,9 +181,8 @@ pre {
 <span class="transition">taking True path</span>
 <span class="lineno">1092</span> <span id="trace0-line1092" class="unreached-line">	<span class="source_k">return</span> <span class="source_p">(</span><span class="source_n">str</span><span class="source_p">);</span></span>
 <span class="lineno">1093</span> <span id="trace0-line1093" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">ob_refcnt of '*str.190' is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
+<span class="error">memory leak: ob_refcnt of '*str.44' is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of '*str.44' to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</span>
 <span class="note">found 2 similar trace(s) to this</span>
 </pre></div>
 

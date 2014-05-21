@@ -147,7 +147,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_get_client_info</b></td></tr>
-  <tr><td>Error:</td> <td><b>ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1734</span> <span id="trace0-line1734" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1735</span> <span id="trace0-line1735" class="unreached-line"><span class="source_nf">_mysql_get_client_info</span><span class="source_p">(</span></span>
@@ -163,13 +163,12 @@ pre {
 <span class="transition">when considering range: -0x80000000 <= value <= -1</span>
 <span class="transition">taking True path</span>
 <span class="transition">when _mysql_Exception() succeeds</span>
-<span class="note">new ref from (unknown) _mysql_Exception allocated at: 	check_server_init(NULL);</span>
-<span class="transition">ob_refcnt is now refs: 1 + N where N >= 0</span>
+<span class="note">new ref from (unknown) _mysql_Exception was allocated at: 	check_server_init(NULL);</span>
+<span class="transition">ob_refcnt is now refs: 1 owned</span>
 <span class="lineno">1741</span> <span id="trace0-line1741" class="unreached-line">	<span class="source_k">return</span> <span class="source_n">PyUnicode_FromString</span><span class="source_p">(</span><span class="source_n">mysql_get_client_info</span><span class="source_p">());</span></span>
 <span class="lineno">1742</span> <span id="trace0-line1742" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
-<span class="note">was expecting final ob_refcnt to be N + 0 (for some unknown N)</span>
-<span class="note">but final ob_refcnt is N + 1</span>
+<span class="error">memory leak: ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
+<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) _mysql_Exception to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</span>
 <span class="note">found 1 similar trace(s) to this</span>
 </pre></div>
 
