@@ -163,14 +163,14 @@ pre {
 <span class="transition">when considering range: -0x80000000 <= value <= -1</span>
 <span class="transition">taking True path</span>
 <span class="transition">when _mysql_Exception() succeeds</span>
+<span class="error">memory leak: ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
 <span class="note">new ref from (unknown) _mysql_Exception was allocated at: 	check_server_init(NULL);</span>
+<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) _mysql_Exception to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</span>
+<span class="note">found 1 similar trace(s) to this</span>
 <span class="transition">ob_refcnt is now refs: 1 owned</span>
 <span class="lineno">368</span> <span id="trace0-line368" class="unreached-line">	<span class="source_k">return</span> <span class="source_n">flag</span><span class="source_p">;</span></span>
 <span class="lineno">369</span> <span id="trace0-line369" class="unreached-line"><span class="source_p">}</span></span>
 <span class="lineno">370</span> <span id="trace0-line370" class="unreached-line"></pre></div></span>
-<span class="error">memory leak: ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
-<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) _mysql_Exception to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</span>
-<span class="note">found 1 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">
@@ -216,11 +216,11 @@ pre {
 <span class="transition">when considering range: -0x80000000 <= value <= -1</span>
 <span class="transition">taking True path</span>
 <span class="transition">when _mysql_Exception() succeeds</span>
+<span class="error">returning (PyObject*)NULL without setting an exception</span>
+<span class="note">found 1 similar trace(s) to this</span>
 <span class="lineno">368</span> <span id="trace1-line368" class="unreached-line">	<span class="source_k">return</span> <span class="source_n">flag</span><span class="source_p">;</span></span>
 <span class="lineno">369</span> <span id="trace1-line369" class="unreached-line"><span class="source_p">}</span></span>
 <span class="lineno">370</span> <span id="trace1-line370" class="unreached-line"></pre></div></span>
-<span class="error">returning (PyObject*)NULL without setting an exception</span>
-<span class="note">found 1 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">

@@ -200,9 +200,6 @@ pre {
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="reached-lineno">1727</span> <span id="trace0-line1727" class="reached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
 <span class="lineno">1728</span> <span id="trace0-line1728" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">memory leak: ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString is 1 too high</span>
-<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) PyUnicodeUCS4_FromString to be 0 since nothing references it but final ob_refcnt is refs: 1 owned, 1 borrowed</span>
-<span class="note">found 93 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">
@@ -340,9 +337,6 @@ pre {
 <span class="transition">when PyDict_SetItemString() succeeds</span>
 <span class="reached-lineno">1727</span> <span id="trace1-line1727" class="reached-line">	<span class="source_k">return</span> <span class="source_n">result</span><span class="source_p">;</span></span>
 <span class="lineno">1728</span> <span id="trace1-line1728" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">memory leak: ob_refcnt of PyIntObject is 1 too high</span>
-<span class="note">was expecting final owned ob_refcnt of PyIntObject to be 0 since nothing references it but final ob_refcnt is refs: 1 owned, 1 borrowed</span>
-<span class="note">found 51 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">

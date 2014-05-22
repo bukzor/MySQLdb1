@@ -257,9 +257,6 @@ pre {
 <span class="transition">calling PyMem_Free on PyMem_Malloc allocated at _mysql.c:292</span>
 <span class="reached-lineno">337</span> <span id="trace0-line337" class="reached-line"><span class="source_p">}</span></span>
 <span class="lineno">338</span> <span id="trace0-line338" class="unreached-line"></pre></div></span>
-<span class="error">memory leak: ob_refcnt of new ref from (unknown) _mysql_Exception is 1 too high</span>
-<span class="note">was expecting final owned ob_refcnt of new ref from (unknown) _mysql_Exception to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</span>
-<span class="note">found 5 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">
@@ -482,8 +479,6 @@ pre {
 <span class="transition">calling PyMem_Free on PyMem_Malloc allocated at _mysql.c:292</span>
 <span class="reached-lineno">337</span> <span id="trace1-line337" class="reached-line"><span class="source_p">}</span></span>
 <span class="lineno">338</span> <span id="trace1-line338" class="unreached-line"></pre></div></span>
-<span class="error">returning (PyObject*)NULL without setting an exception</span>
-<span class="note">found 5 similar trace(s) to this</span>
 </pre></div>
 
 <script type="text/javascript">

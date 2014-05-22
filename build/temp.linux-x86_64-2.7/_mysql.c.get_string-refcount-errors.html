@@ -161,9 +161,9 @@ pre {
 <span class="reached-lineno">104</span> <span id="trace0-line104" class="reached-line">	<span class="source_k">return</span> <span class="source_n">PyBytes_AS_STRING</span><span class="source_p">(</span><span class="source_n">strobj</span><span class="source_p">);</span></span>
 <span class="transition">ob_refcnt is now refs: 2 owned</span>
 <span class="reached-lineno">105</span> <span id="trace0-line105" class="reached-line"><span class="source_p">}</span></span>
-<span class="lineno">106</span> <span id="trace0-line106" class="unreached-line"></pre></div></span>
 <span class="error">memory leak: ob_refcnt of '*strobj' is 2 too high</span>
 <span class="note">was expecting final owned ob_refcnt of '*strobj' to be 0 since nothing references it but final ob_refcnt is refs: 2 owned</span>
+<span class="lineno">106</span> <span id="trace0-line106" class="unreached-line"></pre></div></span>
 </pre></div>
 
 <script type="text/javascript">

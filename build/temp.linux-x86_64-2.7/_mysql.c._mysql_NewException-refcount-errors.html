@@ -172,9 +172,9 @@ pre {
 <span class="lineno">2946</span> <span id="trace0-line2946" class="unreached-line">	<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">e</span><span class="source_p">);</span></span>
 <span class="lineno">2947</span> <span id="trace0-line2947" class="unreached-line"><span class="source_cp">#endif</span></span>
 <span class="reached-lineno">2948</span> <span id="trace0-line2948" class="reached-line">	<span class="source_k">return</span> <span class="source_n">e</span><span class="source_p">;</span></span>
-<span class="lineno">2949</span> <span id="trace0-line2949" class="unreached-line"><span class="source_p">}</span></span>
 <span class="error">future use-after-free: ob_refcnt of return value is 1 too low</span>
 <span class="note">was expecting final owned ob_refcnt of return value to be 1 due to object being referenced by: return value but final ob_refcnt is refs: 0 owned, 2 borrowed</span>
+<span class="lineno">2949</span> <span id="trace0-line2949" class="unreached-line"><span class="source_p">}</span></span>
 </pre></div>
 
 <script type="text/javascript">
@@ -224,13 +224,13 @@ pre {
 <span class="transition">PyDict_GetItemString does not find string</span>
 <span class="transition">taking True path</span>
 <span class="reached-lineno">2943</span> <span id="trace1-line2943" class="reached-line">		<span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="error">returning (PyObject*)NULL without setting an exception</span>
 <span class="lineno">2944</span> <span id="trace1-line2944" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyDict_SetItemString</span><span class="source_p">(</span><span class="source_n">dict</span><span class="source_p">,</span> <span class="source_n">name</span><span class="source_p">,</span> <span class="source_n">e</span><span class="source_p">))</span> <span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="lineno">2945</span> <span id="trace1-line2945" class="unreached-line"><span class="source_cp">#ifdef PYPY_VERSION</span></span>
 <span class="lineno">2946</span> <span id="trace1-line2946" class="unreached-line">	<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">e</span><span class="source_p">);</span></span>
 <span class="lineno">2947</span> <span id="trace1-line2947" class="unreached-line"><span class="source_cp">#endif</span></span>
 <span class="lineno">2948</span> <span id="trace1-line2948" class="unreached-line">	<span class="source_k">return</span> <span class="source_n">e</span><span class="source_p">;</span></span>
 <span class="lineno">2949</span> <span id="trace1-line2949" class="unreached-line"><span class="source_p">}</span></span>
-<span class="error">returning (PyObject*)NULL without setting an exception</span>
 </pre></div>
 
 <script type="text/javascript">
