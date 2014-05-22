@@ -285,15 +285,15 @@ pre {
 <span class="lineno">629</span> <span id="trace0-line629" class="unreached-line">	<span class="source_p">}</span></span>
 <span class="lineno">630</span> <span id="trace0-line630" class="unreached-line"><span class="source_cp">#endif</span></span>
 <span class="reached-lineno">631</span> <span id="trace0-line631" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">compress</span> <span class="source_o">!=</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_p">{</span></span>
-<span class="transition">when considering range: -0x80000000 <= value <= -2</span>
-<span class="transition">taking True path</span>
-<span class="reached-lineno">632</span> <span id="trace0-line632" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_COMPRESS</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">);</span></span>
-<span class="reached-lineno">633</span> <span id="trace0-line633" class="reached-line">		<span class="source_n">client_flag</span> <span class="source_o">|=</span> <span class="source_n">CLIENT_COMPRESS</span><span class="source_p">;</span></span>
+<span class="transition">when considering value == (int)-1 from _mysql.c:571</span>
+<span class="transition">taking False path</span>
+<span class="lineno">632</span> <span id="trace0-line632" class="unreached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_COMPRESS</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">);</span></span>
+<span class="lineno">633</span> <span id="trace0-line633" class="unreached-line">		<span class="source_n">client_flag</span> <span class="source_o">|=</span> <span class="source_n">CLIENT_COMPRESS</span><span class="source_p">;</span></span>
 <span class="lineno">634</span> <span id="trace0-line634" class="unreached-line">	<span class="source_p">}</span></span>
 <span class="reached-lineno">635</span> <span id="trace0-line635" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">named_pipe</span> <span class="source_o">!=</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span></span>
-<span class="transition">when considering range: -0x80000000 <= value <= -2</span>
-<span class="transition">taking True path</span>
-<span class="reached-lineno">636</span> <span id="trace0-line636" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_NAMED_PIPE</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">);</span></span>
+<span class="transition">when considering value == (int)-1 from _mysql.c:571</span>
+<span class="transition">taking False path</span>
+<span class="lineno">636</span> <span id="trace0-line636" class="unreached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_OPT_NAMED_PIPE</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">);</span></span>
 <span class="reached-lineno">637</span> <span id="trace0-line637" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">init_command</span> <span class="source_o">!=</span> <span class="source_nb">NULL</span><span class="source_p">)</span></span>
 <span class="transition">when treating unknown const char * from _mysql.c:571 as non-NULL</span>
 <span class="transition">taking True path</span>
@@ -303,9 +303,9 @@ pre {
 <span class="transition">taking True path</span>
 <span class="reached-lineno">640</span> <span id="trace0-line640" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_READ_DEFAULT_FILE</span><span class="source_p">,</span> <span class="source_n">read_default_file</span><span class="source_p">);</span></span>
 <span class="reached-lineno">641</span> <span id="trace0-line641" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">read_default_group</span> <span class="source_o">!=</span> <span class="source_nb">NULL</span><span class="source_p">)</span></span>
-<span class="transition">when treating unknown const char * from _mysql.c:571 as non-NULL</span>
-<span class="transition">taking True path</span>
-<span class="reached-lineno">642</span> <span id="trace0-line642" class="reached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_READ_DEFAULT_GROUP</span><span class="source_p">,</span> <span class="source_n">read_default_group</span><span class="source_p">);</span></span>
+<span class="transition">when treating unknown const char * from _mysql.c:571 as NULL</span>
+<span class="transition">taking False path</span>
+<span class="lineno">642</span> <span id="trace0-line642" class="unreached-line">		<span class="source_n">mysql_options</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_o">-&gt;</span><span class="source_n">connection</span><span class="source_p">),</span> <span class="source_n">MYSQL_READ_DEFAULT_GROUP</span><span class="source_p">,</span> <span class="source_n">read_default_group</span><span class="source_p">);</span></span>
 <span class="lineno">643</span> <span id="trace0-line643" class="unreached-line"></span>
 <span class="reached-lineno">644</span> <span id="trace0-line644" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">local_infile</span> <span class="source_o">!=</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span></span>
 <span class="transition">when considering range: -0x80000000 <= value <= -2</span>
@@ -432,12 +432,12 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace0-line631',
-                     target:'trace0-line632',
+                     target:'trace0-line635',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace0-line635',
-                     target:'trace0-line636',
+                     target:'trace0-line637',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
@@ -452,7 +452,7 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace0-line641',
-                     target:'trace0-line642',
+                     target:'trace0-line644',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });

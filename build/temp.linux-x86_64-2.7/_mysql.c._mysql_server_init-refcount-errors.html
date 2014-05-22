@@ -186,28 +186,37 @@ pre {
 <span class="reached-lineno">286</span> <span id="trace0-line286" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cmd_argc</span> <span class="source_o">==</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_p">{</span></span>
 <span class="transition">when PySequence_Size() succeeds</span>
 <span class="reached-lineno">287</span> <span id="trace0-line287" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
-<span class="transition">when considering range: -0x80000000 <= value <= -2</span>
+<span class="transition">when considering range: 0 <= value <= 0x7fffffff</span>
 <span class="transition">taking False path</span>
 <span class="lineno">288</span> <span id="trace0-line288" class="unreached-line">					<span class="source_s">&quot;args could not be sized&quot;</span><span class="source_p">);</span></span>
 <span class="lineno">289</span> <span id="trace0-line289" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
 <span class="lineno">290</span> <span id="trace0-line290" class="unreached-line">		<span class="source_p">}</span></span>
 <span class="lineno">291</span> <span id="trace0-line291" class="unreached-line">		<span class="source_n">cmd_args_c</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">**</span><span class="source_p">)</span> <span class="source_n">PyMem_Malloc</span><span class="source_p">(</span><span class="source_n">cmd_argc</span><span class="source_o">*</span><span class="source_k">sizeof</span><span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">));</span></span>
 <span class="reached-lineno">292</span> <span id="trace0-line292" class="reached-line">		<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">i</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">&lt;</span> <span class="source_n">cmd_argc</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
-<span class="transition">when PyMem_Malloc() succeeds</span>
+<span class="transition">when PyMem_Malloc() fails</span>
 <span class="reached-lineno">293</span> <span id="trace0-line293" class="reached-line">			<span class="source_n">item</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">);</span></span>
+<span class="transition">when considering range: 1 <= cmd_argc <= 0x7fffffff</span>
+<span class="transition">taking True path</span>
+<span class="transition">when considering cmd_argc == (int)1 from _mysql.c:286</span>
 <span class="transition">taking False path</span>
-<span class="lineno">294</span> <span id="trace0-line294" class="unreached-line">			<span class="source_n">s</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
-<span class="lineno">295</span> <span id="trace0-line295" class="unreached-line"></span>
+<span class="reached-lineno">294</span> <span id="trace0-line294" class="reached-line">			<span class="source_n">s</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="transition">when PySequence_GetItem() succeeds</span>
+<span class="reached-lineno">295</span> <span id="trace0-line295" class="reached-line"></span>
 <span class="lineno">296</span> <span id="trace0-line296" class="unreached-line">			<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
-<span class="lineno">297</span> <span id="trace0-line297" class="unreached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">s</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span> <span class="source_p">}</span></span>
-<span class="lineno">298</span> <span id="trace0-line298" class="unreached-line">			<span class="source_n">cmd_args_c</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_n">s</span><span class="source_p">;</span></span>
-<span class="lineno">299</span> <span id="trace0-line299" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="reached-lineno">297</span> <span id="trace0-line297" class="reached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">s</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span> <span class="source_p">}</span></span>
+<span class="transition">when taking False path</span>
+<span class="transition">calling tp_dealloc on new ref from PySequence_GetItem allocated at _mysql.c:294</span>
+<span class="reached-lineno">298</span> <span id="trace0-line298" class="reached-line">			<span class="source_n">cmd_args_c</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_n">s</span><span class="source_p">;</span></span>
+<span class="transition">when treating unknown char * from _mysql.c:295 as non-NULL</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">299</span> <span id="trace0-line299" class="reached-line">		<span class="source_p">}</span></span>
+<span class="transition">when treating unknown char * * from _mysql.c:299 as non-NULL</span>
 <span class="lineno">300</span> <span id="trace0-line300" class="unreached-line">	<span class="source_p">}</span></span>
 <span class="lineno">301</span> <span id="trace0-line301" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">)</span> <span class="source_p">{</span></span>
 <span class="reached-lineno">302</span> <span id="trace0-line302" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PySequence_Check</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">))</span> <span class="source_p">{</span></span>
 <span class="transition">taking True path</span>
 <span class="reached-lineno">303</span> <span id="trace0-line303" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
-<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">when considering range: 1 <= value <= 0x7fffffff</span>
 <span class="transition">taking False path</span>
 <span class="lineno">304</span> <span id="trace0-line304" class="unreached-line">					<span class="source_s">&quot;groups must be a sequence&quot;</span><span class="source_p">);</span></span>
 <span class="lineno">305</span> <span id="trace0-line305" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
@@ -223,7 +232,7 @@ pre {
 <span class="lineno">312</span> <span id="trace0-line312" class="unreached-line">		<span class="source_p">}</span></span>
 <span class="lineno">313</span> <span id="trace0-line313" class="unreached-line">		<span class="source_n">groups_c</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">**</span><span class="source_p">)</span> <span class="source_n">PyMem_Malloc</span><span class="source_p">((</span><span class="source_mi">1</span><span class="source_o">+</span><span class="source_n">groupc</span><span class="source_p">)</span><span class="source_o">*</span><span class="source_k">sizeof</span><span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">));</span></span>
 <span class="reached-lineno">314</span> <span id="trace0-line314" class="reached-line">		<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">i</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">&lt;</span> <span class="source_n">groupc</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
-<span class="transition">when PyMem_Malloc() succeeds</span>
+<span class="transition">when PyMem_Malloc() fails</span>
 <span class="reached-lineno">315</span> <span id="trace0-line315" class="reached-line">			<span class="source_n">item</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">);</span></span>
 <span class="transition">when considering groupc == (int)0 from _mysql.c:308</span>
 <span class="transition">taking False path</span>
@@ -234,6 +243,7 @@ pre {
 <span class="lineno">320</span> <span id="trace0-line320" class="unreached-line">		<span class="source_p">}</span></span>
 <span class="lineno">321</span> <span id="trace0-line321" class="unreached-line">		<span class="source_n">groups_c</span><span class="source_p">[</span><span class="source_n">groupc</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="reached-lineno">322</span> <span id="trace0-line322" class="reached-line">	<span class="source_p">}</span></span>
+<span class="transition">when treating unknown char * * from _mysql.c:322 as non-NULL</span>
 <span class="lineno">323</span> <span id="trace0-line323" class="unreached-line">	<span class="source_cm">/* even though this may block, don&#39;t give up the interpreter lock</span></span>
 <span class="lineno">324</span> <span id="trace0-line324" class="unreached-line"><span class="source_cm">	   so that the server can&#39;t be initialized multiple times. */</span></span>
 <span class="lineno">325</span> <span id="trace0-line325" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">mysql_server_init</span><span class="source_p">(</span><span class="source_n">cmd_argc</span><span class="source_p">,</span> <span class="source_n">cmd_args_c</span><span class="source_p">,</span> <span class="source_n">groups_c</span><span class="source_p">))</span> <span class="source_p">{</span></span>
@@ -252,9 +262,9 @@ pre {
 <span class="lineno">333</span> <span id="trace0-line333" class="unreached-line">  <span class="source_nl">finish:</span></span>
 <span class="lineno">334</span> <span id="trace0-line334" class="unreached-line">	<span class="source_n">PyMem_Free</span><span class="source_p">(</span><span class="source_n">groups_c</span><span class="source_p">);</span></span>
 <span class="reached-lineno">335</span> <span id="trace0-line335" class="reached-line">	<span class="source_n">PyMem_Free</span><span class="source_p">(</span><span class="source_n">cmd_args_c</span><span class="source_p">);</span></span>
-<span class="transition">calling PyMem_Free on PyMem_Malloc allocated at _mysql.c:314</span>
+<span class="transition">calling PyMem_Free on NULL</span>
 <span class="reached-lineno">336</span> <span id="trace0-line336" class="reached-line">	<span class="source_k">return</span> <span class="source_n">ret</span><span class="source_p">;</span></span>
-<span class="transition">calling PyMem_Free on PyMem_Malloc allocated at _mysql.c:292</span>
+<span class="transition">calling PyMem_Free on NULL</span>
 <span class="reached-lineno">337</span> <span id="trace0-line337" class="reached-line"><span class="source_p">}</span></span>
 <span class="lineno">338</span> <span id="trace0-line338" class="unreached-line"></pre></div></span>
 </pre></div>
@@ -306,6 +316,26 @@ pre {
                    });
     jsPlumb.connect({source:'trace0-line292',
                      target:'trace0-line293',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line293',
+                     target:'trace0-line294',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line294',
+                     target:'trace0-line295',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line297',
+                     target:'trace0-line298',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line298',
+                     target:'trace0-line299',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
@@ -410,28 +440,37 @@ pre {
 <span class="reached-lineno">286</span> <span id="trace1-line286" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cmd_argc</span> <span class="source_o">==</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_p">{</span></span>
 <span class="transition">when PySequence_Size() succeeds</span>
 <span class="reached-lineno">287</span> <span id="trace1-line287" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
-<span class="transition">when considering range: -0x80000000 <= value <= -2</span>
+<span class="transition">when considering range: 0 <= value <= 0x7fffffff</span>
 <span class="transition">taking False path</span>
 <span class="lineno">288</span> <span id="trace1-line288" class="unreached-line">					<span class="source_s">&quot;args could not be sized&quot;</span><span class="source_p">);</span></span>
 <span class="lineno">289</span> <span id="trace1-line289" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
 <span class="lineno">290</span> <span id="trace1-line290" class="unreached-line">		<span class="source_p">}</span></span>
 <span class="lineno">291</span> <span id="trace1-line291" class="unreached-line">		<span class="source_n">cmd_args_c</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">**</span><span class="source_p">)</span> <span class="source_n">PyMem_Malloc</span><span class="source_p">(</span><span class="source_n">cmd_argc</span><span class="source_o">*</span><span class="source_k">sizeof</span><span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">));</span></span>
 <span class="reached-lineno">292</span> <span id="trace1-line292" class="reached-line">		<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">i</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">&lt;</span> <span class="source_n">cmd_argc</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
-<span class="transition">when PyMem_Malloc() succeeds</span>
+<span class="transition">when PyMem_Malloc() fails</span>
 <span class="reached-lineno">293</span> <span id="trace1-line293" class="reached-line">			<span class="source_n">item</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">);</span></span>
+<span class="transition">when considering range: 1 <= cmd_argc <= 0x7fffffff</span>
+<span class="transition">taking True path</span>
+<span class="transition">when considering cmd_argc == (int)1 from _mysql.c:286</span>
 <span class="transition">taking False path</span>
-<span class="lineno">294</span> <span id="trace1-line294" class="unreached-line">			<span class="source_n">s</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
-<span class="lineno">295</span> <span id="trace1-line295" class="unreached-line"></span>
+<span class="reached-lineno">294</span> <span id="trace1-line294" class="reached-line">			<span class="source_n">s</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="transition">when PySequence_GetItem() succeeds</span>
+<span class="reached-lineno">295</span> <span id="trace1-line295" class="reached-line"></span>
 <span class="lineno">296</span> <span id="trace1-line296" class="unreached-line">			<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
-<span class="lineno">297</span> <span id="trace1-line297" class="unreached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">s</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span> <span class="source_p">}</span></span>
-<span class="lineno">298</span> <span id="trace1-line298" class="unreached-line">			<span class="source_n">cmd_args_c</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_n">s</span><span class="source_p">;</span></span>
-<span class="lineno">299</span> <span id="trace1-line299" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="reached-lineno">297</span> <span id="trace1-line297" class="reached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">s</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span> <span class="source_p">}</span></span>
+<span class="transition">when taking False path</span>
+<span class="transition">calling tp_dealloc on new ref from PySequence_GetItem allocated at _mysql.c:294</span>
+<span class="reached-lineno">298</span> <span id="trace1-line298" class="reached-line">			<span class="source_n">cmd_args_c</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_n">s</span><span class="source_p">;</span></span>
+<span class="transition">when treating unknown char * from _mysql.c:295 as non-NULL</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">299</span> <span id="trace1-line299" class="reached-line">		<span class="source_p">}</span></span>
+<span class="transition">when treating unknown char * * from _mysql.c:299 as non-NULL</span>
 <span class="lineno">300</span> <span id="trace1-line300" class="unreached-line">	<span class="source_p">}</span></span>
 <span class="lineno">301</span> <span id="trace1-line301" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">)</span> <span class="source_p">{</span></span>
 <span class="reached-lineno">302</span> <span id="trace1-line302" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PySequence_Check</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">))</span> <span class="source_p">{</span></span>
 <span class="transition">taking True path</span>
 <span class="reached-lineno">303</span> <span id="trace1-line303" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
-<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">when considering range: 1 <= value <= 0x7fffffff</span>
 <span class="transition">taking False path</span>
 <span class="lineno">304</span> <span id="trace1-line304" class="unreached-line">					<span class="source_s">&quot;groups must be a sequence&quot;</span><span class="source_p">);</span></span>
 <span class="lineno">305</span> <span id="trace1-line305" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
@@ -447,7 +486,7 @@ pre {
 <span class="lineno">312</span> <span id="trace1-line312" class="unreached-line">		<span class="source_p">}</span></span>
 <span class="lineno">313</span> <span id="trace1-line313" class="unreached-line">		<span class="source_n">groups_c</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">**</span><span class="source_p">)</span> <span class="source_n">PyMem_Malloc</span><span class="source_p">((</span><span class="source_mi">1</span><span class="source_o">+</span><span class="source_n">groupc</span><span class="source_p">)</span><span class="source_o">*</span><span class="source_k">sizeof</span><span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">));</span></span>
 <span class="reached-lineno">314</span> <span id="trace1-line314" class="reached-line">		<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">i</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">&lt;</span> <span class="source_n">groupc</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
-<span class="transition">when PyMem_Malloc() succeeds</span>
+<span class="transition">when PyMem_Malloc() fails</span>
 <span class="reached-lineno">315</span> <span id="trace1-line315" class="reached-line">			<span class="source_n">item</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">);</span></span>
 <span class="transition">when considering groupc == (int)0 from _mysql.c:308</span>
 <span class="transition">taking False path</span>
@@ -458,6 +497,7 @@ pre {
 <span class="lineno">320</span> <span id="trace1-line320" class="unreached-line">		<span class="source_p">}</span></span>
 <span class="lineno">321</span> <span id="trace1-line321" class="unreached-line">		<span class="source_n">groups_c</span><span class="source_p">[</span><span class="source_n">groupc</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="reached-lineno">322</span> <span id="trace1-line322" class="reached-line">	<span class="source_p">}</span></span>
+<span class="transition">when treating unknown char * * from _mysql.c:322 as non-NULL</span>
 <span class="lineno">323</span> <span id="trace1-line323" class="unreached-line">	<span class="source_cm">/* even though this may block, don&#39;t give up the interpreter lock</span></span>
 <span class="lineno">324</span> <span id="trace1-line324" class="unreached-line"><span class="source_cm">	   so that the server can&#39;t be initialized multiple times. */</span></span>
 <span class="lineno">325</span> <span id="trace1-line325" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">mysql_server_init</span><span class="source_p">(</span><span class="source_n">cmd_argc</span><span class="source_p">,</span> <span class="source_n">cmd_args_c</span><span class="source_p">,</span> <span class="source_n">groups_c</span><span class="source_p">))</span> <span class="source_p">{</span></span>
@@ -474,9 +514,9 @@ pre {
 <span class="lineno">333</span> <span id="trace1-line333" class="unreached-line">  <span class="source_nl">finish:</span></span>
 <span class="lineno">334</span> <span id="trace1-line334" class="unreached-line">	<span class="source_n">PyMem_Free</span><span class="source_p">(</span><span class="source_n">groups_c</span><span class="source_p">);</span></span>
 <span class="reached-lineno">335</span> <span id="trace1-line335" class="reached-line">	<span class="source_n">PyMem_Free</span><span class="source_p">(</span><span class="source_n">cmd_args_c</span><span class="source_p">);</span></span>
-<span class="transition">calling PyMem_Free on PyMem_Malloc allocated at _mysql.c:314</span>
+<span class="transition">calling PyMem_Free on NULL</span>
 <span class="reached-lineno">336</span> <span id="trace1-line336" class="reached-line">	<span class="source_k">return</span> <span class="source_n">ret</span><span class="source_p">;</span></span>
-<span class="transition">calling PyMem_Free on PyMem_Malloc allocated at _mysql.c:292</span>
+<span class="transition">calling PyMem_Free on NULL</span>
 <span class="reached-lineno">337</span> <span id="trace1-line337" class="reached-line"><span class="source_p">}</span></span>
 <span class="lineno">338</span> <span id="trace1-line338" class="unreached-line"></pre></div></span>
 </pre></div>
@@ -532,6 +572,26 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace1-line293',
+                     target:'trace1-line294',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line294',
+                     target:'trace1-line295',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line297',
+                     target:'trace1-line298',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line298',
+                     target:'trace1-line299',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace1-line293',
                      target:'trace1-line302',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
@@ -583,6 +643,406 @@ pre {
                    });
     jsPlumb.connect({source:'trace1-line336',
                      target:'trace1-line337',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+  })
+</script>
+<hr/></div>
+<div id="report-2">
+<table>
+  <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
+  <tr><td>Function:</td> <td><b>_mysql_server_init</b></td></tr>
+  <tr><td>Error:</td> <td><b>dereferencing NULL (item->ob_refcnt) at _mysql.c:318</b></td></tr>
+</table>
+<div class="highlight"><pre><span class="lineno">259</span> <span id="trace2-line259" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_nf">_mysql_server_init</span><span class="source_p">(</span></span>
+<span class="lineno">260</span> <span id="trace2-line260" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">self</span><span class="source_p">,</span></span>
+<span class="lineno">261</span> <span id="trace2-line261" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">args</span><span class="source_p">,</span></span>
+<span class="lineno">262</span> <span id="trace2-line262" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">kwargs</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="lineno">263</span> <span id="trace2-line263" class="unreached-line">	<span class="source_k">static</span> <span class="source_kt">char</span> <span class="source_o">*</span><span class="source_n">kwlist</span><span class="source_p">[]</span> <span class="source_o">=</span> <span class="source_p">{</span><span class="source_s">&quot;args&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;groups&quot;</span><span class="source_p">,</span> <span class="source_nb">NULL</span><span class="source_p">};</span></span>
+<span class="lineno">264</span> <span id="trace2-line264" class="unreached-line">	<span class="source_kt">char</span> <span class="source_o">**</span><span class="source_n">cmd_args_c</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">**</span><span class="source_n">groups_c</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">s</span><span class="source_p">;</span></span>
+<span class="reached-lineno">265</span> <span id="trace2-line265" class="reached-line">	<span class="source_kt">int</span> <span class="source_n">cmd_argc</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">,</span> <span class="source_n">groupc</span><span class="source_p">;</span></span>
+<span class="reached-lineno">266</span> <span id="trace2-line266" class="reached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">cmd_args</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">groups</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">ret</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">item</span><span class="source_p">;</span></span>
+<span class="reached-lineno">267</span> <span id="trace2-line267" class="reached-line"></span>
+<span class="lineno">268</span> <span id="trace2-line268" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">_mysql_server_init_done</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="reached-lineno">269</span> <span id="trace2-line269" class="reached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">_mysql_ProgrammingError</span><span class="source_p">,</span></span>
+<span class="transition">when considering value == (int)0 from _mysql.c:121</span>
+<span class="transition">taking False path</span>
+<span class="lineno">270</span> <span id="trace2-line270" class="unreached-line">				<span class="source_s">&quot;already initialized&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">271</span> <span id="trace2-line271" class="unreached-line">		<span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">272</span> <span id="trace2-line272" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">273</span> <span id="trace2-line273" class="unreached-line">	  </span>
+<span class="lineno">274</span> <span id="trace2-line274" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PyArg_ParseTupleAndKeywords</span><span class="source_p">(</span><span class="source_n">args</span><span class="source_p">,</span> <span class="source_n">kwargs</span><span class="source_p">,</span> <span class="source_s">&quot;|OO&quot;</span><span class="source_p">,</span> <span class="source_n">kwlist</span><span class="source_p">,</span></span>
+<span class="reached-lineno">275</span> <span id="trace2-line275" class="reached-line">					 <span class="source_o">&amp;</span><span class="source_n">cmd_args</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">groups</span><span class="source_p">))</span></span>
+<span class="transition">when PyArg_ParseTupleAndKeywords() succeeds</span>
+<span class="transition">taking False path</span>
+<span class="lineno">276</span> <span id="trace2-line276" class="unreached-line">		<span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">277</span> <span id="trace2-line277" class="unreached-line"></span>
+<span class="lineno">278</span> <span id="trace2-line278" class="unreached-line"><span class="source_cp">#if MYSQL_VERSION_ID &gt;= 40000</span></span>
+<span class="lineno">279</span> <span id="trace2-line279" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="reached-lineno">280</span> <span id="trace2-line280" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PySequence_Check</span><span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">281</span> <span id="trace2-line281" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking False path</span>
+<span class="lineno">282</span> <span id="trace2-line282" class="unreached-line">					<span class="source_s">&quot;args must be a sequence&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">283</span> <span id="trace2-line283" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">284</span> <span id="trace2-line284" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">285</span> <span id="trace2-line285" class="unreached-line">		<span class="source_n">cmd_argc</span> <span class="source_o">=</span> <span class="source_n">PySequence_Size</span><span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">);</span></span>
+<span class="reached-lineno">286</span> <span id="trace2-line286" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cmd_argc</span> <span class="source_o">==</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when PySequence_Size() succeeds</span>
+<span class="reached-lineno">287</span> <span id="trace2-line287" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
+<span class="transition">when considering range: 0 <= value <= 0x7fffffff</span>
+<span class="transition">taking False path</span>
+<span class="lineno">288</span> <span id="trace2-line288" class="unreached-line">					<span class="source_s">&quot;args could not be sized&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">289</span> <span id="trace2-line289" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">290</span> <span id="trace2-line290" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">291</span> <span id="trace2-line291" class="unreached-line">		<span class="source_n">cmd_args_c</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">**</span><span class="source_p">)</span> <span class="source_n">PyMem_Malloc</span><span class="source_p">(</span><span class="source_n">cmd_argc</span><span class="source_o">*</span><span class="source_k">sizeof</span><span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">));</span></span>
+<span class="reached-lineno">292</span> <span id="trace2-line292" class="reached-line">		<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">i</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">&lt;</span> <span class="source_n">cmd_argc</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when PyMem_Malloc() fails</span>
+<span class="reached-lineno">293</span> <span id="trace2-line293" class="reached-line">			<span class="source_n">item</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">);</span></span>
+<span class="transition">when considering range: 1 <= cmd_argc <= 0x7fffffff</span>
+<span class="transition">taking True path</span>
+<span class="transition">when considering cmd_argc == (int)1 from _mysql.c:286</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">294</span> <span id="trace2-line294" class="reached-line">			<span class="source_n">s</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="transition">when PySequence_GetItem() succeeds</span>
+<span class="reached-lineno">295</span> <span id="trace2-line295" class="reached-line"></span>
+<span class="lineno">296</span> <span id="trace2-line296" class="unreached-line">			<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="reached-lineno">297</span> <span id="trace2-line297" class="reached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">s</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span> <span class="source_p">}</span></span>
+<span class="transition">when taking False path</span>
+<span class="transition">calling tp_dealloc on new ref from PySequence_GetItem allocated at _mysql.c:294</span>
+<span class="reached-lineno">298</span> <span id="trace2-line298" class="reached-line">			<span class="source_n">cmd_args_c</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_n">s</span><span class="source_p">;</span></span>
+<span class="transition">when treating unknown char * from _mysql.c:295 as non-NULL</span>
+<span class="transition">taking False path</span>
+<span class="reached-lineno">299</span> <span id="trace2-line299" class="reached-line">		<span class="source_p">}</span></span>
+<span class="transition">when treating unknown char * * from _mysql.c:299 as non-NULL</span>
+<span class="lineno">300</span> <span id="trace2-line300" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">301</span> <span id="trace2-line301" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="reached-lineno">302</span> <span id="trace2-line302" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PySequence_Check</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">303</span> <span id="trace2-line303" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
+<span class="transition">when considering range: 1 <= value <= 0x7fffffff</span>
+<span class="transition">taking False path</span>
+<span class="lineno">304</span> <span id="trace2-line304" class="unreached-line">					<span class="source_s">&quot;groups must be a sequence&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">305</span> <span id="trace2-line305" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">306</span> <span id="trace2-line306" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">307</span> <span id="trace2-line307" class="unreached-line">		<span class="source_n">groupc</span> <span class="source_o">=</span> <span class="source_n">PySequence_Size</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">);</span></span>
+<span class="reached-lineno">308</span> <span id="trace2-line308" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">groupc</span> <span class="source_o">==</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when PySequence_Size() succeeds</span>
+<span class="reached-lineno">309</span> <span id="trace2-line309" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
+<span class="transition">when considering range: 0 <= value <= 0x7fffffff</span>
+<span class="transition">taking False path</span>
+<span class="lineno">310</span> <span id="trace2-line310" class="unreached-line">					<span class="source_s">&quot;groups could not be sized&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">311</span> <span id="trace2-line311" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">312</span> <span id="trace2-line312" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">313</span> <span id="trace2-line313" class="unreached-line">		<span class="source_n">groups_c</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">**</span><span class="source_p">)</span> <span class="source_n">PyMem_Malloc</span><span class="source_p">((</span><span class="source_mi">1</span><span class="source_o">+</span><span class="source_n">groupc</span><span class="source_p">)</span><span class="source_o">*</span><span class="source_k">sizeof</span><span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">));</span></span>
+<span class="reached-lineno">314</span> <span id="trace2-line314" class="reached-line">		<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">i</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">&lt;</span> <span class="source_n">groupc</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when PyMem_Malloc() succeeds</span>
+<span class="reached-lineno">315</span> <span id="trace2-line315" class="reached-line">			<span class="source_n">item</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">);</span></span>
+<span class="transition">when considering range: 1 <= groupc <= 0x7fffffff</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">316</span> <span id="trace2-line316" class="reached-line">			<span class="source_n">s</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="transition">when PySequence_GetItem() fails</span>
+<span class="reached-lineno">317</span> <span id="trace2-line317" class="reached-line">			<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="reached-lineno">318</span> <span id="trace2-line318" class="reached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">s</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span> <span class="source_p">}</span></span>
+<span class="error">dereferencing NULL (item->ob_refcnt) at _mysql.c:318</span>
+<span class="note">found 30 similar trace(s) to this</span>
+<span class="lineno">319</span> <span id="trace2-line319" class="unreached-line">			<span class="source_n">groups_c</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_n">s</span><span class="source_p">;</span></span>
+<span class="lineno">320</span> <span id="trace2-line320" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">321</span> <span id="trace2-line321" class="unreached-line">		<span class="source_n">groups_c</span><span class="source_p">[</span><span class="source_n">groupc</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">322</span> <span id="trace2-line322" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">323</span> <span id="trace2-line323" class="unreached-line">	<span class="source_cm">/* even though this may block, don&#39;t give up the interpreter lock</span></span>
+<span class="lineno">324</span> <span id="trace2-line324" class="unreached-line"><span class="source_cm">	   so that the server can&#39;t be initialized multiple times. */</span></span>
+<span class="lineno">325</span> <span id="trace2-line325" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">mysql_server_init</span><span class="source_p">(</span><span class="source_n">cmd_argc</span><span class="source_p">,</span> <span class="source_n">cmd_args_c</span><span class="source_p">,</span> <span class="source_n">groups_c</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="lineno">326</span> <span id="trace2-line326" class="unreached-line">		<span class="source_n">_mysql_Exception</span><span class="source_p">(</span><span class="source_nb">NULL</span><span class="source_p">);</span></span>
+<span class="lineno">327</span> <span id="trace2-line327" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">328</span> <span id="trace2-line328" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">329</span> <span id="trace2-line329" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="lineno">330</span> <span id="trace2-line330" class="unreached-line">	<span class="source_n">ret</span> <span class="source_o">=</span> <span class="source_n">Py_None</span><span class="source_p">;</span></span>
+<span class="lineno">331</span> <span id="trace2-line331" class="unreached-line">	<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">Py_None</span><span class="source_p">);</span></span>
+<span class="lineno">332</span> <span id="trace2-line332" class="unreached-line">	<span class="source_n">_mysql_server_init_done</span> <span class="source_o">=</span> <span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">333</span> <span id="trace2-line333" class="unreached-line">  <span class="source_nl">finish:</span></span>
+<span class="lineno">334</span> <span id="trace2-line334" class="unreached-line">	<span class="source_n">PyMem_Free</span><span class="source_p">(</span><span class="source_n">groups_c</span><span class="source_p">);</span></span>
+<span class="lineno">335</span> <span id="trace2-line335" class="unreached-line">	<span class="source_n">PyMem_Free</span><span class="source_p">(</span><span class="source_n">cmd_args_c</span><span class="source_p">);</span></span>
+<span class="lineno">336</span> <span id="trace2-line336" class="unreached-line">	<span class="source_k">return</span> <span class="source_n">ret</span><span class="source_p">;</span></span>
+<span class="lineno">337</span> <span id="trace2-line337" class="unreached-line"><span class="source_p">}</span></span>
+<span class="lineno">338</span> <span id="trace2-line338" class="unreached-line"></pre></div></span>
+</pre></div>
+
+<script type="text/javascript">
+  jsPlumb.bind("ready", function() {
+    /* Set up defaults: */
+    jsPlumb.Defaults.Connector = [ "Bezier", 1 ];
+    jsPlumb.Defaults.Connector = [ "Straight" ];
+    jsPlumb.Defaults.PaintStyle = { strokeStyle:"blue", lineWidth:1 };
+    jsPlumb.Defaults.EndpointStyle = { radius:2, fillStyle:"red" };
+    jsPlumb.Defaults.Anchors =  [ "BottomCenter", "TopCenter" ];
+
+    /* Add lines: */
+    jsPlumb.connect({source:'trace2-line269',
+                     target:'trace2-line275',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line275',
+                     target:'trace2-line275',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line275',
+                     target:'trace2-line280',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line280',
+                     target:'trace2-line281',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line281',
+                     target:'trace2-line286',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line286',
+                     target:'trace2-line286',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line287',
+                     target:'trace2-line292',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line292',
+                     target:'trace2-line293',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line293',
+                     target:'trace2-line294',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line294',
+                     target:'trace2-line295',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line297',
+                     target:'trace2-line298',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line298',
+                     target:'trace2-line299',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line293',
+                     target:'trace2-line302',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line302',
+                     target:'trace2-line303',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line303',
+                     target:'trace2-line308',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line308',
+                     target:'trace2-line308',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line309',
+                     target:'trace2-line314',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line314',
+                     target:'trace2-line315',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line315',
+                     target:'trace2-line316',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace2-line316',
+                     target:'trace2-line317',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+  })
+</script>
+<hr/></div>
+<div id="report-3">
+<table>
+  <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
+  <tr><td>Function:</td> <td><b>_mysql_server_init</b></td></tr>
+  <tr><td>Error:</td> <td><b>dereferencing NULL (item->ob_refcnt) at _mysql.c:297</b></td></tr>
+</table>
+<div class="highlight"><pre><span class="lineno">259</span> <span id="trace3-line259" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_nf">_mysql_server_init</span><span class="source_p">(</span></span>
+<span class="lineno">260</span> <span id="trace3-line260" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">self</span><span class="source_p">,</span></span>
+<span class="lineno">261</span> <span id="trace3-line261" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">args</span><span class="source_p">,</span></span>
+<span class="lineno">262</span> <span id="trace3-line262" class="unreached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">kwargs</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="lineno">263</span> <span id="trace3-line263" class="unreached-line">	<span class="source_k">static</span> <span class="source_kt">char</span> <span class="source_o">*</span><span class="source_n">kwlist</span><span class="source_p">[]</span> <span class="source_o">=</span> <span class="source_p">{</span><span class="source_s">&quot;args&quot;</span><span class="source_p">,</span> <span class="source_s">&quot;groups&quot;</span><span class="source_p">,</span> <span class="source_nb">NULL</span><span class="source_p">};</span></span>
+<span class="lineno">264</span> <span id="trace3-line264" class="unreached-line">	<span class="source_kt">char</span> <span class="source_o">**</span><span class="source_n">cmd_args_c</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">**</span><span class="source_n">groups_c</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">s</span><span class="source_p">;</span></span>
+<span class="reached-lineno">265</span> <span id="trace3-line265" class="reached-line">	<span class="source_kt">int</span> <span class="source_n">cmd_argc</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">,</span> <span class="source_n">groupc</span><span class="source_p">;</span></span>
+<span class="reached-lineno">266</span> <span id="trace3-line266" class="reached-line">	<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">cmd_args</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">groups</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">ret</span><span class="source_o">=</span><span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_o">*</span><span class="source_n">item</span><span class="source_p">;</span></span>
+<span class="reached-lineno">267</span> <span id="trace3-line267" class="reached-line"></span>
+<span class="lineno">268</span> <span id="trace3-line268" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">_mysql_server_init_done</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="reached-lineno">269</span> <span id="trace3-line269" class="reached-line">		<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">_mysql_ProgrammingError</span><span class="source_p">,</span></span>
+<span class="transition">when considering value == (int)0 from _mysql.c:121</span>
+<span class="transition">taking False path</span>
+<span class="lineno">270</span> <span id="trace3-line270" class="unreached-line">				<span class="source_s">&quot;already initialized&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">271</span> <span id="trace3-line271" class="unreached-line">		<span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">272</span> <span id="trace3-line272" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">273</span> <span id="trace3-line273" class="unreached-line">	  </span>
+<span class="lineno">274</span> <span id="trace3-line274" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PyArg_ParseTupleAndKeywords</span><span class="source_p">(</span><span class="source_n">args</span><span class="source_p">,</span> <span class="source_n">kwargs</span><span class="source_p">,</span> <span class="source_s">&quot;|OO&quot;</span><span class="source_p">,</span> <span class="source_n">kwlist</span><span class="source_p">,</span></span>
+<span class="reached-lineno">275</span> <span id="trace3-line275" class="reached-line">					 <span class="source_o">&amp;</span><span class="source_n">cmd_args</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">groups</span><span class="source_p">))</span></span>
+<span class="transition">when PyArg_ParseTupleAndKeywords() succeeds</span>
+<span class="transition">taking False path</span>
+<span class="lineno">276</span> <span id="trace3-line276" class="unreached-line">		<span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">277</span> <span id="trace3-line277" class="unreached-line"></span>
+<span class="lineno">278</span> <span id="trace3-line278" class="unreached-line"><span class="source_cp">#if MYSQL_VERSION_ID &gt;= 40000</span></span>
+<span class="lineno">279</span> <span id="trace3-line279" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="reached-lineno">280</span> <span id="trace3-line280" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PySequence_Check</span><span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">281</span> <span id="trace3-line281" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
+<span class="transition">taking False path</span>
+<span class="lineno">282</span> <span id="trace3-line282" class="unreached-line">					<span class="source_s">&quot;args must be a sequence&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">283</span> <span id="trace3-line283" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">284</span> <span id="trace3-line284" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">285</span> <span id="trace3-line285" class="unreached-line">		<span class="source_n">cmd_argc</span> <span class="source_o">=</span> <span class="source_n">PySequence_Size</span><span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">);</span></span>
+<span class="reached-lineno">286</span> <span id="trace3-line286" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">cmd_argc</span> <span class="source_o">==</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when PySequence_Size() succeeds</span>
+<span class="reached-lineno">287</span> <span id="trace3-line287" class="reached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
+<span class="transition">when considering range: 0 <= value <= 0x7fffffff</span>
+<span class="transition">taking False path</span>
+<span class="lineno">288</span> <span id="trace3-line288" class="unreached-line">					<span class="source_s">&quot;args could not be sized&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">289</span> <span id="trace3-line289" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">290</span> <span id="trace3-line290" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">291</span> <span id="trace3-line291" class="unreached-line">		<span class="source_n">cmd_args_c</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">**</span><span class="source_p">)</span> <span class="source_n">PyMem_Malloc</span><span class="source_p">(</span><span class="source_n">cmd_argc</span><span class="source_o">*</span><span class="source_k">sizeof</span><span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">));</span></span>
+<span class="reached-lineno">292</span> <span id="trace3-line292" class="reached-line">		<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">i</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">&lt;</span> <span class="source_n">cmd_argc</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when PyMem_Malloc() succeeds</span>
+<span class="reached-lineno">293</span> <span id="trace3-line293" class="reached-line">			<span class="source_n">item</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">cmd_args</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">);</span></span>
+<span class="transition">when considering range: 1 <= cmd_argc <= 0x7fffffff</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">294</span> <span id="trace3-line294" class="reached-line">			<span class="source_n">s</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="transition">when PySequence_GetItem() fails</span>
+<span class="reached-lineno">295</span> <span id="trace3-line295" class="reached-line"></span>
+<span class="lineno">296</span> <span id="trace3-line296" class="unreached-line">			<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="reached-lineno">297</span> <span id="trace3-line297" class="reached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">s</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span> <span class="source_p">}</span></span>
+<span class="error">dereferencing NULL (item->ob_refcnt) at _mysql.c:297</span>
+<span class="lineno">298</span> <span id="trace3-line298" class="unreached-line">			<span class="source_n">cmd_args_c</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_n">s</span><span class="source_p">;</span></span>
+<span class="lineno">299</span> <span id="trace3-line299" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">300</span> <span id="trace3-line300" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">301</span> <span id="trace3-line301" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="lineno">302</span> <span id="trace3-line302" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PySequence_Check</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="lineno">303</span> <span id="trace3-line303" class="unreached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
+<span class="lineno">304</span> <span id="trace3-line304" class="unreached-line">					<span class="source_s">&quot;groups must be a sequence&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">305</span> <span id="trace3-line305" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">306</span> <span id="trace3-line306" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">307</span> <span id="trace3-line307" class="unreached-line">		<span class="source_n">groupc</span> <span class="source_o">=</span> <span class="source_n">PySequence_Size</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">);</span></span>
+<span class="lineno">308</span> <span id="trace3-line308" class="unreached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">groupc</span> <span class="source_o">==</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="lineno">309</span> <span id="trace3-line309" class="unreached-line">			<span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
+<span class="lineno">310</span> <span id="trace3-line310" class="unreached-line">					<span class="source_s">&quot;groups could not be sized&quot;</span><span class="source_p">);</span></span>
+<span class="lineno">311</span> <span id="trace3-line311" class="unreached-line">			<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">312</span> <span id="trace3-line312" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">313</span> <span id="trace3-line313" class="unreached-line">		<span class="source_n">groups_c</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">**</span><span class="source_p">)</span> <span class="source_n">PyMem_Malloc</span><span class="source_p">((</span><span class="source_mi">1</span><span class="source_o">+</span><span class="source_n">groupc</span><span class="source_p">)</span><span class="source_o">*</span><span class="source_k">sizeof</span><span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">));</span></span>
+<span class="lineno">314</span> <span id="trace3-line314" class="unreached-line">		<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">i</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">&lt;</span> <span class="source_n">groupc</span><span class="source_p">;</span> <span class="source_n">i</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="lineno">315</span> <span id="trace3-line315" class="unreached-line">			<span class="source_n">item</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">groups</span><span class="source_p">,</span> <span class="source_n">i</span><span class="source_p">);</span></span>
+<span class="lineno">316</span> <span id="trace3-line316" class="unreached-line">			<span class="source_n">s</span> <span class="source_o">=</span> <span class="source_n">get_string</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="lineno">317</span> <span id="trace3-line317" class="unreached-line">			<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">item</span><span class="source_p">);</span></span>
+<span class="lineno">318</span> <span id="trace3-line318" class="unreached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">s</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span> <span class="source_p">}</span></span>
+<span class="lineno">319</span> <span id="trace3-line319" class="unreached-line">			<span class="source_n">groups_c</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_n">s</span><span class="source_p">;</span></span>
+<span class="lineno">320</span> <span id="trace3-line320" class="unreached-line">		<span class="source_p">}</span></span>
+<span class="lineno">321</span> <span id="trace3-line321" class="unreached-line">		<span class="source_n">groups_c</span><span class="source_p">[</span><span class="source_n">groupc</span><span class="source_p">]</span> <span class="source_o">=</span> <span class="source_p">(</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span><span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">322</span> <span id="trace3-line322" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">323</span> <span id="trace3-line323" class="unreached-line">	<span class="source_cm">/* even though this may block, don&#39;t give up the interpreter lock</span></span>
+<span class="lineno">324</span> <span id="trace3-line324" class="unreached-line"><span class="source_cm">	   so that the server can&#39;t be initialized multiple times. */</span></span>
+<span class="lineno">325</span> <span id="trace3-line325" class="unreached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">mysql_server_init</span><span class="source_p">(</span><span class="source_n">cmd_argc</span><span class="source_p">,</span> <span class="source_n">cmd_args_c</span><span class="source_p">,</span> <span class="source_n">groups_c</span><span class="source_p">))</span> <span class="source_p">{</span></span>
+<span class="lineno">326</span> <span id="trace3-line326" class="unreached-line">		<span class="source_n">_mysql_Exception</span><span class="source_p">(</span><span class="source_nb">NULL</span><span class="source_p">);</span></span>
+<span class="lineno">327</span> <span id="trace3-line327" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">finish</span><span class="source_p">;</span></span>
+<span class="lineno">328</span> <span id="trace3-line328" class="unreached-line">	<span class="source_p">}</span></span>
+<span class="lineno">329</span> <span id="trace3-line329" class="unreached-line"><span class="source_cp">#endif</span></span>
+<span class="lineno">330</span> <span id="trace3-line330" class="unreached-line">	<span class="source_n">ret</span> <span class="source_o">=</span> <span class="source_n">Py_None</span><span class="source_p">;</span></span>
+<span class="lineno">331</span> <span id="trace3-line331" class="unreached-line">	<span class="source_n">Py_INCREF</span><span class="source_p">(</span><span class="source_n">Py_None</span><span class="source_p">);</span></span>
+<span class="lineno">332</span> <span id="trace3-line332" class="unreached-line">	<span class="source_n">_mysql_server_init_done</span> <span class="source_o">=</span> <span class="source_mi">1</span><span class="source_p">;</span></span>
+<span class="lineno">333</span> <span id="trace3-line333" class="unreached-line">  <span class="source_nl">finish:</span></span>
+<span class="lineno">334</span> <span id="trace3-line334" class="unreached-line">	<span class="source_n">PyMem_Free</span><span class="source_p">(</span><span class="source_n">groups_c</span><span class="source_p">);</span></span>
+<span class="lineno">335</span> <span id="trace3-line335" class="unreached-line">	<span class="source_n">PyMem_Free</span><span class="source_p">(</span><span class="source_n">cmd_args_c</span><span class="source_p">);</span></span>
+<span class="lineno">336</span> <span id="trace3-line336" class="unreached-line">	<span class="source_k">return</span> <span class="source_n">ret</span><span class="source_p">;</span></span>
+<span class="lineno">337</span> <span id="trace3-line337" class="unreached-line"><span class="source_p">}</span></span>
+<span class="lineno">338</span> <span id="trace3-line338" class="unreached-line"></pre></div></span>
+</pre></div>
+
+<script type="text/javascript">
+  jsPlumb.bind("ready", function() {
+    /* Set up defaults: */
+    jsPlumb.Defaults.Connector = [ "Bezier", 1 ];
+    jsPlumb.Defaults.Connector = [ "Straight" ];
+    jsPlumb.Defaults.PaintStyle = { strokeStyle:"blue", lineWidth:1 };
+    jsPlumb.Defaults.EndpointStyle = { radius:2, fillStyle:"red" };
+    jsPlumb.Defaults.Anchors =  [ "BottomCenter", "TopCenter" ];
+
+    /* Add lines: */
+    jsPlumb.connect({source:'trace3-line269',
+                     target:'trace3-line275',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line275',
+                     target:'trace3-line275',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line275',
+                     target:'trace3-line280',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line280',
+                     target:'trace3-line281',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line281',
+                     target:'trace3-line286',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line286',
+                     target:'trace3-line286',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line287',
+                     target:'trace3-line292',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line292',
+                     target:'trace3-line293',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line293',
+                     target:'trace3-line294',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace3-line294',
+                     target:'trace3-line295',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });

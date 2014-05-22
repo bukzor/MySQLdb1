@@ -161,7 +161,7 @@ pre {
 <span class="transition">taking False path</span>
 <span class="lineno">1235</span> <span id="trace0-line1235" class="unreached-line">		<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="reached-lineno">1236</span> <span id="trace0-line1236" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">PyMapping_Check</span><span class="source_p">(</span><span class="source_n">d</span><span class="source_p">))</span> <span class="source_p">{</span></span>
-<span class="transition">when considering range: 1 <= value <= 0x7fffffff</span>
+<span class="transition">when considering range: -0x80000000 <= value <= -1</span>
 <span class="transition">taking False path</span>
 <span class="lineno">1237</span> <span id="trace0-line1237" class="unreached-line">	      <span class="source_n">PyErr_SetString</span><span class="source_p">(</span><span class="source_n">PyExc_TypeError</span><span class="source_p">,</span></span>
 <span class="lineno">1238</span> <span id="trace0-line1238" class="unreached-line">			      <span class="source_s">&quot;argument 2 must be a mapping&quot;</span><span class="source_p">);</span></span>
