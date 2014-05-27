@@ -147,7 +147,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_ResultObject_fetch_row</b></td></tr>
-  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of '*r.69' is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of '*r.68' is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1536</span> <span id="trace0-line1536" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1537</span> <span id="trace0-line1537" class="unreached-line"><span class="source_nf">_mysql_ResultObject_fetch_row</span><span class="source_p">(</span></span>
@@ -189,7 +189,7 @@ pre {
 <span class="reached-lineno">1564</span> <span id="trace0-line1564" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_p">(</span><span class="source_n">r</span> <span class="source_o">=</span> <span class="source_n">PyTuple_New</span><span class="source_p">(</span><span class="source_n">maxrows</span><span class="source_p">)))</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="transition">when PyTuple_New() succeeds</span>
 <span class="transition">taking False path</span>
-<span class="note">'*r.69' was allocated at: 		if (!(r = PyTuple_New(maxrows))) goto error;</span>
+<span class="note">'*r.68' was allocated at: 		if (!(r = PyTuple_New(maxrows))) goto error;</span>
 <span class="transition">ob_refcnt is now refs: 1 owned</span>
 <span class="reached-lineno">1565</span> <span id="trace0-line1565" class="reached-line">		<span class="source_n">rowsadded</span> <span class="source_o">=</span> <span class="source_n">_mysql__fetch_row</span><span class="source_p">(</span><span class="source_n">self</span><span class="source_p">,</span> <span class="source_o">&amp;</span><span class="source_n">r</span><span class="source_p">,</span> <span class="source_n">skiprows</span><span class="source_p">,</span> <span class="source_n">maxrows</span><span class="source_p">,</span> </span>
 <span class="lineno">1566</span> <span id="trace0-line1566" class="unreached-line">				<span class="source_n">convert_row</span><span class="source_p">);</span></span>
@@ -341,11 +341,9 @@ pre {
 <span class="transition">taking False path</span>
 <span class="reached-lineno">1576</span> <span id="trace1-line1576" class="reached-line">				<span class="source_n">skiprows</span> <span class="source_o">+=</span> <span class="source_n">rowsadded</span><span class="source_p">;</span></span>
 <span class="reached-lineno">1577</span> <span id="trace1-line1577" class="reached-line">				<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">rowsadded</span> <span class="source_o">&lt;</span> <span class="source_n">maxrows</span><span class="source_p">)</span> <span class="source_k">break</span><span class="source_p">;</span></span>
-<span class="transition">when considering range: 1000 <= value <= 0x7fffffff</span>
-<span class="transition">taking False path</span>
-<span class="reached-lineno">1578</span> <span id="trace1-line1578" class="reached-line">				<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">MyTuple_Resize</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">r</span><span class="source_p">,</span> <span class="source_n">skiprows</span><span class="source_o">+</span><span class="source_n">maxrows</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">)</span> <span class="source_o">==</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span></span>
-<span class="transition">when considering value == (int)-1 from _mysql.c:1578</span>
+<span class="transition">when considering range: -0x80000000 <= value <= 999</span>
 <span class="transition">taking True path</span>
+<span class="lineno">1578</span> <span id="trace1-line1578" class="unreached-line">				<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">MyTuple_Resize</span><span class="source_p">(</span><span class="source_o">&amp;</span><span class="source_n">r</span><span class="source_p">,</span> <span class="source_n">skiprows</span><span class="source_o">+</span><span class="source_n">maxrows</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">)</span> <span class="source_o">==</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span></span>
 <span class="lineno">1579</span> <span id="trace1-line1579" class="unreached-line">					<span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">1580</span> <span id="trace1-line1580" class="unreached-line">			<span class="source_p">}</span></span>
 <span class="lineno">1581</span> <span id="trace1-line1581" class="unreached-line">		<span class="source_p">}</span> <span class="source_k">else</span> <span class="source_p">{</span></span>
@@ -357,14 +355,10 @@ pre {
 <span class="lineno">1587</span> <span id="trace1-line1587" class="unreached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">rowsadded</span> <span class="source_o">==</span> <span class="source_o">-</span><span class="source_mi">1</span><span class="source_p">)</span> <span class="source_k">goto</span> <span class="source_n">error</span><span class="source_p">;</span></span>
 <span class="lineno">1588</span> <span id="trace1-line1588" class="unreached-line">		<span class="source_p">}</span></span>
 <span class="lineno">1589</span> <span id="trace1-line1589" class="unreached-line">	<span class="source_p">}</span></span>
-<span class="lineno">1590</span> <span id="trace1-line1590" class="unreached-line">	<span class="source_k">return</span> <span class="source_n">r</span><span class="source_p">;</span></span>
+<span class="reached-lineno">1590</span> <span id="trace1-line1590" class="reached-line">	<span class="source_k">return</span> <span class="source_n">r</span><span class="source_p">;</span></span>
 <span class="lineno">1591</span> <span id="trace1-line1591" class="unreached-line">  <span class="source_nl">error:</span></span>
-<span class="reached-lineno">1592</span> <span id="trace1-line1592" class="reached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_p">);</span></span>
-<span class="transition">when treating unknown struct PyObject * * from _mysql.c:1578 as non-NULL</span>
-<span class="transition">taking False path</span>
-<span class="transition">when considering range: -0x8000000000000000 <= value <= -1</span>
-<span class="transition">taking True path</span>
-<span class="reached-lineno">1593</span> <span id="trace1-line1593" class="reached-line">	<span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="lineno">1592</span> <span id="trace1-line1592" class="unreached-line">	<span class="source_n">Py_XDECREF</span><span class="source_p">(</span><span class="source_n">r</span><span class="source_p">);</span></span>
+<span class="lineno">1593</span> <span id="trace1-line1593" class="unreached-line">	<span class="source_k">return</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="lineno">1594</span> <span id="trace1-line1594" class="unreached-line"><span class="source_p">}</span></span>
 </pre></div>
 
@@ -424,17 +418,7 @@ pre {
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
     jsPlumb.connect({source:'trace1-line1577',
-                     target:'trace1-line1578',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line1578',
-                     target:'trace1-line0',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
-    jsPlumb.connect({source:'trace1-line1592',
-                     target:'trace1-line1593',
+                     target:'trace1-line1590',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });

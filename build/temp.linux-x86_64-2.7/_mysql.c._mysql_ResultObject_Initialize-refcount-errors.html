@@ -229,8 +229,7 @@ pre {
 <span class="reached-lineno">439</span> <span id="trace0-line439" class="reached-line">		<span class="source_n">fun</span> <span class="source_o">=</span> <span class="source_n">PyObject_GetItem</span><span class="source_p">(</span><span class="source_n">conv</span><span class="source_p">,</span> <span class="source_n">tmp</span><span class="source_p">);</span></span>
 <span class="transition">when PyObject_GetItem() succeeds</span>
 <span class="reached-lineno">440</span> <span id="trace0-line440" class="reached-line">		<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">tmp</span><span class="source_p">);</span></span>
-<span class="transition">when taking False path</span>
-<span class="transition">calling tp_dealloc on PyIntObject allocated at _mysql.c:434</span>
+<span class="transition">when taking True path</span>
 <span class="reached-lineno">441</span> <span id="trace0-line441" class="reached-line">		<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">fun</span><span class="source_p">)</span> <span class="source_p">{</span></span>
 <span class="transition">taking False path</span>
 <span class="lineno">442</span> <span id="trace0-line442" class="unreached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyErr_Occurred</span><span class="source_p">())</span> <span class="source_p">{</span></span>
@@ -252,6 +251,8 @@ pre {
 <span class="reached-lineno">455</span> <span id="trace0-line455" class="reached-line">			<span class="source_k">for</span> <span class="source_p">(</span><span class="source_n">j</span><span class="source_o">=</span><span class="source_mi">0</span><span class="source_p">;</span> <span class="source_n">j</span><span class="source_o">&lt;</span><span class="source_n">n2</span><span class="source_p">;</span> <span class="source_n">j</span><span class="source_o">++</span><span class="source_p">)</span> <span class="source_p">{</span></span>
 <span class="transition">when considering range: 1 <= n2 <= 0x7fffffff</span>
 <span class="transition">taking True path</span>
+<span class="transition">when considering n2 == (int)1 from _mysql.c:453</span>
+<span class="transition">taking False path</span>
 <span class="reached-lineno">456</span> <span id="trace0-line456" class="reached-line">				<span class="source_n">PyObject</span> <span class="source_o">*</span><span class="source_n">t</span> <span class="source_o">=</span> <span class="source_n">PySequence_GetItem</span><span class="source_p">(</span><span class="source_n">fun</span><span class="source_p">,</span> <span class="source_n">j</span><span class="source_p">);</span></span>
 <span class="transition">when PySequence_GetItem() succeeds</span>
 <span class="reached-lineno">457</span> <span id="trace0-line457" class="reached-line">				<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">t</span><span class="source_p">)</span> <span class="source_p">{</span></span>
@@ -270,32 +271,38 @@ pre {
 <span class="reached-lineno">465</span> <span id="trace0-line465" class="reached-line">					<span class="source_n">pmask</span> <span class="source_o">=</span> <span class="source_n">PyTuple_GET_ITEM</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">,</span> <span class="source_mi">0</span><span class="source_p">);</span></span>
 <span class="reached-lineno">466</span> <span id="trace0-line466" class="reached-line">					<span class="source_n">fun2</span> <span class="source_o">=</span> <span class="source_n">PyTuple_GET_ITEM</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">,</span> <span class="source_mi">1</span><span class="source_p">);</span></span>
 <span class="reached-lineno">467</span> <span id="trace0-line467" class="reached-line">					<span class="source_n">Py_XINCREF</span><span class="source_p">(</span><span class="source_n">fun2</span><span class="source_p">);</span></span>
-<span class="transition">when treating unknown struct PyObject * from _mysql.c:466 as NULL</span>
-<span class="transition">taking True path</span>
+<span class="transition">when treating unknown struct PyObject * from _mysql.c:466 as non-NULL</span>
+<span class="transition">taking False path</span>
 <span class="reached-lineno">468</span> <span id="trace0-line468" class="reached-line">					<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">PyInt_Check</span><span class="source_p">(</span><span class="source_n">pmask</span><span class="source_p">))</span> <span class="source_p">{</span></span>
 <span class="transition">when treating unknown struct PyObject * from _mysql.c:465 as non-NULL</span>
 <span class="transition">when treating unknown struct _typeobject * from _mysql.c:468 as non-NULL</span>
-<span class="transition">when considering value == (long int)0 from _mysql.c:468</span>
-<span class="transition">taking False path</span>
-<span class="lineno">469</span> <span id="trace0-line469" class="unreached-line">						<span class="source_n">mask</span> <span class="source_o">=</span> <span class="source_n">PyInt_AS_LONG</span><span class="source_p">(</span><span class="source_n">pmask</span><span class="source_p">);</span></span>
-<span class="lineno">470</span> <span id="trace0-line470" class="unreached-line">						<span class="source_n">flags</span> <span class="source_o">=</span> <span class="source_n">fields</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">].</span><span class="source_n">flags</span><span class="source_p">;</span></span>
-<span class="lineno">471</span> <span id="trace0-line471" class="unreached-line">						<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">fields</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">].</span><span class="source_n">charsetnr</span> <span class="source_o">!=</span> <span class="source_mi">63</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_cm">/* maaagic */</span></span>
-<span class="lineno">472</span> <span id="trace0-line472" class="unreached-line">							<span class="source_n">flags</span> <span class="source_o">&amp;=</span> <span class="source_o">~</span><span class="source_n">BINARY_FLAG</span><span class="source_p">;</span></span>
+<span class="transition">when considering range: 1 <= value <= 0x800000</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">469</span> <span id="trace0-line469" class="reached-line">						<span class="source_n">mask</span> <span class="source_o">=</span> <span class="source_n">PyInt_AS_LONG</span><span class="source_p">(</span><span class="source_n">pmask</span><span class="source_p">);</span></span>
+<span class="reached-lineno">470</span> <span id="trace0-line470" class="reached-line">						<span class="source_n">flags</span> <span class="source_o">=</span> <span class="source_n">fields</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">].</span><span class="source_n">flags</span><span class="source_p">;</span></span>
+<span class="transition">when treating unknown struct MYSQL_FIELD * from _mysql.c:470 as non-NULL</span>
+<span class="reached-lineno">471</span> <span id="trace0-line471" class="reached-line">						<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">fields</span><span class="source_p">[</span><span class="source_n">i</span><span class="source_p">].</span><span class="source_n">charsetnr</span> <span class="source_o">!=</span> <span class="source_mi">63</span><span class="source_p">)</span> <span class="source_p">{</span> <span class="source_cm">/* maaagic */</span></span>
+<span class="transition">when treating unknown struct MYSQL_FIELD * from _mysql.c:471 as non-NULL</span>
+<span class="transition">when considering range: 0 <= value <= 62</span>
+<span class="transition">taking True path</span>
+<span class="reached-lineno">472</span> <span id="trace0-line472" class="reached-line">							<span class="source_n">flags</span> <span class="source_o">&amp;=</span> <span class="source_o">~</span><span class="source_n">BINARY_FLAG</span><span class="source_p">;</span></span>
 <span class="lineno">473</span> <span id="trace0-line473" class="unreached-line">						<span class="source_p">}</span></span>
-<span class="lineno">474</span> <span id="trace0-line474" class="unreached-line">						<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">mask</span> <span class="source_o">&amp;</span> <span class="source_n">flags</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="reached-lineno">474</span> <span id="trace0-line474" class="reached-line">						<span class="source_k">if</span> <span class="source_p">(</span><span class="source_n">mask</span> <span class="source_o">&amp;</span> <span class="source_n">flags</span><span class="source_p">)</span> <span class="source_p">{</span></span>
+<span class="transition">when considering value == (long int)0 from _mysql.c:474</span>
+<span class="transition">taking False path</span>
 <span class="lineno">475</span> <span id="trace0-line475" class="unreached-line">							<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">);</span></span>
 <span class="lineno">476</span> <span id="trace0-line476" class="unreached-line">							<span class="source_k">break</span><span class="source_p">;</span></span>
 <span class="lineno">477</span> <span id="trace0-line477" class="unreached-line">						<span class="source_p">}</span></span>
 <span class="lineno">478</span> <span id="trace0-line478" class="unreached-line">						<span class="source_k">else</span> <span class="source_p">{</span></span>
-<span class="lineno">479</span> <span id="trace0-line479" class="unreached-line">							<span class="source_n">fun2</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
+<span class="reached-lineno">479</span> <span id="trace0-line479" class="reached-line">							<span class="source_n">fun2</span> <span class="source_o">=</span> <span class="source_nb">NULL</span><span class="source_p">;</span></span>
 <span class="lineno">480</span> <span id="trace0-line480" class="unreached-line">						<span class="source_p">}</span></span>
 <span class="lineno">481</span> <span id="trace0-line481" class="unreached-line">					<span class="source_p">}</span> <span class="source_k">else</span> <span class="source_p">{</span></span>
-<span class="reached-lineno">482</span> <span id="trace0-line482" class="reached-line">						<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">);</span></span>
-<span class="transition">when taking True path</span>
+<span class="lineno">482</span> <span id="trace0-line482" class="unreached-line">						<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">);</span></span>
 <span class="lineno">483</span> <span id="trace0-line483" class="unreached-line">						<span class="source_k">break</span><span class="source_p">;</span></span>
 <span class="lineno">484</span> <span id="trace0-line484" class="unreached-line">					<span class="source_p">}</span></span>
 <span class="lineno">485</span> <span id="trace0-line485" class="unreached-line">				<span class="source_p">}</span></span>
-<span class="lineno">486</span> <span id="trace0-line486" class="unreached-line">				<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">);</span></span>
+<span class="reached-lineno">486</span> <span id="trace0-line486" class="reached-line">				<span class="source_n">Py_DECREF</span><span class="source_p">(</span><span class="source_n">t</span><span class="source_p">);</span></span>
+<span class="transition">when taking True path</span>
 <span class="lineno">487</span> <span id="trace0-line487" class="unreached-line">			<span class="source_p">}</span></span>
 <span class="reached-lineno">488</span> <span id="trace0-line488" class="reached-line">			<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">fun2</span><span class="source_p">)</span> <span class="source_p">{</span></span>
 <span class="transition">taking True path</span>
@@ -436,17 +443,27 @@ pre {
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
-    jsPlumb.connect({source:'trace0-line467',
-                     target:'trace0-line468',
-                     label:'',
-                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
-                   });
     jsPlumb.connect({source:'trace0-line468',
-                     target:'trace0-line482',
+                     target:'trace0-line469',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
                    });
-    jsPlumb.connect({source:'trace0-line482',
+    jsPlumb.connect({source:'trace0-line471',
+                     target:'trace0-line472',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line474',
+                     target:'trace0-line479',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line486',
+                     target:'trace0-line455',
+                     label:'',
+                     overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]
+                   });
+    jsPlumb.connect({source:'trace0-line455',
                      target:'trace0-line488',
                      label:'',
                      overlays:[['PlainArrow', { width:10, length:10, location:1.0 }]]

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>_mysql.c -- GCC Python Plugin</title><style media="screen" type="text/css">
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>_mysql_ResultObject_Initialize() _mysql.c -- GCC Python Plugin</title><style media="screen" type="text/css">
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -427,6 +427,7 @@ img {
 }
 .states li.new-subflow {
     border-top-width: 4px;
+    border-top-color: black;
 }
 .states h2 {
     float: right;
@@ -653,7 +654,7 @@ td.selected .flow-dot {
 </td></tr><tr><td class="code">	<span class="n"><a href="http://docs.python.org/c-api/refcounting.html#Py_DECREF">Py_DECREF</a></span><span class="p">(</span><span class="n">conv</span><span class="p">);</span>
 </td></tr><tr><td class="code">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </td></tr><tr><td class="code"><span class="p">}</span>
-</td></tr></table></div><ol class="states"><li data-line="0"><p class="note">was expecting final owned ob_refcnt of PyTupleObject to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</p><p class="note">found 566 similar trace(s) to this</p></li><li data-line="396"><p>when PyArg_ParseTupleAndKeywords() succeeds</p><p>taking False path</p></li><li data-line="399"><p>taking False path</p></li><li data-line="409"><p>releasing the GIL by calling PyEval_SaveThread()</p></li><li data-line="410"><p>when considering range: -0x80000000 &lt;= value &lt;= -1</p><p>taking True path</p></li><li data-line="415"><p>reacquiring the GIL by calling PyEval_RestoreThread()</p></li><li data-line="416"><p>when treating unknown struct MYSQL_RES * from _mysql.c:411 as non-NULL</p><p>taking False path</p></li><li data-line="427"><p>when PyTuple_New() succeeds</p><p>taking False path</p><p class="note">PyTupleObject was allocated at: 	if (!(self-&gt;converter = PyTuple_New(n))) {</p></li><li data-line="432"><p>when considering range: 1 &lt;= n &lt;= 0xffffffff</p><p>taking True path</p></li><li data-line="434"><p>when treating unknown struct MYSQL_FIELD * from _mysql.c:434 as non-NULL</p><p>when PyInt_FromLong() succeeds</p></li><li data-line="435"><p>taking False path</p></li><li data-line="439"><p>when PyObject_GetItem() succeeds</p></li><li data-line="440"><p>when taking False path</p><p>calling tp_dealloc on PyIntObject allocated at _mysql.c:434</p></li><li data-line="441"><p>taking False path</p></li><li data-line="452"><p>when considering range: -0x80000000 &lt;= value &lt;= -1</p><p>taking True path</p></li><li data-line="453"><p>when PySequence_Size() succeeds</p></li><li data-line="455"><p>when considering range: 1 &lt;= n2 &lt;= 0x7fffffff</p><p>taking True path</p></li><li data-line="456"><p>when PySequence_GetItem() succeeds</p></li><li data-line="457"><p>taking False path</p></li><li data-line="462"><p>when considering range: 1 &lt;= value &lt;= 0x4000000</p><p>taking True path</p><p>when considering value == (Py_ssize_t)2 from _mysql.c:462</p><p>taking True path</p></li><li data-line="467"><p>when treating unknown struct PyObject * from _mysql.c:466 as NULL</p><p>taking True path</p></li><li data-line="468"><p>when treating unknown struct PyObject * from _mysql.c:465 as non-NULL</p><p>when treating unknown struct _typeobject * from _mysql.c:468 as non-NULL</p><p>when considering value == (long int)0 from _mysql.c:468</p><p>taking False path</p></li><li data-line="482"><p>when taking True path</p></li><li data-line="488"><p>taking True path</p></li><li data-line="492"><p>when taking True path</p></li><li data-line="432"><p>when considering n == (unsigned int)1 from _mysql.c:425</p><p>taking False path</p></li><li data-line="498"><p>when considering range: -0x8000000000000000 &lt;= value &lt;= -1</p><p>taking True path</p></li></ol></div></li></ol><footer><script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.3/zepto.js" type="text/javascript"></script><script type="text/javascript">
+</td></tr></table></div><ol class="states"><li data-line="0"><p class="note">was expecting final owned ob_refcnt of PyTupleObject to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</p><p class="note">found 50 similar trace(s) to this</p></li><li data-line="396"><p>when PyArg_ParseTupleAndKeywords() succeeds</p><p>taking False path</p></li><li data-line="399"><p>taking False path</p></li><li data-line="409"><p>releasing the GIL by calling PyEval_SaveThread()</p></li><li data-line="410"><p>when considering range: -0x80000000 &lt;= value &lt;= -1</p><p>taking True path</p></li><li data-line="415"><p>reacquiring the GIL by calling PyEval_RestoreThread()</p></li><li data-line="416"><p>when treating unknown struct MYSQL_RES * from _mysql.c:411 as non-NULL</p><p>taking False path</p></li><li data-line="427"><p>when PyTuple_New() succeeds</p><p>taking False path</p><p class="note">PyTupleObject was allocated at: 	if (!(self-&gt;converter = PyTuple_New(n))) {</p></li><li data-line="432"><p>when considering range: 1 &lt;= n &lt;= 0xffffffff</p><p>taking True path</p></li><li data-line="434"><p>when treating unknown struct MYSQL_FIELD * from _mysql.c:434 as non-NULL</p><p>when PyInt_FromLong() succeeds</p></li><li data-line="435"><p>taking False path</p></li><li data-line="439"><p>when PyObject_GetItem() succeeds</p></li><li data-line="440"><p>when taking True path</p></li><li data-line="441"><p>taking False path</p></li><li data-line="452"><p>when considering range: -0x80000000 &lt;= value &lt;= -1</p><p>taking True path</p></li><li data-line="453"><p>when PySequence_Size() succeeds</p></li><li data-line="455"><p>when considering range: 1 &lt;= n2 &lt;= 0x7fffffff</p><p>taking True path</p></li><li data-line="456"><p>when PySequence_GetItem() succeeds</p></li><li data-line="457"><p>taking False path</p></li><li data-line="462"><p>when considering range: 1 &lt;= value &lt;= 0x4000000</p><p>taking True path</p><p>when considering value == (Py_ssize_t)2 from _mysql.c:462</p><p>taking True path</p></li><li data-line="467"><p>when treating unknown struct PyObject * from _mysql.c:466 as non-NULL</p><p>taking False path</p></li><li data-line="468"><p>when treating unknown struct PyObject * from _mysql.c:465 as non-NULL</p><p>when treating unknown struct _typeobject * from _mysql.c:468 as non-NULL</p><p>when considering range: 1 &lt;= value &lt;= 0x800000</p><p>taking True path</p></li><li data-line="470"><p>when treating unknown struct MYSQL_FIELD * from _mysql.c:470 as non-NULL</p></li><li data-line="471"><p>when treating unknown struct MYSQL_FIELD * from _mysql.c:471 as non-NULL</p><p>when considering range: 0 &lt;= value &lt;= 62</p><p>taking True path</p></li><li data-line="474"><p>when considering value == (long int)0 from _mysql.c:474</p><p>taking False path</p></li><li data-line="486"><p>when taking True path</p></li><li data-line="455"><p>when considering n2 == (int)1 from _mysql.c:453</p><p>taking False path</p></li><li data-line="488"><p>taking True path</p></li><li data-line="492"><p>when taking True path</p></li><li data-line="432"><p>when considering n == (unsigned int)1 from _mysql.c:425</p><p>taking False path</p></li><li data-line="498"><p>when considering range: -0x8000000000000000 &lt;= value &lt;= -1</p><p>taking True path</p></li></ol></div></li></ol><footer><script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.3/zepto.js" type="text/javascript"></script><script type="text/javascript">
 /*  Copyright 2012 Buck Golemon <buck@yelp.com>
  
     This is free software: you can redistribute it and/or modify it
@@ -696,18 +697,24 @@ $(function() {
         // backwards, that starts a new subflow
         var $states = $report.find('.states li');
         var source_flow = [];
-        var last_line = null;
+        var last_line = Infinity;
         $states.each(function() {
             var $state = $(this);
             var lineno = parseInt($state.data('line'), 10);
             var $assoc_line = $line_index[lineno];
+
+            if ( $assoc_line === undefined ) {
+                // The commentary mentioned a line that we're not showing.
+                return;
+            }
             $state.data('line-element', $assoc_line);
             $state.prepend($('<h2>').text(String(lineno)));
 
+
+
             var flow;
-            if (! last_line || last_line >= lineno) {
-                // Mark commentary that starts a new subflow (but not the
-                // first)
+            if (last_line >= lineno) {
+                // This is a new subflow, possibly the first.
                 if (source_flow.length) {
                     $state.addClass('new-subflow');
                 }
@@ -753,11 +760,9 @@ $(function() {
                     flow.shift();
                 }
                 // Lines between the start and end of a subflow, or before the
-                // start of the first subflow, or after the end of the last
-                // subflow, get undotted lines
+                // start of the first subflow get undotted lines
                 else if (
                     (idx == 0 && flow.length) ||
-                    (idx == source_flow.length - 1 && ! flow.length) ||
                     (started[idx] && flow.length)
                 ) {
                     $paths = $paths.add($('<td>', { "class": "flow-line" }).html('&#x200b;'));

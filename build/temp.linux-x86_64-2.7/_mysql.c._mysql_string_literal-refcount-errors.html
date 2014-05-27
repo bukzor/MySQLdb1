@@ -267,7 +267,7 @@ pre {
 <table>
   <tr><td>File:</td> <td><b>_mysql.c</b></td></tr>
   <tr><td>Function:</td> <td><b>_mysql_string_literal</b></td></tr>
-  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of '*str.34' is 1 too high</b></td></tr>
+  <tr><td>Error:</td> <td><b>memory leak: ob_refcnt of '*str.35' is 1 too high</b></td></tr>
 </table>
 <div class="highlight"><pre><span class="lineno">1107</span> <span id="trace1-line1107" class="unreached-line"><span class="source_k">static</span> <span class="source_n">PyObject</span> <span class="source_o">*</span></span>
 <span class="lineno">1108</span> <span id="trace1-line1108" class="unreached-line"><span class="source_nf">_mysql_string_literal</span><span class="source_p">(</span></span>
@@ -303,7 +303,7 @@ pre {
 <span class="reached-lineno">1128</span> <span id="trace1-line1128" class="reached-line">	<span class="source_n">size</span> <span class="source_o">=</span> <span class="source_n">PyBytes_GET_SIZE</span><span class="source_p">(</span><span class="source_n">s</span><span class="source_p">);</span></span>
 <span class="reached-lineno">1129</span> <span id="trace1-line1129" class="reached-line">	<span class="source_n">str</span> <span class="source_o">=</span> <span class="source_n">PyBytes_FromStringAndSize</span><span class="source_p">((</span><span class="source_kt">char</span> <span class="source_o">*</span><span class="source_p">)</span> <span class="source_nb">NULL</span><span class="source_p">,</span> <span class="source_n">size</span><span class="source_o">*</span><span class="source_mi">2</span><span class="source_o">+</span><span class="source_mi">3</span><span class="source_p">);</span></span>
 <span class="transition">when PyString_FromStringAndSize() succeeds</span>
-<span class="note">'*str.34' was allocated at: 	str = PyBytes_FromStringAndSize((char *) NULL, size*2+3);</span>
+<span class="note">'*str.35' was allocated at: 	str = PyBytes_FromStringAndSize((char *) NULL, size*2+3);</span>
 <span class="transition">ob_refcnt is now refs: 1 owned</span>
 <span class="reached-lineno">1130</span> <span id="trace1-line1130" class="reached-line">	<span class="source_k">if</span> <span class="source_p">(</span><span class="source_o">!</span><span class="source_n">str</span><span class="source_p">)</span> <span class="source_k">return</span> <span class="source_n">PyErr_NoMemory</span><span class="source_p">();</span></span>
 <span class="transition">taking False path</span>

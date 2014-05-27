@@ -1,0 +1,3323 @@
+{
+    "filename": "_mysql.c", 
+    "function": {
+        "lines": [
+            2934, 
+            2950
+        ], 
+        "name": "_mysql_NewException"
+    }, 
+    "reports": [
+        {
+            "message": "future use-after-free: ob_refcnt of return value is 1 too low", 
+            "notes": [
+                {
+                    "location": [
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }, 
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }
+                    ], 
+                    "message": "return value was allocated at: \tif (!(e = PyDict_GetItemString(edict, name)))"
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 2, 
+                            "line": 2948
+                        }, 
+                        {
+                            "column": 2, 
+                            "line": 2948
+                        }
+                    ], 
+                    "message": "was expecting final owned ob_refcnt of return value to be 1 due to object being referenced by: return value but final ob_refcnt is refs: 0 owned, 2 borrowed"
+                }
+            ], 
+            "severity": "warning", 
+            "states": [
+                {
+                    "location": null, 
+                    "message": "", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 8, 
+                                    "line": 2938
+                                }, 
+                                {
+                                    "column": 8, 
+                                    "line": 2938
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }, 
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }
+                    ], 
+                    "message": "when treating unknown char * from _mysql.c:2938 as non-NULL", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 8, 
+                                    "line": 2938
+                                }, 
+                                {
+                                    "column": 8, 
+                                    "line": 2938
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }, 
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }
+                    ], 
+                    "message": "when PyDict_GetItemString() succeeds", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }, 
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }
+                    ], 
+                    "message": "taking False path", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for borrowed reference returned by PyDict_GetItemString().tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 26, 
+                            "line": 2944
+                        }, 
+                        {
+                            "column": 26, 
+                            "line": 2944
+                        }
+                    ], 
+                    "message": "when PyDict_SetItemString() succeeds", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for borrowed reference returned by PyDict_GetItemString().tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 5, 
+                            "line": 2944
+                        }, 
+                        {
+                            "column": 5, 
+                            "line": 2944
+                        }
+                    ], 
+                    "message": "taking False path", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }, 
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for borrowed reference returned by PyDict_GetItemString().tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 2, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }, 
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 2, 
+                            "line": 2948
+                        }, 
+                        {
+                            "column": 2, 
+                            "line": 2948
+                        }
+                    ], 
+                    "message": null, 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }, 
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for borrowed reference returned by PyDict_GetItemString().tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 2, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }, 
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": null, 
+                    "message": "returning", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }, 
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for borrowed reference returned by PyDict_GetItemString().tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 2, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }, 
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": null, 
+                    "message": null, 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }, 
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for borrowed reference returned by PyDict_GetItemString().tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 2, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": [
+                                    "return value"
+                                ]
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }, 
+                                {
+                                    "column": 26, 
+                                    "line": 2944
+                                }
+                            ]
+                        }, 
+                        "borrowed reference returned by PyDict_GetItemString().ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "borrowed reference returned by PyDict_GetItemString()", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }, 
+        {
+            "message": "returning (PyObject*)NULL without setting an exception", 
+            "notes": [], 
+            "severity": "warning", 
+            "states": [
+                {
+                    "location": null, 
+                    "message": "", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 8, 
+                                    "line": 2938
+                                }, 
+                                {
+                                    "column": 8, 
+                                    "line": 2938
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }, 
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }
+                    ], 
+                    "message": "when treating unknown char * from _mysql.c:2938 as non-NULL", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 8, 
+                                    "line": 2938
+                                }, 
+                                {
+                                    "column": 8, 
+                                    "line": 2938
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }, 
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }
+                    ], 
+                    "message": "PyDict_GetItemString does not find string", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }, 
+                        {
+                            "column": 5, 
+                            "line": 2942
+                        }
+                    ], 
+                    "message": "taking True path", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 3, 
+                            "line": 2943
+                        }, 
+                        {
+                            "column": 3, 
+                            "line": 2943
+                        }
+                    ], 
+                    "message": null, 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": null, 
+                    "message": "returning", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 3, 
+                                    "line": 2943
+                                }, 
+                                {
+                                    "column": 3, 
+                                    "line": 2943
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": null, 
+                    "message": null, 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "D.16233": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 3, 
+                                    "line": 2943
+                                }, 
+                                {
+                                    "column": 3, 
+                                    "line": 2943
+                                }
+                            ]
+                        }, 
+                        "D.16234": {
+                            "gcctype": "int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }, 
+                                {
+                                    "column": 1, 
+                                    "line": 2939
+                                }
+                            ]
+                        }, 
+                        "dict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "dict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "dict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('dict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2936
+                                }
+                            ]
+                        }, 
+                        "e": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "ConcreteValue", 
+                            "value": 0, 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }, 
+                        "edict": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "edict", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "edict->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('edict')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 2937
+                                }
+                            ]
+                        }, 
+                        "name": {
+                            "gcctype": "char *", 
+                            "kind": "PointerToRegion", 
+                            "target": "heap-region-216", 
+                            "value_comes_from": [
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }, 
+                                {
+                                    "column": 5, 
+                                    "line": 2942
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

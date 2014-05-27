@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>_mysql.c -- GCC Python Plugin</title><style media="screen" type="text/css">
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>_mysql_string_literal() _mysql.c -- GCC Python Plugin</title><style media="screen" type="text/css">
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -427,6 +427,7 @@ img {
 }
 .states li.new-subflow {
     border-top-width: 4px;
+    border-top-color: black;
 }
 .states h2 {
     float: right;
@@ -571,7 +572,7 @@ td.selected .flow-dot {
 </td></tr><tr><td class="code">	<span class="p">}</span>
 </td></tr><tr><td class="code">	<span class="k">return</span> <span class="p">(</span><span class="n">str</span><span class="p">);</span>
 </td></tr><tr><td class="code"><span class="p">}</span>
-</td></tr></table></div><ol class="states"><li data-line="0"><p class="note">was expecting final owned ob_refcnt of '*s' to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</p><p class="note">found 3 similar trace(s) to this</p></li><li data-line="1115"><p>when PyArg_ParseTuple() succeeds</p><p>taking False path</p></li><li data-line="1117"><p>when treating unknown struct _typeobject * from _mysql.c:1117 as non-NULL</p><p>when considering value == (long int)0 from _mysql.c:1117</p></li><li data-line="1118"><p>taking False path</p></li><li data-line="1120"><p>when treating unknown struct _typeobject * from _mysql.c:1120 as non-NULL</p><p>when considering value == (long int)0 from _mysql.c:1120</p><p>taking False path</p></li><li data-line="1123"><p>when PyObject_Str() succeeds</p><p class="note">'*s' was allocated at: 		s = PyObject_Bytes(o);</p></li><li data-line="1125"><p>taking False path</p></li><li data-line="1129"><p>when PyString_FromStringAndSize() succeeds</p></li><li data-line="1130"><p>taking False path</p></li><li data-line="1137"><p>when treating unknown char * from _mysql.c:1137 as non-NULL</p></li><li data-line="1138"><p>when considering range: -0x80000000 &lt;= value &lt;= -1</p><p>taking True path</p></li></ol></div></li><li id="state2"><header><div class="error">memory leak: ob_refcnt of '*str.34' is 1 too high</div><div class="report-count"><h3>Report</h3>2</div></header><div class="body"><div class="source"><table data-first-line="1107"><tr><td class="code"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+</td></tr></table></div><ol class="states"><li data-line="0"><p class="note">was expecting final owned ob_refcnt of '*s' to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</p><p class="note">found 3 similar trace(s) to this</p></li><li data-line="1115"><p>when PyArg_ParseTuple() succeeds</p><p>taking False path</p></li><li data-line="1117"><p>when treating unknown struct _typeobject * from _mysql.c:1117 as non-NULL</p><p>when considering value == (long int)0 from _mysql.c:1117</p></li><li data-line="1118"><p>taking False path</p></li><li data-line="1120"><p>when treating unknown struct _typeobject * from _mysql.c:1120 as non-NULL</p><p>when considering value == (long int)0 from _mysql.c:1120</p><p>taking False path</p></li><li data-line="1123"><p>when PyObject_Str() succeeds</p><p class="note">'*s' was allocated at: 		s = PyObject_Bytes(o);</p></li><li data-line="1125"><p>taking False path</p></li><li data-line="1129"><p>when PyString_FromStringAndSize() succeeds</p></li><li data-line="1130"><p>taking False path</p></li><li data-line="1137"><p>when treating unknown char * from _mysql.c:1137 as non-NULL</p></li><li data-line="1138"><p>when considering range: -0x80000000 &lt;= value &lt;= -1</p><p>taking True path</p></li></ol></div></li><li id="state2"><header><div class="error">memory leak: ob_refcnt of '*str.35' is 1 too high</div><div class="report-count"><h3>Report</h3>2</div></header><div class="body"><div class="source"><table data-first-line="1107"><tr><td class="code"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
 </td></tr><tr><td class="code"><span class="nf">_mysql_string_literal</span><span class="p">(</span>
 </td></tr><tr><td class="code">	<span class="n">_mysql_ConnectionObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span>
 </td></tr><tr><td class="code">	<span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
@@ -608,7 +609,7 @@ td.selected .flow-dot {
 </td></tr><tr><td class="code">	<span class="p">}</span>
 </td></tr><tr><td class="code">	<span class="k">return</span> <span class="p">(</span><span class="n">str</span><span class="p">);</span>
 </td></tr><tr><td class="code"><span class="p">}</span>
-</td></tr></table></div><ol class="states"><li data-line="0"><p class="note">was expecting final owned ob_refcnt of '*str.34' to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</p><p class="note">found 7 similar trace(s) to this</p></li><li data-line="1115"><p>when PyArg_ParseTuple() succeeds</p><p>taking False path</p></li><li data-line="1117"><p>when treating unknown struct _typeobject * from _mysql.c:1117 as non-NULL</p><p>when considering value == (long int)0 from _mysql.c:1117</p></li><li data-line="1118"><p>taking False path</p></li><li data-line="1120"><p>when treating unknown struct _typeobject * from _mysql.c:1120 as non-NULL</p><p>when considering value == (long int)0 from _mysql.c:1120</p><p>taking False path</p></li><li data-line="1123"><p>when PyObject_Str() succeeds</p></li><li data-line="1125"><p>taking False path</p></li><li data-line="1129"><p>when PyString_FromStringAndSize() succeeds</p><p class="note">'*str.34' was allocated at: 	str = PyBytes_FromStringAndSize((char *) NULL, size*2+3);</p></li><li data-line="1130"><p>taking False path</p></li><li data-line="1137"><p>when treating unknown char * from _mysql.c:1137 as non-NULL</p></li><li data-line="1138"><p>when considering range: -0x80000000 &lt;= value &lt;= -1</p><p>taking True path</p></li></ol></div></li><li id="state3"><header><div class="error">returning (PyObject*)NULL without setting an exception</div><div class="report-count"><h3>Report</h3>3</div></header><div class="body"><div class="source"><table data-first-line="1107"><tr><td class="code"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+</td></tr></table></div><ol class="states"><li data-line="0"><p class="note">was expecting final owned ob_refcnt of '*str.35' to be 0 since nothing references it but final ob_refcnt is refs: 1 owned</p><p class="note">found 7 similar trace(s) to this</p></li><li data-line="1115"><p>when PyArg_ParseTuple() succeeds</p><p>taking False path</p></li><li data-line="1117"><p>when treating unknown struct _typeobject * from _mysql.c:1117 as non-NULL</p><p>when considering value == (long int)0 from _mysql.c:1117</p></li><li data-line="1118"><p>taking False path</p></li><li data-line="1120"><p>when treating unknown struct _typeobject * from _mysql.c:1120 as non-NULL</p><p>when considering value == (long int)0 from _mysql.c:1120</p><p>taking False path</p></li><li data-line="1123"><p>when PyObject_Str() succeeds</p></li><li data-line="1125"><p>taking False path</p></li><li data-line="1129"><p>when PyString_FromStringAndSize() succeeds</p><p class="note">'*str.35' was allocated at: 	str = PyBytes_FromStringAndSize((char *) NULL, size*2+3);</p></li><li data-line="1130"><p>taking False path</p></li><li data-line="1137"><p>when treating unknown char * from _mysql.c:1137 as non-NULL</p></li><li data-line="1138"><p>when considering range: -0x80000000 &lt;= value &lt;= -1</p><p>taking True path</p></li></ol></div></li><li id="state3"><header><div class="error">returning (PyObject*)NULL without setting an exception</div><div class="report-count"><h3>Report</h3>3</div></header><div class="body"><div class="source"><table data-first-line="1107"><tr><td class="code"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
 </td></tr><tr><td class="code"><span class="nf">_mysql_string_literal</span><span class="p">(</span>
 </td></tr><tr><td class="code">	<span class="n">_mysql_ConnectionObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span>
 </td></tr><tr><td class="code">	<span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
@@ -688,18 +689,24 @@ $(function() {
         // backwards, that starts a new subflow
         var $states = $report.find('.states li');
         var source_flow = [];
-        var last_line = null;
+        var last_line = Infinity;
         $states.each(function() {
             var $state = $(this);
             var lineno = parseInt($state.data('line'), 10);
             var $assoc_line = $line_index[lineno];
+
+            if ( $assoc_line === undefined ) {
+                // The commentary mentioned a line that we're not showing.
+                return;
+            }
             $state.data('line-element', $assoc_line);
             $state.prepend($('<h2>').text(String(lineno)));
 
+
+
             var flow;
-            if (! last_line || last_line >= lineno) {
-                // Mark commentary that starts a new subflow (but not the
-                // first)
+            if (last_line >= lineno) {
+                // This is a new subflow, possibly the first.
                 if (source_flow.length) {
                     $state.addClass('new-subflow');
                 }
@@ -745,11 +752,9 @@ $(function() {
                     flow.shift();
                 }
                 // Lines between the start and end of a subflow, or before the
-                // start of the first subflow, or after the end of the last
-                // subflow, get undotted lines
+                // start of the first subflow get undotted lines
                 else if (
                     (idx == 0 && flow.length) ||
-                    (idx == source_flow.length - 1 && ! flow.length) ||
                     (started[idx] && flow.length)
                 ) {
                     $paths = $paths.add($('<td>', { "class": "flow-line" }).html('&#x200b;'));

@@ -1,0 +1,1658 @@
+{
+    "filename": "_mysql.c", 
+    "function": {
+        "lines": [
+            99, 
+            107
+        ], 
+        "name": "get_string"
+    }, 
+    "reports": [
+        {
+            "message": "memory leak: ob_refcnt of '*strobj' is 2 too high", 
+            "notes": [
+                {
+                    "location": [
+                        {
+                            "column": 12, 
+                            "line": 102
+                        }, 
+                        {
+                            "column": 12, 
+                            "line": 102
+                        }
+                    ], 
+                    "message": "'*strobj' was allocated at: \tPyObject *strobj = PyUnicode_AsEncodedString(uniobj, \"UTF-8\", \"strict\");"
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 2, 
+                            "line": 105
+                        }, 
+                        {
+                            "column": 2, 
+                            "line": 105
+                        }
+                    ], 
+                    "message": "was expecting final owned ob_refcnt of '*strobj' to be 0 since nothing references it but final ob_refcnt is refs: 2 owned"
+                }
+            ], 
+            "severity": "warning", 
+            "states": [
+                {
+                    "location": null, 
+                    "message": "", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14572": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14573": {
+                            "gcctype": "long int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14574": {
+                            "gcctype": "long int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "strobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "uniobj", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('uniobj')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 12, 
+                            "line": 102
+                        }, 
+                        {
+                            "column": 12, 
+                            "line": 102
+                        }
+                    ], 
+                    "message": "when PyUnicodeUCS4_AsEncodedString() succeeds", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14572": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14573": {
+                            "gcctype": "long int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14574": {
+                            "gcctype": "long int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "strobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "uniobj", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('uniobj')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 5, 
+                            "line": 103
+                        }, 
+                        {
+                            "column": 5, 
+                            "line": 103
+                        }
+                    ], 
+                    "message": "taking False path", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14572": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14573": {
+                            "gcctype": "long int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14574": {
+                            "gcctype": "long int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString.tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 1
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "strobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('uniobj')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 2, 
+                            "line": 104
+                        }, 
+                        {
+                            "column": 2, 
+                            "line": 104
+                        }
+                    ], 
+                    "message": null, 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14572": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14573": {
+                            "gcctype": "long int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14574": {
+                            "gcctype": "long int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString.tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 1
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "strobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('uniobj')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 2, 
+                            "line": 104
+                        }, 
+                        {
+                            "column": 2, 
+                            "line": 104
+                        }
+                    ], 
+                    "message": null, 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14572": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14573": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 1
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "D.14574": {
+                            "gcctype": "long int", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString.tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 1
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "strobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('uniobj')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 2, 
+                            "line": 104
+                        }, 
+                        {
+                            "column": 2, 
+                            "line": 104
+                        }
+                    ], 
+                    "message": null, 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14572": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14573": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 1
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "D.14574": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 2
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }, 
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString.tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 1
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "strobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('uniobj')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": [
+                        {
+                            "column": 2, 
+                            "line": 105
+                        }, 
+                        {
+                            "column": 2, 
+                            "line": 105
+                        }
+                    ], 
+                    "message": null, 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14572": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14573": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 1
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "D.14574": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 2
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }, 
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString.tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 2
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }, 
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "strobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('uniobj')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": null, 
+                    "message": "returning", 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14572": {
+                            "gcctype": "char[1] *", 
+                            "kind": "PointerToRegion", 
+                            "target": "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_sval[0]", 
+                            "value_comes_from": [
+                                {
+                                    "column": 2, 
+                                    "line": 105
+                                }, 
+                                {
+                                    "column": 2, 
+                                    "line": 105
+                                }
+                            ]
+                        }, 
+                        "D.14573": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 1
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "D.14574": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 2
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }, 
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString.tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 2
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }, 
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "strobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('uniobj')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }
+                    }
+                }, 
+                {
+                    "location": null, 
+                    "message": null, 
+                    "variables": {
+                        "<retval>": {
+                            "gcctype": "char *", 
+                            "kind": "UninitializedData", 
+                            "value_comes_from": [
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 45, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "D.14572": {
+                            "gcctype": "char[1] *", 
+                            "kind": "PointerToRegion", 
+                            "target": "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_sval[0]", 
+                            "value_comes_from": [
+                                {
+                                    "column": 2, 
+                                    "line": 105
+                                }, 
+                                {
+                                    "column": 2, 
+                                    "line": 105
+                                }
+                            ]
+                        }, 
+                        "D.14573": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 1
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "D.14574": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 2
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }, 
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }
+                            ]
+                        }, 
+                        "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString.tp_dealloc": {
+                            "gcctype": "void (*destructor) (struct PyObject *)", 
+                            "kind": "GenericTpDealloc", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 0, 
+                                "refs_we_own": 2
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }, 
+                                {
+                                    "column": 2, 
+                                    "line": 104
+                                }
+                            ]
+                        }, 
+                        "new ref from (unknown) PyUnicodeUCS4_AsEncodedString.ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "PyTypeObject for new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "strobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "new ref from (unknown) PyUnicodeUCS4_AsEncodedString", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj": {
+                            "gcctype": "struct PyObject *", 
+                            "kind": "UnknownValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }, 
+                                {
+                                    "column": 12, 
+                                    "line": 102
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_refcnt": {
+                            "actual_ob_refcnt": {
+                                "lower_bound_of_other_refs": 1, 
+                                "refs_we_own": 0
+                            }, 
+                            "expected_ob_refcnt": {
+                                "pointers_to_this": []
+                            }, 
+                            "gcctype": "Py_ssize_t", 
+                            "kind": "RefcountValue", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }, 
+                        "uniobj->ob_type": {
+                            "gcctype": "struct PyTypeObject *", 
+                            "kind": "PointerToRegion", 
+                            "target": "region-for-type-of-arg-gcc.ParmDecl('uniobj')", 
+                            "value_comes_from": [
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }, 
+                                {
+                                    "column": 37, 
+                                    "line": 100
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
