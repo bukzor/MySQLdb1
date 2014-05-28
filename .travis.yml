@@ -5,11 +5,15 @@ env:  # These should match the tox env list
  - TOXENV=py33
  - TOXENV=py34
  - TOXENV=pypy
+ - TOXENV=py27-ee PATH=prefix/bin:/usr/bin:/bin
 install:
- - pip install tox
+ - "if [ $TOXENV == py27-ee ]; then ./bin/install_py27_explicit_encoding; else pip install tox; fi"
 before_script:
  - mysql -e 'create database mysqldb_test charset utf8;'
 script: TESTDB=travis.cnf tox
 matrix:
   allow_failures:
     - env: "TOXENV=pypy"
+cache:
+    directories:
+        - prefix

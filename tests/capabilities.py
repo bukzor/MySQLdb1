@@ -14,7 +14,7 @@ from future.builtins import range
 """
 from time import time
 import unittest
-from .configdb import connection_factory
+from configdb import connection_factory
 
 
 class DatabaseTest(unittest.TestCase):

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from future.builtins import dict
 from future.builtins import chr
 
-from . import capabilities
+import capabilities
 import unittest
 import MySQLdb
 import warnings

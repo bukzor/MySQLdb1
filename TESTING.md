@@ -18,13 +18,13 @@ In your MySQLdb1 directory (this directory), run the tests:
 
     virtualenv mysql-venv
     source mysql-venv/bin/activate
-    pip install nose
-    nosetests
+    pip install pytest
+    py.test tests
 
 
 To run a single test:
 
-    nosetests tests.test_MySQLdb_dbapi20:test_MySQLdb.test_executemany
+    py.test tests -k test_executemany
 
 
 When you're done, stop the server and remove its data:

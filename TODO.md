@@ -3,8 +3,9 @@ Milestone 2
 - [x] get rid of pre-dependency on `future` package
 - [x] travis bling
 - [ ] some benchmarking
-- [ ] run the refcount checking tool
-- [ ] travis py27-hack13
+- [x] run the refcount checking tool
+- [ ] fix the refcount issues
+- [x] travis py27-hack13
 
 Milestone 1
 ===========
