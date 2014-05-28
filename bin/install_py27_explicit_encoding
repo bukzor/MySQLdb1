@@ -8,7 +8,10 @@ git clone git://github.com/bukzor/cpython.git --branch explicit_encoding
 
 pushd cpython
 
-./configure --prefix=$TOP/py27-ee
+./configure --prefix=$TOP/prefix
 make -j30
 make install
 popd
+
+$TOP/prefix/bin/python $TOP/bin/get-pip.py
+$TOP/prefix/bin/pip install tox

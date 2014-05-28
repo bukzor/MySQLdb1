@@ -5,10 +5,10 @@ from future.builtins import dict
 from future.builtins import range
 from five import udict
 
-from . import dbapi20
+import dbapi20
 import unittest
 import MySQLdb
-from .configdb import connection_kwargs
+from configdb import connection_kwargs
 import warnings
 warnings.simplefilter("ignore")
 

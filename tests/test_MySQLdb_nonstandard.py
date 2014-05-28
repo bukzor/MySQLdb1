@@ -6,7 +6,7 @@ import unittest
 import _mysql
 import MySQLdb
 from MySQLdb.constants import FIELD_TYPE
-from .configdb import connection_factory
+from configdb import connection_factory
 from five import text
 import warnings
 warnings.simplefilter("ignore")
@@ -45,6 +45,10 @@ class CoreModule(unittest.TestCase):
 
     def test_thread_safe(self):
         self.assertTrue(isinstance(_mysql.thread_safe(), int))
+
+    def test_installation_path(self):
+        from os.path import dirname
+        self.assertEqual(dirname(_mysql.__file__), dirname(dirname(MySQLdb.__file__)))
 
 
 class CoreAPI(unittest.TestCase):
