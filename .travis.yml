@@ -5,8 +5,7 @@ env:  # These should match the tox env list
  - TOXENV=py33
  - TOXENV=py34
  - TOXENV=pypy
- - TOXENV=py27-ee
- - PATH=prefix/bin:/usr/bin:/bin
+ - TOXENV=py27-ee PATH=prefix/bin:/usr/bin:/bin
 install:
  - "if [ $TOXENV == py27-ee ]; then ./bin/install_py27_explicit_encoding; else pip install tox; fi"
 before_script:
