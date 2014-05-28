@@ -4,7 +4,7 @@ TOP=$(dirname $(dirname $(readlink -f $0)))
 $TOP/bin/explicit_encoding
 
 rm -rf cpython
-git clone git@github.com:bukzor/cpython.git --branch explicit_encoding
+git clone git://github.com/bukzor/cpython.git --branch explicit_encoding
 
 pushd cpython
 

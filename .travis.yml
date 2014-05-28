@@ -16,4 +16,4 @@ matrix:
     - env: "TOXENV=pypy"
 
 before_install:
-    - [ "$TOXENV" == 'py27-ee' ] && ./bin/install_py27_explicit_encoding
+    - "[ $TOXENV == py27-ee ] && ./bin/install_py27_explicit_encoding"
