@@ -3,6 +3,10 @@ set -e
 TOP=$(dirname $(dirname $(readlink -f $0)))
 $TOP/bin/explicit_encoding
 
+if [[ -x $TOP/prefix/bin/python ]]; then
+    exit 0
+fi
+
 rm -rf cpython
 git clone git://github.com/bukzor/cpython.git --branch explicit_encoding
 
