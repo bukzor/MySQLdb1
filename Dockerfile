@@ -10,6 +10,9 @@ RUN apt-get install --no-install-recommends -y \
     g++-4.8 \
     gcc-4.8-plugin-dev
 
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50
+RUN update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 50
+
 RUN apt-get install --no-install-recommends -y \
     python2.7-dbg \
     python2.7-dev \
@@ -17,6 +20,7 @@ RUN apt-get install --no-install-recommends -y \
     python-pygments \
     python-six
 
+RUN update-alternatives --install /usr/bin/python-config python-config /usr/bin/python2.7-dbg-config 50
 
 # docker mini-bug: ending the last line with  ' \' above makes it join
 #   with the next line, no matter how many newlines in between.
@@ -34,7 +38,6 @@ ENTRYPOINT ["/opt/gcc-python-plugin/gcc-with-cpychecker"]
 # default arguments:
 CMD ["--help"]
 
-ENV C_INCLUDE_PATH /usr/include/python2.7_d
 
 WORKDIR /src
 VOLUME ["/src"]
