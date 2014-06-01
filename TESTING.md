@@ -36,10 +36,8 @@ When you're done, stop the server and remove its data:
 Checking Refcounts
 ==================
 
-    git clone git://git.fedorahosted.org/gcc-python-plugin.git
-    cd gcc-python-plugin
-    make plugin
-    export CC=$PWD/gcc-with-cpychecker
+    docker build -t gcc-python-plugin .
+    export CC='docker run -v '"$PWD"':/src gcc-python-plugin'
 
     cd /path/to/MySQLdb1
     git checkout gh-pages
